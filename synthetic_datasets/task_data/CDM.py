@@ -27,30 +27,45 @@ class CDM(SyntheticTask):
         
         # NOTE: producess all trials of same total duration, the mask if for the loss
         # NOTE: not reducing bins yet
+        # NOTE: time of initial fixation is always constant
+        # NOTE: not returning mask, but mask later with phase_index
         
-        if random_trials:
-            ctx = np.random.randint(200 / bin_size, 600 / bin_size)
-            stim = np.random.randint(200 / bin_size, 1600 / bin_size)
-            mem = np.random.randint(200 / bin_size, 1600 / bin_size)
-            res= np.random.randint(300 / bin_size, 700 / bin_size)
-            
-            # renormalize the indices
-            total = ctx + stim + mem + res
-            ctx = floor((ctx / total) * (n_timesteps - fix))
-            stim = floor((stim / total) * (n_timesteps - fix))
-            mem = floor((mem / total) * (n_timesteps - fix))
-            res = floor((res / total) * (n_timesteps - fix))
-            
         # get the timestamps for each period
-        stim_begin = fix + ctx
+        if random_trials:
+            fix = 100
+            ctx = np.random.randint(200, 600)
+            stim = np.random.randint(200, 1600)
+            mem = np.random.randint(200, 1600)
+            res= np.random.randint(300, 700)
+            
+            total = fix + ctx + stim + mem + res
+            
+            # rescale
+            fix = floor(n_timesteps / bin_size * (fix / total))
+            ctx = floor(n_timesteps / bin_size  * (ctx / total))
+            stim = floor(n_timesteps / bin_size  * (stim / total))
+            mem = floor(n_timesteps / bin_size  * (mem / total))
+            res = floor(n_timesteps / bin_size  * (res / total))
+                
+        else:
+            
+            fix = floor(fix / bin_size)
+            ctx = floor(ctx / bin_size)
+            stim = floor(stim / bin_size)
+            mem = floor(mem / bin_size)
+            res = floor(res / bin_size)
+            
+        ctx_begin = fix
+        stim_begin = ctx_begin + ctx
         mem_begin = stim_begin + stim
         res_begin = mem_begin + mem
+        total_duration = res_begin + res
         
         # record timestamps when each phase begins
         if not random_trials:
             phase_index = {
                 'fix': 0,
-                'ctx': fix,
+                'ctx': ctx_begin,
                 'stim': stim_begin,
                 'mem': mem_begin,
                 'res': res_begin}
@@ -64,35 +79,39 @@ class CDM(SyntheticTask):
             
         # initialize the inputs: 2 noisy inputs drawn from the coherences
         # 2 contextual inputs as a one-hot encoding of the trial context
-        inputs_sensory = noise * torch.randn((n_trials, n_timesteps, 2), dtype=torch.float32)
-        inputs_context = torch.zeros((n_trials, n_timesteps, 2))
+        inputs_sensory = noise * torch.randn((n_trials, total_duration, 2), dtype=torch.float32)
+        inputs_context = torch.zeros((n_trials, total_duration, 2))
         inputs = torch.cat([inputs_sensory, inputs_context], dim=2)
-        targets = torch.zeros((n_trials, n_timesteps, 1), dtype=torch.float32)
+        targets = torch.zeros((n_trials, total_duration, 1), dtype=torch.float32)
         mask = torch.zeros((n_trials, n_timesteps, 1), dtype=torch.float32)
             
         for n in range(n_trials):
  
             # recalculate time stamps
             if random_trials:
+                fix = 100
                 ctx = np.random.randint(200, 600)
                 stim = np.random.randint(200, 1600)
                 mem = np.random.randint(200, 1600)
                 res= np.random.randint(300, 700)
 
-                # renormalize the fractions
-                total = ctx + stim + mem + res
-                ctx = floor((ctx / total) * (n_timesteps - fix))
-                stim = floor((stim / total) * (n_timesteps - fix))
-                mem = floor((mem / total) * (n_timesteps - fix))
-                res = floor((res / total) * (n_timesteps - fix))
-            
-                stim_begin = fix + ctx
+                total = fix + ctx + stim + mem + res
+
+                # rescale
+                fix = floor(n_timesteps / bin_size * (fix / total))
+                ctx = floor(n_timesteps / bin_size  * (ctx / total))
+                stim = floor(n_timesteps / bin_size  * (stim / total))
+                mem = floor(n_timesteps / bin_size  * (mem / total))
+                res = floor(n_timesteps / bin_size  * (res / total))
+                
+                ctx_begin = fix
+                stim_begin = ctx_begin + ctx
                 mem_begin = stim_begin + stim
                 res_begin = mem_begin + mem
-                n_timesteps = res_begin + res
+                total_duration = res_begin + res
                 
                 phase_index['fix'][n] = 0
-                phase_index['ctx'][n] = fix
+                phase_index['ctx'][n] = ctx_begin
                 phase_index['stim'][n] = stim_begin
                 phase_index['mem'][n] = mem_begin
                 phase_index['res'][n] = res_begin
@@ -115,12 +134,12 @@ class CDM(SyntheticTask):
                 inputs[n, fix:res_begin, 3] = 1 * ctx_scale
                 targets[n, res_begin:, 0] = self.hi if coh_choice1 > 0 else self.lo
 
-            mask[n, res_begin:, 0] = 1  # for the loss
-
-        return inputs, targets, phase_index, mask
+        return inputs, targets, phase_index
     
     
     def plot_trial(self, **kwargs):
+        
+        # TODO: adjust the x axis for targets
         
         inputs, targets, phase_index, _= self.generate_dataset(1, **kwargs)
         inputs = inputs.squeeze().numpy() 
