@@ -1,0 +1,1 @@
+module load anaconda3/2024.2
