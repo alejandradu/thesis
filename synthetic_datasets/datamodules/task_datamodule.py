@@ -1,7 +1,7 @@
 import os
 import h5py
 import logging
-import lightning as L
+import lightning as pl
 import numpy as np
 import torch
 from torch.utils.data import DataLoader, TensorDataset
@@ -11,7 +11,7 @@ from task_data.AbstractClass import SyntheticTask
 # Configure logging
 logger = logging.getLogger(__name__)
 
-class TaskDataModule(L.LightningDataModule):
+class TaskDataModule(pl.LightningDataModule):
     """Organize data creation and saving/loading to train a 
     task-trained network for one tasks
     
