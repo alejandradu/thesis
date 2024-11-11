@@ -10,6 +10,8 @@ class CDM(SyntheticTask):
     """Represent a context-dependent decision making tasks
     for a fixed set of coherences"""
     
+    # NOTE: coherences here are possibly the same as Driscoll's targets
+    
     hi = 1
     lo = -1
 
@@ -141,7 +143,7 @@ class CDM(SyntheticTask):
         
         # TODO: adjust the x axis for targets
         
-        inputs, targets, phase_index, _= self.generate_dataset(1, **kwargs)
+        inputs, targets, phase_index = self.generate_dataset(1, **kwargs)
         inputs = inputs.squeeze().numpy() 
         targets = targets.squeeze().numpy()
         
@@ -149,6 +151,7 @@ class CDM(SyntheticTask):
         fig, ax = plt.subplots(1, 2, figsize=(10, 5))
         ax[0].plot(inputs, label=['Channel 0', 'Channel 1', 'Context 0', 'Context 1'])
         ax[0].set_title("Inputs")
+        ax[0].set_xlim(0, len(inputs))
         ax[0].legend()
         ax[1].plot(targets)
         ax[1].set_title("Targets")
