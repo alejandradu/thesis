@@ -31,6 +31,7 @@ class CDM(SyntheticTask):
         # NOTE: not reducing bins yet
         # NOTE: time of initial fixation is always constant
         # NOTE: not returning mask, but mask later with phase_index
+        # NOTE: not returning also de-noised "true" inputs yet
         
         # get the timestamps for each period
         if random_trials:
