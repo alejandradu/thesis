@@ -5,6 +5,9 @@ import lightning as pl
 import torch 
 import torch.nn as nn
 import logging
+import math
+from models.loss import *
+from models.accuracy import *
 
 # start the logger
 logger = logging.getLogger(__name__)
@@ -14,7 +17,7 @@ class tradRNN(pl.LightningModule):
     def __init__(self, input_size, hidden_size, output_size, noise_std, alpha=0.2, rho=1,
                  train_wi=False, train_wo=False, train_wrec=True, train_h0=False, train_si=True, train_so=True,
                  wi_init=None, wo_init=None, wrec_init=None, si_init=None, so_init=None, b_init=None,
-                 add_biases=False, non_linearity=torch.tanh, output_non_linearity=torch.tanh):
+                 add_biases=False, non_linearity=torch.tanh, output_non_linearity=torch.tanh, rank=128):
 
         super(tradRNN, self).__init__()
         self.input_size = input_size
@@ -31,6 +34,7 @@ class tradRNN(pl.LightningModule):
         self.train_so = train_so
         self.non_linearity = non_linearity
         self.output_non_linearity = output_non_linearity
+        self.rank = rank
 
         # Define parameters
         self.wi = nn.Parameter(torch.Tensor(input_size, hidden_size))
@@ -59,7 +63,8 @@ class tradRNN(pl.LightningModule):
         if not train_h0:
             self.h0.requires_grad = False
 
-        # Initialize parameters
+        # Initialize parameters - all of them is good
+        # note that if you tried only the last layer, you would not used GD
         with torch.no_grad():
             if wi_init is None:
                 self.wi.normal_()
@@ -70,7 +75,7 @@ class tradRNN(pl.LightningModule):
             else:
                 self.si.copy_(si_init)
             if wrec_init is None:
-                self.wrec.normal_(std=rho / sqrt(hidden_size))
+                self.wrec.normal_(std=rho / math.sqrt(hidden_size))
             else:
                 self.wrec.copy_(wrec_init)
             if b_init is None:
@@ -114,11 +119,12 @@ class tradRNN(pl.LightningModule):
         if return_dynamics:
             trajectories = torch.zeros(batch_size, seq_len + 1, self.hidden_size, device=self.wrec.device)
             trajectories[:, 0, :] = h
+            
+        # TODO: set noise to zero, otherwise be careful if noise_std depends on alpha
 
         # simulation loop
         for i in range(seq_len):
-            h = h + self.noise_std * noise[:, i, :] + self.alpha * \
-                (-h + r.matmul(self.wrec.t()) + input[:, i, :].matmul(self.wi_full))
+            h = h + self.noise_std * noise[:, i, :] + self.alpha * (-h + r.matmul(self.wrec.t()) + input[:, i, :].matmul(self.wi_full))
             r = self.non_linearity(h + self.b)
             output[:, i, :] = self.output_non_linearity(h) @ self.wo_full
 
@@ -130,9 +136,20 @@ class tradRNN(pl.LightningModule):
         else:
             return output, trajectories
         
-    def masked_loss(self, mask):
-        # TODO: get this from the helper modules
-        pass
-        
     def training_step(self, batch, batch_idx):
-        n_trials, timesteps, dims = batch
+        inputs, targets, initial_states = batch
+        output, trajectories = self(inputs, return_dynamics=True, initial_states=initial_states)
+        # create mask to count only the response period
+        mask = torch.ones_like(output) # TODO: fix mask
+        loss = loss_mse(output, targets, mask)
+        
+    # REVISE
+    def validation_step(self, batch, batch_idx):
+        inputs, targets, initial_states = batch
+        output, trajectories = self(inputs, return_dynamics=True, initial_states=initial_states)
+        # create mask to count only the response period
+        mask = torch.ones_like(output)
+        loss = loss_mse(output, targets, mask)
+        
+    def configure_optimizers(self):
+        return torch.optim.Adam(self.parameters(), lr=1e-3)

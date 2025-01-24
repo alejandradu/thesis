@@ -1,9 +1,7 @@
 
-
-# NOTE: revise
 def loss_mse(output, target, mask):
     """
-    Mean squared error loss
+    Mean squared error loss - simple version used by Valente
     :param output: torch tensor of shape (num_trials, num_timesteps, output_dim)
     :param target: idem
     :param mask: torch tensor of shape (num_trials, num_timesteps, 1)

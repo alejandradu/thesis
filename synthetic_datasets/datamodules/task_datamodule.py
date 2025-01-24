@@ -50,7 +50,7 @@ class TaskDataModule(pl.LightningDataModule):
         self.phase_index_train = None
         self.phase_index_val = None
 
-    # this will runk once: put complicated task generation here 
+    # this will run once: put complicated task generation here 
     def prepare_data(self):
         
         key = hash(frozenset(self.kwargs.items()))
@@ -126,3 +126,8 @@ class TaskDataModule(pl.LightningDataModule):
     
     def val_dataloader(self):
         return DataLoader(self.val_dataset, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers)
+    
+    def data_shape(self):
+        """Return the length of the input and output vectors"""
+        return self.train_dataset[0][0].shape[1], self.train_dataset[0][1].shape[1]
+        
