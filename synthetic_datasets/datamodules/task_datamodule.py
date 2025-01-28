@@ -1,14 +1,10 @@
 import os
 import h5py
-import logging
 import lightning as pl
 import numpy as np
 import torch
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.model_selection import train_test_split
-
-# Configure logging
-logger = logging.getLogger(__name__)
 
 class TaskDataModule(pl.LightningDataModule):
     """Organize data creation and saving/loading to train a 
@@ -55,7 +51,8 @@ class TaskDataModule(pl.LightningDataModule):
         if os.path.exists(self.dpath):
             return
         else:
-            logger.info(f"Creating dataset with: {self.kwargs}, \n{self.train_ratio}, {self.val_ratio}")
+            # NOTE: might want to log more params
+            self.log_dict({'train_ratio': self.train_ratio, 'val_ratio': self.val_ratio})
             inputs, targets, phase_index = self.task.generate_dataset(self.n_trials, **self.kwargs)
             # get initial conditions
             if self.init_states is not None:
@@ -94,7 +91,7 @@ class TaskDataModule(pl.LightningDataModule):
             with h5py.File(self.dpath, 'w') as f:
                 for key, value in data.items():
                     f.create_dataset(key, data=value)
-            logger.info(f"Dataset saved to {self.dpath}")
+            self.log('Dataset path', self.dpath)
         
 
     def setup(self):
