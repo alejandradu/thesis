@@ -167,8 +167,6 @@ class lrRNN(pl.LightningModule):
     architecture and optimizer params. Note configs != frRNN. MN^T are
     always optimized"""
     
-    # NOTE: MN^T no initialization option for now
-    
     def __init__(self, config):
 
         super(frRNN, self).__init__()
@@ -193,6 +191,8 @@ class lrRNN(pl.LightningModule):
         self.b_init = config['b_init']
         self.wo_init = config['wo_init']
         self.so_init = config['so_init']
+        self.m_init = config['m_init']
+        self.n_init = config['n_init']
 
         # Define parameters
         self.wi = nn.Parameter(torch.Tensor(self.input_size, self.hidden_size))
@@ -232,10 +232,14 @@ class lrRNN(pl.LightningModule):
                 self.si.set_(torch.ones_like(self.si))
             else:
                 self.si.copy_(self.si_init)
-            if self.wrec_init is None:
-                self.wrec.normal_(std=self.rho / math.sqrt(self.hidden_size))
+            if self.m_init is None:
+                self.m.normal_()
             else:
-                self.wrec.copy_(self.wrec_init)
+                self.m.copy_(self.m_init)
+            if self.n_init is None:
+                self.n.normal_()
+            else:
+                self.n.copy_(self.n_init)
             if self.b_init is None:
                 self.b.zero_()
             else:
@@ -272,17 +276,18 @@ class lrRNN(pl.LightningModule):
         h = initial_states.clone()
         r = self.non_linearity(initial_states)
         self._define_proxy_parameters()
-        noise = torch.randn(batch_size, seq_len, self.hidden_size, device=self.wrec.device)
-        output = torch.zeros(batch_size, seq_len, self.output_size, device=self.wrec.device)
+        noise = torch.randn(batch_size, seq_len, self.hidden_size, device=self.m.device)
+        output = torch.zeros(batch_size, seq_len, self.output_size, device=self.m.device)
         if return_latents:
-            trajectories = torch.zeros(batch_size, seq_len + 1, self.hidden_size, device=self.wrec.device)
+            trajectories = torch.zeros(batch_size, seq_len + 1, self.hidden_size, device=self.m.device)
             trajectories[:, 0, :] = h
             
         # TODO: set noise to zero, otherwise be careful if noise_std depends on alpha
 
         # simulation loop 
         for i in range(seq_len):
-            h = h + self.noise_std * noise[:, i, :] + self.alpha * (-h + r.matmul(self.wrec.t()) + input[:, i, :].matmul(self.wi_full))
+            # NOTE: why are we dividing by hidden_size?
+            h = h + self.noise_std * noise[:, i, :] + self.alpha * (-h + r.matmul(self.n).matmul(self.m.t()) / self.hidden_size + input[:, i, :].matmul(self.wi_full))
             r = self.non_linearity(h + self.b)
             output[:, i, :] = self.output_non_linearity(h) @ self.wo_full
             if return_latents:
