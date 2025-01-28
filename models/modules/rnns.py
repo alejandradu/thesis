@@ -2,7 +2,7 @@
 ## https://github.com/adrian-valente/lowrank_inference
 ## Base models for more traditional RNNs with their low rank approximations
 
-from base_models.helpers import *
+from analysis.helpers import *
 import torch.nn as nn
 from math import sqrt, floor
 import random
