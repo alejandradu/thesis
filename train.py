@@ -21,8 +21,7 @@ from ray.train.lightning import (
 
 # INCREASE THE RESPONSE PERIOD
 
-# create the task
-# TODO: might need task_config
+# create the task - task_config is contained in data_config
 task = CDM()
 
 # create the datamodule
@@ -35,7 +34,22 @@ data_config = {
     "num_workers": 4,  # difference between this and the num_workers in scaling_config?
     "train_ratio": 0.8,
     "val_ratio": 0.2,
-    "init_states": None
+    "init_states": None,
+    # below are kwargs for the generate_data() method of each task
+    "bin_size": 20,
+    "noise": 0.1,
+    "n_timesteps": 1370,
+    "fix": 100,
+    "ctx": 350,
+    "stim": 800,
+    "mem": 100,
+    "res": 20,
+    "random_trials": False,
+    "ctx_choice": None,
+    "coh_choice0": None,
+    "coh_choice1": None,
+    "coh_scale": 1e-1,
+    "ctx_scale": 1e-1
 }
 
 # can add more kwargs here
@@ -78,7 +92,7 @@ model_config = {
 model = frRNN(model_config) 
 
 ######## train with Ray
-num_epochs = 100
+num_epochs = 5
 grace_period = 1
 reduction_factor = 2
 num_workers = 4   # SET THE SAME AS CPU
