@@ -7,43 +7,66 @@ from lightning import LightningModule
 from lightning import Trainer
 from lightning import seed_everything
 from torch.utils.data import DataLoader
+from synthetic_datasets.tasks.CDM import CDM
+from models.modules.rnn_module import tradRNN
+from synthetic_datasets.datamodules.task_datamodule import TaskDataModule
 
 # INCREASE THE RESPONSE PERIOD
 
 # create the task
-from synthetic_datasets.tasks.CDM import CDM
+# TODO: might need task_config
 task = CDM()
 
 # create the datamodule
-from synthetic_datasets.datamodules.task_datamodule import TaskDataModule
-data = TaskDataModule(task)  # THE ARGS??
-# task: SyntheticTask,
-#                  data_dir: str = "./", 
-#                  n_trials: int = 1000,   # = n_samples for others
-#                  batch_size: int = 64, 
-#                  num_workers: int = 4, 
-#                  train_ratio: float = 0.8,
-#                  val_ratio: float = 0.2,
-#                  init_states: torch.Tensor = None,
-#                  **kwargs
+data_config = {
+    "task": task,  # ote tis has to follow AbstractClass
+    "data_dir": "./",
+    "n_trials": 1000,
+    "batch_size": 64,
+    "num_workers": 4,
+    "train_ratio": 0.8,
+    "val_ratio": 0.2,
+    "init_states": None
+}
+
+# can add more kwargs here
+DataModule = TaskDataModule(data_config)  
+DataModule.setup()
+
+# get the dataloaders
+train = DataModule.train_dataloader()   
+val = DataModule.val_dataloader()
+input_size, output_size = DataModule.data_shape()
 
 # create the model
-input_size = 10
-hidden_size = 100
-output_size = 1
-noise_std = 0.05
+model_config = {
+    "input_size": input_size,
+    "hidden_size": None,
+    "output_size": output_size,
+    "noise_std": None,
+    "alpha": 0.2,
+    "rho": 1,
+    "train_wi": False,
+    "train_wo": False,
+    "train_wrec": True,
+    "train_h0": False,
+    "train_si": True,
+    "train_so": True,
+    "wi_init": None,
+    "wo_init": None,
+    "wrec_init": None,
+    "si_init": None,
+    "so_init": None,
+    "b_init": None,
+    "add_biases": False,
+    "non_linearity": torch.tanh,
+    "output_non_linearity": torch.tanh,
+    "rank": 128,
+    "lr": 1e-3,
+    "weight_decay": 0.0
+}
 
-input_size, output_size = data.data_shape()
-print(input_size, output_size)
-
-from models.modules.rnn_module import tradRNN
-model = tradRNN(input_size, 
-                hidden_size, 
-                output_size, 
-                noise_std, alpha=0.2, rho=1,
-                 train_wi=False, train_wo=False, train_wrec=True, train_h0=False, train_si=True, train_so=True,
-                 wi_init=None, wo_init=None, wrec_init=None, si_init=None, so_init=None, b_init=None,
-                 add_biases=False, non_linearity=torch.tanh, output_non_linearity=torch.tanh, rank=128) 
+model = tradRNN(model_config) 
 
 # # create the trainer
 # trainer = Trainer()

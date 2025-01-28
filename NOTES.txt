@@ -1,0 +1,12 @@
+CODE STRUCTURE
+
+TASK DATAMODULE: creates and saves datasets (as datamodules)
+- prepare_data: creates the long complicated data and saved as h5
+- setup: loads the data and assigns train/val split as attributes
+- train_dataloader: returns the dataloader of the train_dataset
+- val_dataloader: "
+- data_shape: return length of input and output vectors
+
+MODEL MODULES: follows same structure as Valente
+- rnns: nn.Module implementation templates from Valente
+- rnn_module: pl.Lightning my implementation

@@ -25,30 +25,25 @@ class TaskDataModule(pl.LightningDataModule):
         init_states: if empty initializes to zero. Use for special inits.
         num_workers: int, match to number of CPUs per task
     """
-    def __init__(self, 
-                 task: SyntheticTask,
-                 data_dir: str = "./", 
-                 n_trials: int = 1000,   # = n_samples for others
-                 batch_size: int = 64, 
-                 num_workers: int = 4, 
-                 train_ratio: float = 0.8,
-                 val_ratio: float = 0.2,
-                 init_states: torch.Tensor = None,
-                 **kwargs):
+    
+    # changing all hparams to a config dict 
+    # config: task, data_dir, n_trials, batch_size, num_workers, train_ratio, val_ratio, init_states
+    
+    def __init__(self, config, **kwargs):
         
         super().__init__()
-        self.task = task
-        self.data_dir = data_dir
-        self.n_trials = n_trials
-        self.batch_size = batch_size
-        self.num_workers = num_workers
-        self.train_ratio = train_ratio
-        self.val_ratio = val_ratio
-        self.kwargs = kwargs
-        self.init_states = init_states
+        self.task = config['task']
+        self.data_dir = config['data_dir']
+        self.n_trials = config['n_trials']
+        self.batch_size = config['batch_size']
+        self.num_workers = config['num_workers']
+        self.train_ratio = config['train_ratio']
+        self.val_ratio = config['val_ratio']
+        self.init_states = config['init_states']
         self.dpath = None
         self.phase_index_train = None
         self.phase_index_val = None
+        self.kwargs = kwargs
 
     # this will run once: put complicated task generation here 
     def prepare_data(self):
@@ -103,7 +98,11 @@ class TaskDataModule(pl.LightningDataModule):
             logger.info(f"Dataset saved to {self.dpath}")
         
 
-    def setup(self, stage=None):
+    def setup(self):
+        
+        # create dataset if not there
+        if not os.path.exists(self.dpath):
+            self.prepare_data()
         
         # load the saved h5py dataset
         with h5py.File((self.dpath), 'r') as f:
