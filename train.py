@@ -8,7 +8,7 @@ from lightning import Trainer
 from lightning import seed_everything
 from torch.utils.data import DataLoader
 from synthetic_datasets.tasks.CDM import CDM
-from models.modules.rnn_module import tradRNN
+from models.modules.rnn_module import frRNN
 from synthetic_datasets.datamodules.task_datamodule import TaskDataModule
 
 # INCREASE THE RESPONSE PERIOD
@@ -61,12 +61,11 @@ model_config = {
     "add_biases": False,
     "non_linearity": torch.tanh,
     "output_non_linearity": torch.tanh,
-    "rank": 128,
     "lr": 1e-3,
     "weight_decay": 0.0
 }
 
-model = tradRNN(model_config) 
+model = frRNN(model_config) 
 
 # # create the trainer
 # trainer = Trainer()
