@@ -6,7 +6,6 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.model_selection import train_test_split
-from task_data.AbstractClass import SyntheticTask
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -99,10 +98,6 @@ class TaskDataModule(pl.LightningDataModule):
         
 
     def setup(self):
-        
-        # create dataset if not there
-        if not os.path.exists(self.dpath):
-            self.prepare_data()
         
         # load the saved h5py dataset
         with h5py.File((self.dpath), 'r') as f:
