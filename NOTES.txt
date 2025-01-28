@@ -7,6 +7,6 @@ TASK DATAMODULE: creates and saves datasets (as datamodules)
 - val_dataloader: "
 - data_shape: return length of input and output vectors
 
-MODEL MODULES: follows same structure as Valente
+MODEL MODULES: follows same structure as Valente (frRNN, lrRNN)
 - rnns: nn.Module implementation templates from Valente
-- rnn_module: pl.Lightning my implementation
+- rnn_module: pl.Lightning my implementation, all models initialized wiht (big) config dict
