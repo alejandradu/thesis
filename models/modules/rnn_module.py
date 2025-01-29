@@ -279,7 +279,8 @@ class lrRNN(pl.LightningModule):
         noise = torch.randn(batch_size, seq_len, self.hidden_size, device=self.m.device)
         output = torch.zeros(batch_size, seq_len, self.output_size, device=self.m.device)
         if return_latents:
-            trajectories = torch.zeros(batch_size, seq_len + 1, self.hidden_size, device=self.m.device)
+            # BUG: The expanded size of the tensor (10) must match the existing size (4) at non-singleton dimension 1.  Target sizes: [1, 10].  Tensor sizes: [335, 4]
+            trajectories = torch.zeros(batch_size, seq_len + 1, self.hidden_size, device=self.m.device) 
             trajectories[:, 0, :] = h
             
         # TODO: set noise to zero, otherwise be careful if noise_std depends on alpha
