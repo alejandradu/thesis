@@ -22,6 +22,8 @@ class CDM(SyntheticTask):
             self.coherences = [-4,-2,-1,1,2,4]
         else:
             self.coherences = coherences
+        self.input_size = 4   # 2 sensory inputs, 2 context inputs
+        self.output_size = 1  # 1 decision output
         
     def generate_dataset(self, n_trials, bin_size=20, noise=0.1, n_timesteps=1370, fix=100, ctx=350, 
                        stim=800, mem=100, res=20, random_trials=False, ctx_choice=None,
@@ -136,7 +138,7 @@ class CDM(SyntheticTask):
             elif ctx_choice == 1:
                 inputs[n, fix:res_begin, 3] = 1 * ctx_scale
                 targets[n, res_begin:, 0] = self.hi if coh_choice1 > 0 else self.lo
-
+        
         return inputs, targets, phase_index
     
     

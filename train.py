@@ -24,6 +24,9 @@ from ray.train.lightning import (
 # create the task - task_config is contained in data_config
 task = CDM()
 
+input_size = task.input_size
+output_size = task.output_size
+
 # create the datamodule
 # NOTE: write as 'param': tune.choice([]) (or tune.OTHER) for hyperparam tuning
 data_config = {
@@ -52,22 +55,17 @@ data_config = {
     "ctx_scale": 1e-1
 }
 
+# create data: encapsulate all train, val, test splits
 # can add more kwargs here
-DataModule = TaskDataModule(data_config)  
-DataModule.setup()
-
-# get the dataloaders
-train_datamodule = DataModule.train_dataloader()   
-val_datamodule = DataModule.val_dataloader()
-input_size, output_size = DataModule.data_shape()
+datamodule = TaskDataModule(data_config)  
 
 # create the model
 # NOTE: write as 'param': tune.choice([]) (or tune.OTHER) for hyperparam tuning
 model_config = {
     "input_size": input_size,
-    "hidden_size": None,
+    "hidden_size": 10,
     "output_size": output_size,
-    "noise_std": None,
+    "noise_std": 0.0,
     "alpha": 0.2,
     "rho": 1,
     "train_wi": False,
@@ -111,14 +109,14 @@ def train_func(model):
         enable_progress_bar=False,
     )
     trainer = prepare_trainer(trainer)
-    trainer.fit(model, train_dataloader=train_datamodule, val_dataloader=val_datamodule)
+    trainer.fit(model, datamodule)
     
 # optimize trials (stop if params are likely to be bad)
 scheduler = ASHAScheduler(max_t=num_epochs, grace_period=grace_period, reduction_factor=reduction_factor)
 
 # HERE for distributed training
 scaling_config = ScalingConfig(
-    num_workers=num_workers, use_gpu=False, resources_per_worker={"CPU": 1, "GPU": 1}
+    num_workers=num_workers, use_gpu=False, resources_per_worker={"CPU": 1, "GPU": 0}
 )
 
 run_config = RunConfig(
@@ -155,8 +153,3 @@ def tune_mnist_asha(num_samples=10):
 
 results = tune_mnist_asha(num_samples=num_samples)
 
-# # save final model
-# mpath = os.path.join(data.data_dir, "model.pt")  # TODO: need specific name
-# trainer.save_checkpoint("model.pt")
-
-#
