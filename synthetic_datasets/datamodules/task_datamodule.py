@@ -43,13 +43,15 @@ class TaskDataModule(pl.LightningDataModule):
         self.dpath = None
         self.phase_index_train = None
         self.phase_index_val = None
+        
+        key = hash(frozenset(self.task.task_config.items()))
+        self.dpath = os.path.join(self.data_dir, f"task{key}.h5")
 
     # this will run once: put complicated task generation here 
+    # NOTE: should not assign states here
     def prepare_data(self):
         
         n_trials = self.task.n_trials
-        key = hash(frozenset(self.task.task_config.items()))
-        self.dpath = os.path.join(self.data_dir, f"task_{self.train_ratio}_{self.val_ratio}_{key}.h5")
         idx = np.linspace(0, n_trials-1, n_trials-1).astype(int)
         
         # if data with same timing and splits already exists pass
@@ -82,21 +84,24 @@ class TaskDataModule(pl.LightningDataModule):
                 'train_inputs': inputs[train_idx],
                 'train_targets': targets[train_idx],
                 'train_init_states': init_states[train_idx],
-                'phase_index_train': phase_index_train,
                 'val_inputs': inputs[val_idx],
                 'val_targets': targets[val_idx],
                 'val_init_states': init_states[val_idx],
             }
             
             # save
+            print("THIS HAS BEEN SAVED TO PAHT", self.dpath)
             os.makedirs(self.data_dir, exist_ok=True)
             with h5py.File(self.dpath, 'w') as f:
                 for key, value in data.items():
                     f.create_dataset(key, data=value)
         
 
-    def setup(self):
+    # DO NOT REMOVE stage
+    # BUG: should do splits here
+    def setup(self, stage=None):
         
+        # BUG: this is not finding the dataset (path is fine)
         # load the saved h5py dataset
         with h5py.File((self.dpath), 'r') as f:
             train_inputs = torch.tensor(f['train_inputs'][:])

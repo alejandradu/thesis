@@ -43,7 +43,7 @@ TASK_CONFIG = {
 
 # create task
 task = CDM(TASK_CONFIG)
-task.plot_trial()
+# task.plot_trial()
 
 input_size = task.input_size
 output_size = task.output_size
@@ -104,7 +104,10 @@ def train_loop(model_config):
     # create the model
     model = frRNN(model_config) 
     # create data: encapsulate all train, val, test splits
-    datamodule = TaskDataModule(DATA_CONFIG) 
+    data_module = TaskDataModule(DATA_CONFIG) 
+    
+    data_module.prepare_data()
+    data_module.setup()
     
     trainer = pl.Trainer(
         devices="auto",
@@ -115,7 +118,7 @@ def train_loop(model_config):
         enable_progress_bar=False,
     )
     trainer = prepare_trainer(trainer)
-    trainer.fit(model, datamodule)
+    trainer.fit(model, datamodule=data_module)
     
 # optimize trials (stop if params are likely to be bad)
 scheduler = ASHAScheduler(max_t=num_epochs, grace_period=grace_period, reduction_factor=reduction_factor)
@@ -141,7 +144,7 @@ ray_trainer = TorchTrainer(
 )
 
 def tune_mnist_asha(num_samples=10):
-    scheduler = ASHAScheduler(max_t=num_epochs, grace_period=1, reduction_factor=2)
+    scheduler = ASHAScheduler(time_attr='training_iteration', max_t=num_epochs, grace_period=1, reduction_factor=2)
 
     tuner = tune.Tuner(
         ray_trainer,
