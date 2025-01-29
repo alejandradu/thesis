@@ -43,7 +43,6 @@ class TaskDataModule(pl.LightningDataModule):
         self.init_states = config['init_states']
         self.init_states_name = config['init_states_name']
         self.init_states_dimension = config['init_states_dimension']
-        self.dpath = None
         self.phase_index_train = None
         self.phase_index_val = None
         

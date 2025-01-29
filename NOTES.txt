@@ -13,3 +13,6 @@ TASK DATAMODULE: creates and saves datasets (as datamodules)
 MODEL MODULES: follows same structure as Valente (frRNN, lrRNN)
 - rnns: nn.Module implementation templates from Valente
 - rnn_module: pl.Lightning my implementation, all models initialized wiht (big) config dict
+
+init_states is a value fo the hidden vector and NOT the same as the input 
+to the system. 

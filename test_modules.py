@@ -33,13 +33,15 @@ output_size = task.output_size
 
 DATA_CONFIG = {
     "task": task,  # this has to follow AbstractClass
-    "data_dir": "./",
+    "data_dir": "/Users/alejandraduran/Documents/THESIS/thesis/",
     "n_trials": 20,
     "batch_size": 64,
     "num_workers": 4,  # difference between this and the num_workers in scaling_config?
     "train_ratio": 0.8,
     "val_ratio": 0.2,
     "init_states": None,
+    "init_states_name": 'none',
+    "init_states_dimension": 10,  # HAVE TO MATCH THIS WITH HIDDEN SIZE
 } 
 
 # model_config = {
@@ -76,7 +78,7 @@ DATA_CONFIG = {
 # outputs2 = full(inputs, return_latents=False)
 
 # print the input dataset from the datamodule
-# data_module = TaskDataModule(DATA_CONFIG)
-# data_module.prepare_data()
-# data_module.setup()
-# print(data_module.train_dataset)
+data_module = TaskDataModule(DATA_CONFIG)
+data_module.prepare_data()
+data_module.setup()
+

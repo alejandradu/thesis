@@ -123,13 +123,12 @@ class frRNN(pl.LightningModule):
 
         # clone to keep reusability across trials and distributions
         h = initial_states.clone()
-        r = self.non_linearity(initial_states)
+        r = self.non_linearity(initial_states).float()
         self._define_proxy_parameters()
         noise = torch.randn((batch_size, n_timesteps, self.hidden_size), device=self.wrec.device)
         output = torch.zeros((batch_size, n_timesteps, self.output_size), device=self.wrec.device)
         if return_latents:
             trajectories = torch.zeros((batch_size, n_timesteps+1, self.hidden_size), device=self.wrec.device)
-            print(trajectories.shape, h.shape)
             trajectories[:, 0, :] = h
             
         # TODO: set noise to zero, otherwise be careful if noise_std depends on alpha
@@ -137,8 +136,8 @@ class frRNN(pl.LightningModule):
         # simulation loop 
         for i in range(n_timesteps):
             h = h + self.noise_std * noise[:, i, :] + self.alpha * (-h + r.matmul(self.wrec.t()) + input[:, i, :].matmul(self.wi_full))
-            r = self.non_linearity(h + self.b)
-            output[:, i, :] = self.output_non_linearity(h) @ self.wo_full
+            r = self.non_linearity(h + self.b).float()
+            output[:, i, :] = self.output_non_linearity(h).float() @ self.wo_full
             if return_latents:
                 trajectories[:, i + 1, :] = h           
 

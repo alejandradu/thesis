@@ -52,7 +52,7 @@ output_size = task.output_size
 # can merge with model_config as dict to optimize over it - not expecting to need this
 DATA_CONFIG = {
     "task": task,  # this has to follow AbstractClass
-    "data_dir": "./",
+    "data_dir": "/Users/alejandraduran/Documents/THESIS/thesis/synthetic_datasets/data/",
     "batch_size": 16,   # COMPARE WITH N TRIALS SET FOR TASK   # NOTE: make this more logical later
     "num_workers": 4,  # difference between this and the num_workers in scaling_config?
     "train_ratio": 0.8,
