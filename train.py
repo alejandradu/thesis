@@ -19,34 +19,20 @@ from ray.train.lightning import (
     prepare_trainer,
 )
 
-# INCREASE THE RESPONSE PERIOD
 
-# create the task - task_config is contained in data_config
-task = CDM()
-
-input_size = task.input_size
-output_size = task.output_size
-
-# create the datamodule
-# NOTE: write as 'param': tune.choice([]) (or tune.OTHER) for hyperparam tuning
-data_config = {
-    "task": task,  # this has to follow AbstractClass
-    "data_dir": "./",
+# setup the task
+TASK_CONFIG = {
+    "seed": 0,
+    "coherences": None,
     "n_trials": 20,
-    "batch_size": 64,
-    "num_workers": 4,  # difference between this and the num_workers in scaling_config?
-    "train_ratio": 0.8,
-    "val_ratio": 0.2,
-    "init_states": None,
-    # below are kwargs for the generate_data() method of each task
-    "bin_size": 20,
-    "noise": 0.1,
-    "n_timesteps": 1370,
-    "fix": 100,
-    "ctx": 350,
-    "stim": 800,
-    "mem": 100,
-    "res": 20,
+    "bin_size": 10,
+    "noise": 0.0,
+    "n_timesteps": 250+800+2000+250+50,
+    "fix": 250,
+    "ctx": 800,
+    "stim": 2000,
+    "mem": 250,
+    "res": 50,
     "random_trials": False,
     "ctx_choice": None,
     "coh_choice0": None,
@@ -55,17 +41,34 @@ data_config = {
     "ctx_scale": 1e-1
 }
 
-# create data: encapsulate all train, val, test splits
-# can add more kwargs here
-datamodule = TaskDataModule(data_config)  
+# create task
+task = CDM(TASK_CONFIG)
+task.plot_trial()
 
-# create the model
+input_size = task.input_size
+output_size = task.output_size
+
+# setup the datamodule
 # NOTE: write as 'param': tune.choice([]) (or tune.OTHER) for hyperparam tuning
-model_config = {
+# can merge with model_config as dict to optimize over it - not expecting to need this
+DATA_CONFIG = {
+    "task": task,  # this has to follow AbstractClass
+    "data_dir": "./",
+    "n_trials": 20,
+    "batch_size": 64,
+    "num_workers": 4,  # difference between this and the num_workers in scaling_config?
+    "train_ratio": 0.8,
+    "val_ratio": 0.2,
+    "init_states": None,
+} 
+
+# setup the model
+# NOTE: write as 'param': tune.choice([]) (or tune.OTHER) for hyperparam tuning
+MODEL_CONFIG = {
     "input_size": input_size,
     "hidden_size": 10,
     "output_size": output_size,
-    "noise_std": 0.0,
+    "noise_std": 0.0,  # TODO: check what this noise is
     "alpha": 0.2,
     "rho": 1,
     "train_wi": False,
@@ -87,8 +90,6 @@ model_config = {
     "weight_decay": 0.0
 }
 
-model = frRNN(model_config) 
-
 ######## train with Ray
 num_epochs = 5
 grace_period = 1
@@ -98,11 +99,16 @@ num_samples = 1  # this matters for other than tune.choice
 ######## 
 
 # training function
-def train_func(model):
+def train_loop(model_config):
+    
+    # create the model
+    model = frRNN(model_config) 
+    # create data: encapsulate all train, val, test splits
+    datamodule = TaskDataModule(DATA_CONFIG) 
     
     trainer = pl.Trainer(
         devices="auto",
-        accelerator="auto",
+        accelerator="cpu",
         strategy=RayDDPStrategy(),
         callbacks=[RayTrainReportCallback()],
         plugins=[RayLightningEnvironment()],
@@ -129,7 +135,7 @@ run_config = RunConfig(
 
 # Define a TorchTrainer without hyper-parameters for Tuner
 ray_trainer = TorchTrainer(
-    train_func,
+    train_loop,
     scaling_config=scaling_config,
     run_config=run_config,
 )
@@ -140,7 +146,7 @@ def tune_mnist_asha(num_samples=10):
     tuner = tune.Tuner(
         ray_trainer,
         # here goes the model_config
-        param_space={"train_loop_config": model_config},
+        param_space={"train_loop_config": MODEL_CONFIG},  # = train_loop(model_config)
         tune_config=tune.TuneConfig(
             metric="ptl/val_accuracy",
             mode="max",

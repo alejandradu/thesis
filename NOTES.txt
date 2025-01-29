@@ -1,5 +1,8 @@
 CODE STRUCTURE
 
+* a design principle: parameters are passed into the main modules
+  as config dictionaries - aligns with structure to (possibly) tune with ray
+
 TASK DATAMODULE: creates and saves datasets (as datamodules)
 - prepare_data: creates the long complicated data and saved as h5
 - setup: loads the data and assigns train/val split as attributes

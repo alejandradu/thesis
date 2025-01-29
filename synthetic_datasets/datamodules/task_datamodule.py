@@ -6,6 +6,9 @@ import torch
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.model_selection import train_test_split
 
+# NOTE: you might want to add a seed, also retrieve
+# phase_index_train and phase_index_val
+
 class TaskDataModule(pl.LightningDataModule):
     """Organize data creation and saving/loading to train a 
     task-trained network for one tasks
@@ -14,22 +17,24 @@ class TaskDataModule(pl.LightningDataModule):
     TODO: add test split (for now take last val acc)
     
     Args:
-        task: SyntheticTask task to generate/handle the dataset
-        data_dir: str, directory for data saving, end WITH "/"
-        kwargs: timing parameters for the trials
-        init_states: if empty initializes to zero. Use for special inits.
-        num_workers: int, match to number of CPUs per task
+        config: dict, all the hyperparameters for the task and data. Include:
+            task: SyntheticTask task - PASS IT ALREADY CONFIGURED
+            data_dir: str, directory for data saving, end WITH "/"
+            init_states: if empty initializes to zero. Use for special inits.
+            num_workers: int, match to number of CPUs per task
+            train_ratio: float, ratio of training data
+            val_ratio: float, ratio of validation data
+            batch_size: int, size of the batches
     """
     
     # changing all hparams to a config dict 
     # config: task, data_dir, n_trials, batch_size, num_workers, train_ratio, val_ratio, init_states
     
-    def __init__(self, config, **kwargs):
+    def __init__(self, config):
         
         super().__init__()
         self.task = config['task']
         self.data_dir = config['data_dir']
-        self.n_trials = config['n_trials']
         self.batch_size = config['batch_size']
         self.num_workers = config['num_workers']
         self.train_ratio = config['train_ratio']
@@ -38,22 +43,20 @@ class TaskDataModule(pl.LightningDataModule):
         self.dpath = None
         self.phase_index_train = None
         self.phase_index_val = None
-        self.kwargs = kwargs
 
     # this will run once: put complicated task generation here 
     def prepare_data(self):
         
-        key = hash(frozenset(self.kwargs.items()))
-        self.dpath = os.path.join(self.data_dir, f"task_{self.train_ratio}_{self.val_ration}_{key}.h5")
-        idx = np.linspace(0, self.n_trials, self.n_trials).astype(int)
+        n_trials = self.task.n_trials
+        key = hash(frozenset(self.task.task_config.items()))
+        self.dpath = os.path.join(self.data_dir, f"task_{self.train_ratio}_{self.val_ratio}_{key}.h5")
+        idx = np.linspace(0, n_trials-1, n_trials-1).astype(int)
         
         # if data with same timing and splits already exists pass
         if os.path.exists(self.dpath):
             return
         else:
-            # NOTE: might want to log more params
-            self.log_dict({'train_ratio': self.train_ratio, 'val_ratio': self.val_ratio})
-            inputs, targets, phase_index = self.task.generate_dataset(self.n_trials, **self.kwargs)
+            inputs, targets, phase_index = self.task.generate_dataset()
             # get initial conditions
             if self.init_states is not None:
                 assert(inputs.shape[0] == self.init_states.shape[0])
@@ -65,7 +68,7 @@ class TaskDataModule(pl.LightningDataModule):
             train_idx, val_idx = train_test_split(idx, train_size=self.train_ratio, test_size=self.val_ratio)
             
             # if the there is more than one phase info for trials
-            if phase_index['fix'].shape[0] > 1:
+            if phase_index['fix'] > 1:
                 phase_index_train = {}
                 phase_index_val = {}
                 for key, value in phase_index.items():
@@ -83,7 +86,6 @@ class TaskDataModule(pl.LightningDataModule):
                 'val_inputs': inputs[val_idx],
                 'val_targets': targets[val_idx],
                 'val_init_states': init_states[val_idx],
-                'phase_index_val': phase_index_val
             }
             
             # save
@@ -91,7 +93,6 @@ class TaskDataModule(pl.LightningDataModule):
             with h5py.File(self.dpath, 'w') as f:
                 for key, value in data.items():
                     f.create_dataset(key, data=value)
-            self.log('Dataset path', self.dpath)
         
 
     def setup(self):
@@ -104,13 +105,13 @@ class TaskDataModule(pl.LightningDataModule):
             val_inputs = torch.tensor(f['val_inputs'][:])
             val_targets = torch.tensor(f['val_targets'][:])
             val_init_states = torch.tensor(f['val_init_states'][:])
-            phase_index_train = f['phase_index_train']
-            phase_index_val = f['phase_index_val']
+            # phase_index_train = f['phase_index_train']
+            # phase_index_val = f['phase_index_val']
 
         self.train_dataset = TensorDataset(train_inputs, train_targets, train_init_states)
         self.val_dataset = TensorDataset(val_inputs, val_targets, val_init_states)
-        self.phase_index_train = phase_index_train
-        self.phase_index_val = phase_index_val
+        # self.phase_index_train = phase_index_train
+        # self.phase_index_val = phase_index_val
 
     def train_dataloader(self):
         return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers)

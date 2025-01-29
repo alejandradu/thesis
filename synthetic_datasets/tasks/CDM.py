@@ -8,26 +8,50 @@ from synthetic_datasets.tasks.AbstractClass import SyntheticTask
 
 class CDM(SyntheticTask):
     """Represent a context-dependent decision making tasks
-    for a fixed set of coherences"""
+    for a fixed set of coherences
+    
+    Args:
+        random_trials: bool, if True, the trial durations are randomly sampled"""
     
     # NOTE: coherences here are possibly the same as Driscoll's targets
     
     hi = 1
     lo = -1
 
-    def __init__(self,seed=0, coherences=None):
+    def __init__(self, task_config):
+        
         super().__init__()
-        self.seed = seed
-        if coherences is None:
+        
+        # save config dictionary to hash name of dataset
+        self.task_config = task_config
+        
+        self.seed = task_config["seed"]
+        self.coherences = task_config["coherences"]
+        if self.coherences is None:
             self.coherences = [-4,-2,-1,1,2,4]
-        else:
-            self.coherences = coherences
+
         self.input_size = 4   # 2 sensory inputs, 2 context inputs
         self.output_size = 1  # 1 decision output
         
-    def generate_dataset(self, n_trials, bin_size=20, noise=0.1, n_timesteps=1370, fix=100, ctx=350, 
-                       stim=800, mem=100, res=20, random_trials=False, ctx_choice=None,
-                       coh_choice0=None, coh_choice1=None, coh_scale=1e-1, ctx_scale=1e-1):
+        self.n_trials = task_config["n_trials"]
+        self.bin_size = task_config["bin_size"]
+        self.noise = task_config["noise"]
+        self.n_timesteps = task_config["n_timesteps"]
+        
+        # these below lose importance if random_trials is True (most recent value)
+        self.fix = task_config["fix"]
+        self.ctx = task_config["ctx"]
+        self.stim = task_config["stim"]
+        self.mem = task_config["mem"]
+        self.res = task_config["res"]
+        self.random_trials = task_config["random_trials"]
+        self.ctx_choice = task_config["ctx_choice"]
+        self.coh_choice0 = task_config["coh_choice0"]
+        self.coh_choice1 = task_config["coh_choice1"]
+        self.coh_scale = task_config["coh_scale"]
+        self.ctx_scale = task_config["ctx_scale"]
+        
+    def generate_dataset(self, to_plot=False):
         
         # NOTE: producess all trials of same total duration, the mask if for the loss
         # NOTE: not reducing bins yet
@@ -35,8 +59,15 @@ class CDM(SyntheticTask):
         # NOTE: not returning mask, but mask later with phase_index
         # NOTE: not returning also de-noised "true" inputs yet
         
+        # only generate one to plot
+        if to_plot:
+            n_trials = 1
+        else:
+            n_trials = self.n_trials
+            
         # get the timestamps for each period
-        if random_trials:
+        if self.random_trials:
+            
             fix = 100
             ctx = np.random.randint(200, 600)
             stim = np.random.randint(200, 1600)
@@ -44,30 +75,30 @@ class CDM(SyntheticTask):
             res= np.random.randint(300, 700)
             
             total = fix + ctx + stim + mem + res
-            
+    
             # rescale
-            fix = floor(n_timesteps / bin_size * (fix / total))
-            ctx = floor(n_timesteps / bin_size  * (ctx / total))
-            stim = floor(n_timesteps / bin_size  * (stim / total))
-            mem = floor(n_timesteps / bin_size  * (mem / total))
-            res = floor(n_timesteps / bin_size  * (res / total))
+            self.fix = floor(self.n_timesteps / self.bin_size * (fix / total))
+            self.ctx = floor(self.n_timesteps / self.bin_size  * (ctx / total))
+            self.stim = floor(self.n_timesteps / self.bin_size  * (stim / total))
+            self.mem = floor(self.n_timesteps / self.bin_size  * (mem / total))
+            self.res = floor(self.n_timesteps / self.bin_size  * (res / total))
                 
         else:
             
-            fix = floor(fix / bin_size)
-            ctx = floor(ctx / bin_size)
-            stim = floor(stim / bin_size)
-            mem = floor(mem / bin_size)
-            res = floor(res / bin_size)
+            self.fix = floor(self.fix / self.bin_size)
+            self.ctx = floor(self.ctx / self.bin_size)
+            self.stim = floor(self.stim / self.bin_size)
+            self.mem = floor(self.mem / self.bin_size)
+            self.res = floor(self.res / self.bin_size)
             
-        ctx_begin = fix
-        stim_begin = ctx_begin + ctx
-        mem_begin = stim_begin + stim
-        res_begin = mem_begin + mem
-        total_duration = res_begin + res
+        ctx_begin = self.fix
+        stim_begin = ctx_begin + self.ctx
+        mem_begin = stim_begin + self.stim
+        res_begin = mem_begin + self.mem
+        total_duration = res_begin + self.res
         
         # record timestamps when each phase begins
-        if not random_trials:
+        if not self.random_trials:
             phase_index = {
                 'fix': 0,
                 'ctx': ctx_begin,
@@ -84,36 +115,36 @@ class CDM(SyntheticTask):
             
         # initialize the inputs: 2 noisy inputs drawn from the coherences
         # 2 contextual inputs as a one-hot encoding of the trial context
-        inputs_sensory = noise * torch.randn((n_trials, total_duration, 2), dtype=torch.float32)
+        inputs_sensory = self.noise * torch.randn((n_trials, total_duration, 2), dtype=torch.float32)
         inputs_context = torch.zeros((n_trials, total_duration, 2))
         inputs = torch.cat([inputs_sensory, inputs_context], dim=2)
         targets = torch.zeros((n_trials, total_duration, 1), dtype=torch.float32)
-        mask = torch.zeros((n_trials, n_timesteps, 1), dtype=torch.float32)
+        mask = torch.zeros((n_trials, self.n_timesteps, 1), dtype=torch.float32)
             
         for n in range(n_trials):
  
             # recalculate time stamps
-            if random_trials:
+            if self.random_trials:
                 fix = 100
                 ctx = np.random.randint(200, 600)
                 stim = np.random.randint(200, 1600)
                 mem = np.random.randint(200, 1600)
                 res= np.random.randint(300, 700)
-
-                total = fix + ctx + stim + mem + res
-
-                # rescale
-                fix = floor(n_timesteps / bin_size * (fix / total))
-                ctx = floor(n_timesteps / bin_size  * (ctx / total))
-                stim = floor(n_timesteps / bin_size  * (stim / total))
-                mem = floor(n_timesteps / bin_size  * (mem / total))
-                res = floor(n_timesteps / bin_size  * (res / total))
                 
-                ctx_begin = fix
-                stim_begin = ctx_begin + ctx
-                mem_begin = stim_begin + stim
-                res_begin = mem_begin + mem
-                total_duration = res_begin + res
+                total = fix + ctx + stim + mem + res
+        
+                # rescale
+                self.fix = floor(self.n_timesteps / self.bin_size * (fix / total))
+                self.ctx = floor(self.n_timesteps / self.bin_size  * (ctx / total))
+                self.stim = floor(self.n_timesteps / self.bin_size  * (stim / total))
+                self.mem = floor(self.n_timesteps / self.bin_size  * (mem / total))
+                self.res = floor(self.n_timesteps / self.bin_size  * (res / total))
+                
+                ctx_begin = self.fix
+                stim_begin = ctx_begin + self.ctx
+                mem_begin = stim_begin + self.stim
+                res_begin = mem_begin + self.mem
+                total_duration = res_begin + self.res
                 
                 phase_index['fix'][n] = 0
                 phase_index['ctx'][n] = ctx_begin
@@ -121,32 +152,31 @@ class CDM(SyntheticTask):
                 phase_index['mem'][n] = mem_begin
                 phase_index['res'][n] = res_begin
                 
-            if coh_choice0 is None:
-                coh_choice0 = np.random.choice(self.coherences)
-            if coh_choice1 is None: 
-                coh_choice1 = np.random.choice(self.coherences)
+            if self.coh_choice0 is None:
+                self.coh_choice0 = np.random.choice(self.coherences)
+            if self.coh_choice1 is None: 
+                self.coh_choice1 = np.random.choice(self.coherences)
                 
-            inputs[n, stim_begin:mem_begin, 0] += coh_choice0 * coh_scale
-            inputs[n, stim_begin:mem_begin, 1] += coh_choice1 * coh_scale
+            inputs[n, stim_begin:mem_begin, 0] += self.coh_choice0 * self.coh_scale
+            inputs[n, stim_begin:mem_begin, 1] += self.coh_choice1 * self.coh_scale
             
-            if ctx_choice is None:
-                ctx_choice = np.random.choice([0,1])
+            if self.ctx_choice is None:
+                self.ctx_choice = np.random.choice([0,1])
                 
-            if ctx_choice == 0:
-                inputs[n, fix:res_begin, 2] = 1 * ctx_scale
-                targets[n, res_begin:, 0] = self.hi if coh_choice0 > 0 else self.lo
-            elif ctx_choice == 1:
-                inputs[n, fix:res_begin, 3] = 1 * ctx_scale
-                targets[n, res_begin:, 0] = self.hi if coh_choice1 > 0 else self.lo
+            if self.ctx_choice == 0:
+                inputs[n, ctx_begin:res_begin, 2] = 1 * self.ctx_scale
+                targets[n, res_begin:, 0] = self.hi if self.coh_choice0 > 0 else self.lo
+            elif self.ctx_choice == 1:
+                inputs[n, ctx_begin:res_begin, 3] = 1 * self.ctx_scale
+                targets[n, res_begin:, 0] = self.hi if self.coh_choice1 > 0 else self.lo
         
         return inputs, targets, phase_index
     
     
-    def plot_trial(self, **kwargs):
+    def plot_trial(self):
+        """"Generate randomly one trial and plot it."""
         
-        # TODO: adjust the x axis for targets
-        
-        inputs, targets, phase_index = self.generate_dataset(1, **kwargs)
+        inputs, targets, phase_index = self.generate_dataset(to_plot=True)
         inputs = inputs.squeeze().numpy() 
         targets = targets.squeeze().numpy()
         
