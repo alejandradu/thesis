@@ -76,8 +76,7 @@ DATA_CONFIG = {
 # outputs2 = full(inputs, return_latents=False)
 
 # print the input dataset from the datamodule
-data_module = TaskDataModule(DATA_CONFIG)
-data_module.prepare_data()
-data_module.setup()
-print(data_module.train_dataset)
-print(data_module.train_dataset.shape())
+# data_module = TaskDataModule(DATA_CONFIG)
+# data_module.prepare_data()
+# data_module.setup()
+# print(data_module.train_dataset)

@@ -106,40 +106,46 @@ class frRNN(pl.LightningModule):
         
     def forward(self, input, return_latents=False, initial_states=None):
         """
-        :param input: tensor of shape (batch_size, #timesteps, input_dimension)
+        :param input: tensor of shape (batch_size, n_timesteps, input_dimension)
         Important: the 3 dimensions need to be present, even if they are of size 1.
         :param return_latents: bool
-        :param initial_states: None or torch tensor of shape (batch_size, hidden_size) of initial state vectors for each trial if desired
-        :return: if return_latents=False, output tensor of shape (batch_size, #timesteps, output_dimension)
-                 if return_latents=True, (output tensor, trajectories tensor of shape (batch_size, #timesteps, #hidden_units))
+        :param initial_states: None or torch tensor of shape (batch_size, hidden_size) of initial state vectors for each trial
+        :return: if return_latents=False, output tensor of shape (batch_size, #n_timesteps, output_dimension)
+                 if return_latents=True, (output tensor, trajectories tensor of shape (batch_size, #n_timesteps, #hidden_units))
         """
         batch_size = input.shape[0]
-        seq_len = input.shape[1]
+        n_timesteps = input.shape[1]
+    
+        # initial state is a value for the hidden vector at time 0
         if initial_states is None:
             initial_states = self.h0
+            #initial_states = initial_states.unsqueeze(0).expand(batch_size, self.hidden_size)
+
+        # clone to keep reusability across trials and distributions
         h = initial_states.clone()
         r = self.non_linearity(initial_states)
         self._define_proxy_parameters()
-        noise = torch.randn(batch_size, seq_len, self.hidden_size, device=self.wrec.device)
-        output = torch.zeros(batch_size, seq_len, self.output_size, device=self.wrec.device)
+        noise = torch.randn((batch_size, n_timesteps, self.hidden_size), device=self.wrec.device)
+        output = torch.zeros((batch_size, n_timesteps, self.output_size), device=self.wrec.device)
         if return_latents:
-            trajectories = torch.zeros(batch_size, seq_len + 1, self.hidden_size, device=self.wrec.device)
+            trajectories = torch.zeros((batch_size, n_timesteps+1, self.hidden_size), device=self.wrec.device)
+            print(trajectories.shape, h.shape)
             trajectories[:, 0, :] = h
             
         # TODO: set noise to zero, otherwise be careful if noise_std depends on alpha
 
         # simulation loop 
-        for i in range(seq_len):
+        for i in range(n_timesteps):
             h = h + self.noise_std * noise[:, i, :] + self.alpha * (-h + r.matmul(self.wrec.t()) + input[:, i, :].matmul(self.wi_full))
             r = self.non_linearity(h + self.b)
             output[:, i, :] = self.output_non_linearity(h) @ self.wo_full
             if return_latents:
                 trajectories[:, i + 1, :] = h           
 
-        if not return_latents:
-            return output
-        else:
+        if return_latents:
             return output, trajectories
+        else:
+            return output
         
     def training_step(self, batch, batch_idx):
         inputs, targets, initial_states = batch
@@ -262,31 +268,31 @@ class lrRNN(pl.LightningModule):
         
     def forward(self, input, return_latents=False, initial_states=None):
         """
-        :param input: tensor of shape (batch_size, #timesteps, input_dimension)
+        :param input: tensor of shape (batch_size, #n_timesteps, input_dimension)
         Important: the 3 dimensions need to be present, even if they are of size 1.
         :param return_latents: bool
         :param initial_states: None or torch tensor of shape (batch_size, hidden_size) of initial state vectors for each trial if desired
-        :return: if return_latents=False, output tensor of shape (batch_size, #timesteps, output_dimension)
-                 if return_latents=True, (output tensor, trajectories tensor of shape (batch_size, #timesteps, #hidden_units))
+        :return: if return_latents=False, output tensor of shape (batch_size, #n_timesteps, output_dimension)
+                 if return_latents=True, (output tensor, trajectories tensor of shape (batch_size, #n_timesteps, #hidden_units))
         """
         batch_size = input.shape[0]
-        seq_len = input.shape[1]
+        n_timesteps = input.shape[1]
         if initial_states is None:
             initial_states = self.h0
         h = initial_states.clone()
         r = self.non_linearity(initial_states)
         self._define_proxy_parameters()
-        noise = torch.randn(batch_size, seq_len, self.hidden_size, device=self.m.device)
-        output = torch.zeros(batch_size, seq_len, self.output_size, device=self.m.device)
+        noise = torch.randn(batch_size, n_timesteps, self.hidden_size, device=self.m.device)
+        output = torch.zeros(batch_size, n_timesteps, self.output_size, device=self.m.device)
         if return_latents:
             # BUG: The expanded size of the tensor (10) must match the existing size (4) at non-singleton dimension 1.  Target sizes: [1, 10].  Tensor sizes: [335, 4]
-            trajectories = torch.zeros(batch_size, seq_len + 1, self.hidden_size, device=self.m.device) 
+            trajectories = torch.zeros(batch_size, n_timesteps + 1, self.hidden_size, device=self.m.device) 
             trajectories[:, 0, :] = h
             
         # TODO: set noise to zero, otherwise be careful if noise_std depends on alpha
 
         # simulation loop 
-        for i in range(seq_len):
+        for i in range(n_timesteps):
             # NOTE: why are we dividing by hidden_size?
             h = h + self.noise_std * noise[:, i, :] + self.alpha * (-h + r.matmul(self.n).matmul(self.m.t()) / self.hidden_size + input[:, i, :].matmul(self.wi_full))
             r = self.non_linearity(h + self.b)

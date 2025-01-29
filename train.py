@@ -23,7 +23,7 @@ from ray.train.lightning import (
 TASK_CONFIG = {
     "seed": 0,
     "coherences": None,
-    "n_trials": 20,
+    "n_trials": 100,    # check that this > batch_size below
     "bin_size": 10,
     "noise": 0.0,
     "n_timesteps": 250+800+2000+250+50,
@@ -53,12 +53,13 @@ output_size = task.output_size
 DATA_CONFIG = {
     "task": task,  # this has to follow AbstractClass
     "data_dir": "./",
-    "n_trials": 20,
-    "batch_size": 64,
+    "batch_size": 16,   # COMPARE WITH N TRIALS SET FOR TASK   # NOTE: make this more logical later
     "num_workers": 4,  # difference between this and the num_workers in scaling_config?
     "train_ratio": 0.8,
     "val_ratio": 0.2,
     "init_states": None,
+    "init_states_dimension": 10,  # HAVE TO MATCH THIS WITH HIDDEN SIZE
+    "init_states_name":'none',
 } 
 
 # setup the model

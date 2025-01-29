@@ -20,7 +20,8 @@ class TaskDataModule(pl.LightningDataModule):
         config: dict, all the hyperparameters for the task and data. Include:
             task: SyntheticTask task - PASS IT ALREADY CONFIGURED
             data_dir: str, directory for data saving, end WITH "/"
-            init_states: if empty initializes to zero. Use for special inits.
+            init_states: if empty initializes to zero. Use for special inits of shape (hidden_size)
+            # NOTE: need more complications to implement distribution initialization
             num_workers: int, match to number of CPUs per task
             train_ratio: float, ratio of training data
             val_ratio: float, ratio of validation data
@@ -40,14 +41,16 @@ class TaskDataModule(pl.LightningDataModule):
         self.train_ratio = config['train_ratio']
         self.val_ratio = config['val_ratio']
         self.init_states = config['init_states']
+        self.init_states_name = config['init_states_name']
+        self.init_states_dimension = config['init_states_dimension']
         self.dpath = None
         self.phase_index_train = None
         self.phase_index_val = None
         
         key = hash(frozenset(self.task.task_config.items()))
-        self.dpath = os.path.join(self.data_dir, f"task{key}.h5")
+        self.dpath = os.path.join(self.data_dir, f"task{key}{self.init_states_name}.h5")
+        
 
-    # this will run once: put complicated task generation here 
     # NOTE: should not assign states here
     def prepare_data(self):
         
@@ -59,12 +62,12 @@ class TaskDataModule(pl.LightningDataModule):
             return
         else:
             inputs, targets, phase_index = self.task.generate_dataset()
-            # get initial conditions
+            
+            # expand the initial states to the number of n_trials
             if self.init_states is not None:
-                assert(inputs.shape[0] == self.init_states.shape[0])
-                init_states = self.init_states
+                init_states = np.tile(self.init_states, (n_trials, 1))
             else:
-                init_states = torch.zeros_like(inputs)
+                init_states = np.zeros((n_trials, self.init_states_dimension))
             
             # split
             train_idx, val_idx = train_test_split(idx, train_size=self.train_ratio, test_size=self.val_ratio)
@@ -90,7 +93,6 @@ class TaskDataModule(pl.LightningDataModule):
             }
             
             # save
-            print("THIS HAS BEEN SAVED TO PAHT", self.dpath)
             os.makedirs(self.data_dir, exist_ok=True)
             with h5py.File(self.dpath, 'w') as f:
                 for key, value in data.items():
