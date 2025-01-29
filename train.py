@@ -19,7 +19,6 @@ from ray.train.lightning import (
     prepare_trainer,
 )
 
-
 # setup the task
 TASK_CONFIG = {
     "seed": 0,
