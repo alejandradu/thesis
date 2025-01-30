@@ -129,6 +129,7 @@ scaling_config = ScalingConfig(
 )
 
 run_config = RunConfig(
+    storage_path="/Users/alejandraduran/Documents/THESIS/thesis/ray_results/",
     checkpoint_config=CheckpointConfig(
         num_to_keep=2,
         checkpoint_score_attribute="ptl/val_accuracy",

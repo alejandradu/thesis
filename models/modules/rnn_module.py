@@ -3,7 +3,6 @@ import torch
 import torch.nn as nn
 import math
 from models.loss import loss_mse
-from models.accuracy import accuracy_general
 
 class frRNN(pl.LightningModule):
     """Implement Sompolinsky RNN full rank. Custom layer
@@ -99,6 +98,10 @@ class frRNN(pl.LightningModule):
             self.h0.zero_()
         self.wi_full, self.wo_full = [None] * 2
         self._define_proxy_parameters()
+        
+        # keep track of per epoch metrics
+        self.loss = []
+        self.accuracy = []
 
     def _define_proxy_parameters(self):
         self.wi_full = (self.wi.t() * self.si).t()
@@ -152,7 +155,9 @@ class frRNN(pl.LightningModule):
         # create mask to count only the response period
         mask = torch.ones_like(output) # TODO: fix mask
         loss = loss_mse(output, targets, mask)
-        self.log('train_loss', loss)
+        acc = accuracy_general(output, targets, mask)
+        self.log('train_loss', loss, sync_dist=True)
+        self.log('train_accuracy', acc, sync_dist=True)
         return loss
         
     def validation_step(self, batch, batch_idx):
@@ -161,7 +166,9 @@ class frRNN(pl.LightningModule):
         # create mask to count only the response period
         mask = torch.ones_like(output)
         loss = loss_mse(output, targets, mask)
-        self.log('val_loss', loss)  
+        acc = accuracy_general(output, targets, mask)
+        self.log('val_loss', loss, sync_dist=True)  
+        self.log('val_accuracy', acc, sync_dist=True)
         
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
