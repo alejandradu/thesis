@@ -5,9 +5,9 @@ import os
 import torch
 import lightning as pl
 from torch.utils.data import DataLoader
-from synthetic_datasets.tasks.CDM import CDM
-from models.modules.rnn_module import frRNN
-from synthetic_datasets.datamodules.task_datamodule import TaskDataModule
+from ..synthetic_datasets.tasks.CDM import CDM
+from ..models.modules.rnn_module import frRNN
+from ..synthetic_datasets.datamodules.task_datamodule import TaskDataModule
 from ray.train import RunConfig, ScalingConfig, CheckpointConfig
 from ray import train, tune
 from ray.train.torch import TorchTrainer
