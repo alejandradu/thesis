@@ -144,7 +144,7 @@ ray_trainer = TorchTrainer(
     run_config=run_config,
 )
 
-def tune_mnist_asha(num_samples=10):
+def tune_mnist_asha(num_samples=1):
     scheduler = ASHAScheduler(time_attr='training_iteration', max_t=num_epochs, grace_period=1, reduction_factor=2)
 
     tuner = tune.Tuner(

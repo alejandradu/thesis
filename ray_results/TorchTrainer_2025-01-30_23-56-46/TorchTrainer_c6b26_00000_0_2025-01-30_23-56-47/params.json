@@ -1,0 +1,27 @@
+{
+  "train_loop_config": {
+    "add_biases": false,
+    "alpha": 0.2,
+    "b_init": null,
+    "hidden_size": 10,
+    "input_size": 4,
+    "lr": 0.001,
+    "noise_std": 0.0,
+    "non_linearity": "<built-in method tanh of type object at 0x107fa3790>",
+    "output_non_linearity": "<built-in method tanh of type object at 0x107fa3790>",
+    "output_size": 1,
+    "rho": 1,
+    "si_init": null,
+    "so_init": null,
+    "train_h0": false,
+    "train_si": true,
+    "train_so": true,
+    "train_wi": false,
+    "train_wo": false,
+    "train_wrec": true,
+    "weight_decay": 0.0,
+    "wi_init": null,
+    "wo_init": null,
+    "wrec_init": null
+  }
+}

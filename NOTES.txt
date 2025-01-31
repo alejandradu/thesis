@@ -16,3 +16,7 @@ MODEL MODULES: follows same structure as Valente (frRNN, lrRNN)
 
 init_states is a value fo the hidden vector and NOT the same as the input 
 to the system. 
+
+torchmetrics accuracy: note that by convention, the input tensors to these
+functions have shape (N, ...) where the first dimension N is the number
+of trials (grouped by batch, so batch)

@@ -2,7 +2,9 @@ import lightning as pl
 import torch 
 import torch.nn as nn
 import math
-from models.loss import loss_mse
+from models.metrics import loss_mse, accuracy
+
+# TODO: refactor to optimize for production
 
 class frRNN(pl.LightningModule):
     """Implement Sompolinsky RNN full rank. Custom layer
@@ -100,8 +102,8 @@ class frRNN(pl.LightningModule):
         self._define_proxy_parameters()
         
         # keep track of per epoch metrics
-        self.loss = []
-        self.accuracy = []
+        self.eval_loss = []
+        self.eval_accuracy = []
 
     def _define_proxy_parameters(self):
         self.wi_full = (self.wi.t() * self.si).t()
@@ -155,9 +157,9 @@ class frRNN(pl.LightningModule):
         # create mask to count only the response period
         mask = torch.ones_like(output) # TODO: fix mask
         loss = loss_mse(output, targets, mask)
-        acc = accuracy_general(output, targets, mask)
-        self.log('train_loss', loss, sync_dist=True)
-        self.log('train_accuracy', acc, sync_dist=True)
+        acc = accuracy(output, targets, mask)
+        self.log('ptl/train_loss', loss, sync_dist=True)
+        self.log('ptl/train_accuracy', acc, sync_dist=True)
         return loss
         
     def validation_step(self, batch, batch_idx):
@@ -166,12 +168,22 @@ class frRNN(pl.LightningModule):
         # create mask to count only the response period
         mask = torch.ones_like(output)
         loss = loss_mse(output, targets, mask)
-        acc = accuracy_general(output, targets, mask)
-        self.log('val_loss', loss, sync_dist=True)  
-        self.log('val_accuracy', acc, sync_dist=True)
+        acc = accuracy(output, targets, mask)
+        self.eval_accuracy.append(acc)
+        self.eval_loss.append(loss)
+        return {"val_loss": loss, "val_accuracy": acc}
         
+    def on_validation_epoch_end(self):
+        avg_loss = torch.stack(self.eval_loss).mean()
+        avg_acc = torch.stack(self.eval_accuracy).mean()
+        self.log("ptl/val_loss", avg_loss, sync_dist=True)
+        self.log("ptl/val_accuracy", avg_acc, sync_dist=True)
+        self.eval_loss.clear()
+        self.eval_accuracy.clear()
+    
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
+    
     
     
 class lrRNN(pl.LightningModule):
