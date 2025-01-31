@@ -5,6 +5,59 @@ import math
 from models.metrics import loss_mse, accuracy
 
 
+class GeneralModel(pl.LightningModule):
+    """Wrap any neural net model for training and logging the same
+    metrics with the same tuning config structure
+    
+    The params relevant for GeneralModel are lr and weight_decay, 
+    but they must be passed before as part of the model_config"""
+    
+    def __init__(self, model):
+        super(GeneralModel, self).__init__()
+        self.model = model
+        self.model_config = model.model_config
+        self.lr = self.model_config['lr']
+        self.weight_decay = self.model_config['weight_decay']
+        
+        # per epoch metrics
+        self.eval_loss = []
+        self.eval_accuracy = []
+        
+    def training_step(self, batch, batch_idx):
+        inputs, targets, initial_states = batch
+        output, trajectories = self(inputs, return_latents=True, initial_states=initial_states)
+        # create mask to count only the response period
+        mask = torch.ones_like(output) # TODO: fix mask
+        loss = loss_mse(output, targets, mask)
+        acc = accuracy(output, targets, mask)
+        self.log('ptl/train_loss', loss, sync_dist=True)
+        self.log('ptl/train_accuracy', acc, sync_dist=True)
+        return loss
+        
+    def validation_step(self, batch, batch_idx):
+        inputs, targets, initial_states = batch
+        output, trajectories = self(inputs, return_latents=True, initial_states=initial_states)
+        # create mask to count only the response period
+        mask = torch.ones_like(output)
+        loss = loss_mse(output, targets, mask)
+        acc = accuracy(output, targets, mask)
+        self.eval_accuracy.append(acc)
+        self.eval_loss.append(loss)
+        return {"val_loss": loss, "val_accuracy": acc}
+        
+    def on_validation_epoch_end(self):
+        avg_loss = torch.stack(self.eval_loss).mean()
+        avg_acc = torch.stack(self.eval_accuracy).mean()
+        self.log("ptl/val_loss", avg_loss, sync_dist=True)
+        self.log("ptl/val_accuracy", avg_acc, sync_dist=True)
+        self.eval_loss.clear()
+        self.eval_accuracy.clear()
+    
+    def configure_optimizers(self):
+        # BUG: maybe the self.parameters() will not retreive all params from the model?
+        return torch.optim.Adam(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
+    
+    
 class frRNN(nn.Module):
     """Implement Sompolinsky RNN, full rank"""
     
@@ -139,68 +192,13 @@ class frRNN(nn.Module):
         else:
             return output
 
-class GeneralModel(pl.LightningModule):
-    """Wrap any neural net model for training and logging the same
-    metrics with the same tuning config structure
     
-    The params relevant for GeneralModel are lr and weight_decay, 
-    but they must be passed before as part of the model_config"""
-    
-    def __init__(self, model):
-        super(GeneralModel, self).__init__()
-        self.model = model
-        self.model_config = model.model_config
-        self.lr = self.model_config['lr']
-        self.weight_decay = self.model_config['weight_decay']
-        
-        # per epoch metrics
-        self.eval_loss = []
-        self.eval_accuracy = []
-        
-    def training_step(self, batch, batch_idx):
-        inputs, targets, initial_states = batch
-        output, trajectories = self(inputs, return_latents=True, initial_states=initial_states)
-        # create mask to count only the response period
-        mask = torch.ones_like(output) # TODO: fix mask
-        loss = loss_mse(output, targets, mask)
-        acc = accuracy(output, targets, mask)
-        self.log('ptl/train_loss', loss, sync_dist=True)
-        self.log('ptl/train_accuracy', acc, sync_dist=True)
-        return loss
-        
-    def validation_step(self, batch, batch_idx):
-        inputs, targets, initial_states = batch
-        output, trajectories = self(inputs, return_latents=True, initial_states=initial_states)
-        # create mask to count only the response period
-        mask = torch.ones_like(output)
-        loss = loss_mse(output, targets, mask)
-        acc = accuracy(output, targets, mask)
-        self.eval_accuracy.append(acc)
-        self.eval_loss.append(loss)
-        return {"val_loss": loss, "val_accuracy": acc}
-        
-    def on_validation_epoch_end(self):
-        avg_loss = torch.stack(self.eval_loss).mean()
-        avg_acc = torch.stack(self.eval_accuracy).mean()
-        self.log("ptl/val_loss", avg_loss, sync_dist=True)
-        self.log("ptl/val_accuracy", avg_acc, sync_dist=True)
-        self.eval_loss.clear()
-        self.eval_accuracy.clear()
-    
-    def configure_optimizers(self):
-        # BUG: maybe the self.parameters() will not retreive all params from the model?
-        return torch.optim.Adam(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
-    
-    
-    
-class lrRNN(pl.LightningModule):
-    """Implement Sompolinsky RNN low rank. Custom layer
-    architecture and optimizer params. Note configs != frRNN. MN^T are
-    always optimized"""
+class lrRNN(nn.Module):
+    """Implement Sompolinsky RNN, low rank"""
     
     def __init__(self, config):
 
-        super(frRNN, self).__init__()
+        super(lrRNN, self).__init__()
         self.input_size = config['input_size']
         self.hidden_size = config['hidden_size']
         self.output_size = config['output_size']

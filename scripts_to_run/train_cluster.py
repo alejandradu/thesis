@@ -23,9 +23,9 @@ from ray.train.lightning import (
 TASK_CONFIG = {
     "seed": 0,
     "coherences": None,
-    "n_trials": 100,    # check that this > batch_size below
-    "bin_size": 10,
-    "noise": 0.0,
+    "n_trials": 2000,    # check that this > batch_size below
+    "bin_size": 20,   # this is bin for TIMESTEPS
+    "noise": 0.0,   # this is noise for the task itself
     "n_timesteps": 250+800+2000+250+50,
     "fix": 250,
     "ctx": 800,
@@ -52,8 +52,8 @@ output_size = task.output_size
 # can merge with model_config as dict to optimize over it - not expecting to need this
 DATA_CONFIG = {
     "task": task,  # this has to follow AbstractClass
-    "data_dir": "/Users/alejandraduran/Documents/THESIS/thesis/synthetic_datasets/data/",
-    "batch_size": 16,   # COMPARE WITH N TRIALS SET FOR TASK   # NOTE: make this more logical later
+    "data_dir": "/scratch/gpfs/ad2002/task_training/",
+    "batch_size": 64,   # COMPARE WITH N TRIALS SET FOR TASK   # NOTE: make this more logical later
     "num_workers": 4,  # difference between this and the num_workers in scaling_config?
     "train_ratio": 0.8,
     "val_ratio": 0.2,
@@ -68,9 +68,9 @@ MODEL_CONFIG = {
     "input_size": input_size,
     "hidden_size": 10,
     "output_size": output_size,
-    "noise_std": tune.choice([0.0, 0.1]),  # TODO: check what this noise is
-    "alpha": 0.2,
-    "rho": 1,
+    "noise_std": tune.choice([0.0, 0.1]),  # this is noise for the evolution of the hidden states
+    "alpha": 1,     # this should be t/TAU?
+    "rho": 1,       # this is for matrix initialization distributions
     "train_wi": False,
     "train_wo": False,
     "train_wrec": True,
@@ -87,11 +87,11 @@ MODEL_CONFIG = {
     "non_linearity": torch.tanh,
     "output_non_linearity": torch.tanh,
     "lr": tune.choice([1e-4, 1e-3]),
-    "weight_decay": 0.0
+    "weight_decay": tune.choice([0.0, 1e-3]),
 }
 
 ######## train with Ray
-num_epochs = 5
+num_epochs = 50
 grace_period = 1
 reduction_factor = 2
 num_workers = 4   # SET THE SAME AS CPU
