@@ -57,7 +57,7 @@ output_size = task.output_size
 # can merge with model_config as dict to optimize over it - not expecting to need this
 DATA_CONFIG = {
     "task": task,  # this has to follow AbstractClass
-    "data_dir": "/scratch/gpfs/ad2002/task_training/",
+    "data_dir": "/scratch/gpfs/ad2002/task_training/task_data/",
     "batch_size": 64,   # COMPARE WITH N TRIALS SET FOR TASK   # NOTE: make this more logical later
     "num_workers": 4,  # difference between this and the num_workers in scaling_config?
     "train_ratio": 0.8,
@@ -130,11 +130,11 @@ scheduler = ASHAScheduler(max_t=num_epochs, grace_period=grace_period, reduction
 
 # HERE for distributed training
 scaling_config = ScalingConfig(
-    num_workers=num_workers, use_gpu=True, resources_per_worker={"CPU": 4, "GPU": 1}
+    num_workers=num_workers, use_gpu=True, resources_per_worker={"CPU": 1, "GPU": 0.25}   # divide by worker
 )
 
 run_config = RunConfig(
-    storage_path="/Users/alejandraduran/Documents/THESIS/thesis/ray_results/",
+    storage_path="/scratch/gpfs/ad2002/task_training/ray_results/",
     checkpoint_config=CheckpointConfig(
         num_to_keep=2,
         checkpoint_score_attribute="ptl/val_accuracy",
