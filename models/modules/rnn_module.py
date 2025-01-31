@@ -4,22 +4,14 @@ import torch.nn as nn
 import math
 from models.metrics import loss_mse, accuracy
 
-# TODO: refactor to optimize for production
 
-class frRNN(pl.LightningModule):
-    """Implement Sompolinsky RNN full rank. Custom layer
-    architecture and optimizer params"""
-    
-    # changing all the hparams for a config (dict?)
-    # config: input_size, hidden_size, output_size, noise_std, alpha=0.2, rho=1,
-    #         train_wi=False, train_wo=False, train_wrec=True, train_h0=False, train_si=True, train_so=True,
-    #         wi_init=None, wo_init=None, wrec_init=None, si_init=None, so_init=None, b_init=None,
-    #         add_biases=False, non_linearity=torch.tanh, output_non_linearity=torch.tanh, 
-    #         lr=1e-3, weight_decay=0.0
+class frRNN(nn.Module):
+    """Implement Sompolinsky RNN, full rank"""
     
     def __init__(self, config):
-
+        
         super(frRNN, self).__init__()
+        self.config = config
         self.input_size = config['input_size']
         self.hidden_size = config['hidden_size']
         self.output_size = config['output_size']
@@ -42,7 +34,7 @@ class frRNN(pl.LightningModule):
         self.b_init = config['b_init']
         self.wo_init = config['wo_init']
         self.so_init = config['so_init']
-
+        
         # Define parameters
         self.wi = nn.Parameter(torch.Tensor(self.input_size, self.hidden_size))
         self.si = nn.Parameter(torch.Tensor(self.input_size))
@@ -101,14 +93,10 @@ class frRNN(pl.LightningModule):
         self.wi_full, self.wo_full = [None] * 2
         self._define_proxy_parameters()
         
-        # keep track of per epoch metrics
-        self.eval_loss = []
-        self.eval_accuracy = []
-
     def _define_proxy_parameters(self):
         self.wi_full = (self.wi.t() * self.si).t()
         self.wo_full = self.wo * self.so
-        
+      
     def forward(self, input, return_latents=False, initial_states=None):
         """
         :param input: tensor of shape (batch_size, n_timesteps, input_dimension)
@@ -150,6 +138,24 @@ class frRNN(pl.LightningModule):
             return output, trajectories
         else:
             return output
+
+class GeneralModel(pl.LightningModule):
+    """Wrap any neural net model for training and logging the same
+    metrics with the same tuning config structure
+    
+    The params relevant for GeneralModel are lr and weight_decay, 
+    but they must be passed before as part of the model_config"""
+    
+    def __init__(self, model):
+        super(GeneralModel, self).__init__()
+        self.model = model
+        self.model_config = model.model_config
+        self.lr = self.model_config['lr']
+        self.weight_decay = self.model_config['weight_decay']
+        
+        # per epoch metrics
+        self.eval_loss = []
+        self.eval_accuracy = []
         
     def training_step(self, batch, batch_idx):
         inputs, targets, initial_states = batch
@@ -182,6 +188,7 @@ class frRNN(pl.LightningModule):
         self.eval_accuracy.clear()
     
     def configure_optimizers(self):
+        # BUG: maybe the self.parameters() will not retreive all params from the model?
         return torch.optim.Adam(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
     
     
