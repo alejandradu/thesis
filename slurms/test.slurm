@@ -21,5 +21,3 @@ python /home/ad2002/thesis/scripts_to_run/train.py
 #Optionally, you can include cleanup commands here (e.g., after the job finishes)
 #For example:
 #rm some_temp_file.txt
-
-/home/ad2002/thesis/scripts_to_run/train.py
