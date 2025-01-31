@@ -46,8 +46,16 @@ class TaskDataModule(pl.LightningDataModule):
         self.phase_index_train = None
         self.phase_index_val = None
         
-        key = hash(frozenset(self.task.task_config.items()))
-        self.dpath = os.path.join(self.data_dir, f"task{key}{self.init_states_name}.h5")
+        # create a unique name for the dataset
+        name = []
+        
+        # TODO: might have to adapt this for more complex tasks
+        for key, value in self.task.task_config.items():
+            if key == 'n_trials' or key == 'bin_size' or key == 'n_timesteps' or key == 'noise':
+                name.append(f"{key}{value}_")
+        
+        key = ''.join(name)
+        self.dpath = os.path.join(self.data_dir, f"{self.init_states_name}_{key}.h5")
         
 
     # NOTE: should not assign states here
