@@ -2,8 +2,6 @@
 CondaError: Run 'conda init' before 'conda activate'
 
 Traceback (most recent call last):
-  File "/home/ad2002/thesis/scripts_to_run/train.py", line 15, in <module>
-    from synthetic_datasets.datamodules.task_datamodule import TaskDataModule
-  File "/home/ad2002/thesis/synthetic_datasets/datamodules/task_datamodule.py", line 2, in <module>
-    import h5py
-ModuleNotFoundError: No module named 'h5py'
+  File "/home/ad2002/thesis/scripts_to_run/train_cluster.py", line 13, in <module>
+    from ..synthetic_datasets.tasks.CDM import CDM
+ImportError: attempted relative import with no known parent package

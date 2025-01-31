@@ -16,7 +16,7 @@
 module load anaconda3/2024.6
 conda activate thesis
 
-python /home/ad2002/thesis/scripts_to_run/train.py
+python /home/ad2002/thesis/scripts_to_run/train_cluster.py
 
 #Optionally, you can include cleanup commands here (e.g., after the job finishes)
 #For example:
