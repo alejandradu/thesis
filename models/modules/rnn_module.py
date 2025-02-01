@@ -12,7 +12,7 @@ class GeneralModel(pl.LightningModule):
     The params relevant for GeneralModel are lr and weight_decay, 
     but they must be passed before as part of the model_config"""
     
-    def __init__(self, model_config):
+    def __init__(self, model_config: dict):
         super(GeneralModel, self).__init__()
         
         # create the model
@@ -28,13 +28,27 @@ class GeneralModel(pl.LightningModule):
         self.eval_loss = []
         self.eval_accuracy = []
         
+        # to mask during training/evaluation
+        self.mask = None
+        
+    def set_mask(self, n_timesteps: int, bin_size: int, mask_interval: list[int]):
+        """Return binary mask for ONLY the timestep dimension
+        
+        Args:
+            n_timesteps: total timesteps as passed in TASK_CONFIG
+            bin_size: bin size as passed in TASK_CONFIG
+            mask_interval: list/tuple of start and end timesteps (raw, not binned)
+        """
+        # binned length
+        binned_mask = torch.zeros(int(n_timesteps / bin_size))  
+        binned_mask[math.floor(mask_interval[0] / bin_size) : math.floor(mask_interval[1] / bin_size)] = 1
+        self.mask = binned_mask
+        
     def training_step(self, batch, batch_idx):
         inputs, targets, initial_states = batch
         output, trajectories = self.model(inputs, return_latents=True, initial_states=initial_states)
-        # create mask to count only the response period
-        mask = torch.ones_like(output) # TODO: fix mask
-        loss = loss_mse(output, targets, mask)
-        acc = accuracy(output, targets, mask)
+        loss = loss_mse(output, targets, self.mask)
+        acc = accuracy(output, targets, self.mask)
         self.log('ptl/train_loss', loss, sync_dist=True)
         self.log('ptl/train_accuracy', acc, sync_dist=True)
         return loss
@@ -42,10 +56,8 @@ class GeneralModel(pl.LightningModule):
     def validation_step(self, batch, batch_idx):
         inputs, targets, initial_states = batch
         output, trajectories = self.model(inputs, return_latents=True, initial_states=initial_states)
-        # create mask to count only the response period
-        mask = torch.ones_like(output)
-        loss = loss_mse(output, targets, mask)
-        acc = accuracy(output, targets, mask)
+        loss = loss_mse(output, targets, self.mask)
+        acc = accuracy(output, targets, self.mask)
         self.eval_accuracy.append(acc)
         self.eval_loss.append(loss)
         return {"val_loss": loss, "val_accuracy": acc}
@@ -331,23 +343,4 @@ class lrRNN(nn.Module):
             return output
         else:
             return output, trajectories
-        
-    def training_step(self, batch, batch_idx):
-        inputs, targets, initial_states = batch
-        output, trajectories = self(inputs, return_latents=True, initial_states=initial_states)
-        # create mask to count only the response period
-        mask = torch.ones_like(output) # TODO: fix mask
-        loss = loss_mse(output, targets, mask)
-        self.log('train_loss', loss)
-        return loss
-        
-    def validation_step(self, batch, batch_idx):
-        inputs, targets, initial_states = batch
-        output, trajectories = self(inputs, return_latents=True, initial_states=initial_states)
-        # create mask to count only the response period
-        mask = torch.ones_like(output)
-        loss = loss_mse(output, targets, mask)
-        self.log('val_loss', loss)  
-        
-    def configure_optimizers(self):
-        return torch.optim.Adam(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
+    

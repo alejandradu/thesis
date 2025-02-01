@@ -9,7 +9,10 @@ def loss_mse(output, target, mask):
     :return: float
     """
     # Compute loss for each (trial, timestep) (average accross output dimensions)
-    loss_tensor = (mask * (target - output)).pow(2).mean(dim=-1)
+    if mask is not None:
+        loss_tensor = (mask * (target - output)).pow(2).mean(dim=-1)
+    else:
+        loss_tensor = (target - output).pow(2).mean(dim=-1)
     # Average over timesteps - account for batches of different size
     loss_by_batch = loss_tensor.sum(dim=-1) / mask[:, :, 0].sum(dim=-1)
     # Average over batches
@@ -27,13 +30,14 @@ def accuracy(output, target, mask, per_batch=False):
                    returns (N, output_dimension). if output_dimension=1, done
                    might need more processing
     """
-    output_use = mask*output
+    if mask is not None:
+        output = mask*output
     # TODO: generalize - no magic numbers
     global_func = torchmetrics.Accuracy(task='multiclass', num_classes=2)
     # apply this twice to get the per batch accuracy
     trial_func = torchmetrics.Accuracy(task='multiclass', num_classes=2, multidim_average='samplewise')
     
     if per_batch:
-        return trial_func(output_use, target)
+        return trial_func(output, target)
     else:
-        return global_func(output_use, target)
+        return global_func(output, target)

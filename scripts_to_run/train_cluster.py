@@ -24,6 +24,14 @@ from ray.train.lightning import (
     prepare_trainer,
 )
 
+######## train with Ray
+num_epochs = 50
+grace_period = 1
+reduction_factor = 2
+num_workers = 8   # SET THE SAME AS CPU
+num_samples = 1  # this matters for other than tune.choice
+######## 
+
 # setup the task
 TASK_CONFIG = {
     "seed": 0,
@@ -59,7 +67,7 @@ DATA_CONFIG = {
     "task": task,  # this has to follow AbstractClass
     "data_dir": "/scratch/gpfs/ad2002/task_training/task_data/",
     "batch_size": 64,   # COMPARE WITH N TRIALS SET FOR TASK   # NOTE: make this more logical later
-    "num_workers": 4,  # difference between this and the num_workers in scaling_config?
+    "num_workers": num_workers,  # difference between this and the num_workers in scaling_config?
     "train_ratio": 0.8,
     "val_ratio": 0.2,
     "init_states": None,
@@ -96,13 +104,8 @@ MODEL_CONFIG = {
     "weight_decay": tune.choice([0.0, 1e-3]),
 }
 
-######## train with Ray
-num_epochs = 50
-grace_period = 1
-reduction_factor = 2
-num_workers = 4   # SET THE SAME AS CPU
-num_samples = 1  # this matters for other than tune.choice
-######## 
+N_TIMESTEPS = TASK_CONFIG["n_timesteps"]
+BIN_SIZE = TASK_CONFIG["bin_size"]
 
 # training function
 # NOTE: might have to create loader functions to simpify function overhead
@@ -113,6 +116,8 @@ def train_loop(model_config):
     
     # create the model
     model = GeneralModel(model_config)
+    # optional: set the mask (will count for training and eval)
+    model.set_mask(N_TIMESTEPS, BIN_SIZE, [N_TIMESTEPS-50, N_TIMESTEPS-1])
     # create data: encapsulate all train, val, test splits
     data_module = TaskDataModule(DATA_CONFIG) 
     
