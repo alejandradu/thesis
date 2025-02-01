@@ -9,33 +9,31 @@ no change     /home/ad2002/.conda/envs/thesis/shell/condabin/Conda.psm1
 no change     /home/ad2002/.conda/envs/thesis/shell/condabin/conda-hook.ps1
 no change     /home/ad2002/.conda/envs/thesis/lib/python3.11/site-packages/xontrib/conda.xsh
 no change     /home/ad2002/.conda/envs/thesis/etc/profile.d/conda.csh
-modified      /home/ad2002/.bashrc
-
-==> For changes to take effect, close and re-open your current shell. <==
-
+no change     /home/ad2002/.bashrc
+No action taken.
 ╭─────────────────────────────────────────────────────────────────────╮
-│ Configuration for experiment     TorchTrainer_2025-01-31_17-29-39   │
+│ Configuration for experiment     TorchTrainer_2025-02-01_14-22-53   │
 ├─────────────────────────────────────────────────────────────────────┤
 │ Search algorithm                 BasicVariantGenerator              │
 │ Scheduler                        AsyncHyperBandScheduler            │
 │ Number of trials                 1                                  │
 ╰─────────────────────────────────────────────────────────────────────╯
 
-View detailed results here: /scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-01-31_17-29-39
-To visualize your results with TensorBoard, run: `tensorboard --logdir /tmp/ray/session_2025-01-31_17-29-39_175196_2404727/artifacts/2025-01-31_17-29-57/TorchTrainer_2025-01-31_17-29-39/driver_artifacts`
+View detailed results here: /scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_14-22-53
+To visualize your results with TensorBoard, run: `tensorboard --logdir /tmp/ray/session_2025-02-01_14-22-53_255629_2685090/artifacts/2025-02-01_14-22-58/TorchTrainer_2025-02-01_14-22-53/driver_artifacts`
 
 Trial status: 1 PENDING
-Current time: 2025-01-31 17:29:57. Total running time: 0s
+Current time: 2025-02-01 14:22:58. Total running time: 0s
 Logical resource usage: 0/48 CPUs, 0/1 GPUs (0.0/1.0 accelerator_type:A100)
 ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ Trial name                 status       ..._config/noise_std     train_loop_config/lr     ...nfig/weight_decay │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ TorchTrainer_e6d7f_00000   PENDING                       0.1                    0.001                        0 │
+│ TorchTrainer_f2131_00000   PENDING                         0                    0.001                        0 │
 ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-Trial TorchTrainer_e6d7f_00000 started with configuration:
+Trial TorchTrainer_f2131_00000 started with configuration:
 ╭────────────────────────────────────────────────────────────────╮
-│ Trial TorchTrainer_e6d7f_00000 config                          │
+│ Trial TorchTrainer_f2131_00000 config                          │
 ├────────────────────────────────────────────────────────────────┤
 │ train_loop_config/add_biases                             False │
 │ train_loop_config/alpha                                      1 │
@@ -43,9 +41,9 @@ Trial TorchTrainer_e6d7f_00000 started with configuration:
 │ train_loop_config/hidden_size                               10 │
 │ train_loop_config/input_size                                 4 │
 │ train_loop_config/lr                                     0.001 │
-│ train_loop_config/noise_std                                0.1 │
-│ train_loop_config/non_linearity           ...t 0x1472d4838c20> │
-│ train_loop_config/output_non_linearity    ...t 0x1472d4838c20> │
+│ train_loop_config/noise_std                                0.0 │
+│ train_loop_config/non_linearity           ...t 0x14c350e12280> │
+│ train_loop_config/output_non_linearity    ...t 0x14c350e12280> │
 │ train_loop_config/output_size                                1 │
 │ train_loop_config/rho                                        1 │
 │ train_loop_config/si_init                                      │
@@ -62,22 +60,22 @@ Trial TorchTrainer_e6d7f_00000 started with configuration:
 │ train_loop_config/wrec_init                                    │
 ╰────────────────────────────────────────────────────────────────╯
 
-Trial TorchTrainer_e6d7f_00000 errored after 0 iterations at 2025-01-31 17:30:15. Total running time: 17s
-Error file: /tmp/ray/session_2025-01-31_17-29-39_175196_2404727/artifacts/2025-01-31_17-29-57/TorchTrainer_2025-01-31_17-29-39/driver_artifacts/TorchTrainer_e6d7f_00000_0_lr=0.0010,noise_std=0.1000,weight_decay=0.0000_2025-01-31_17-29-57/error.txt
+Trial TorchTrainer_f2131_00000 errored after 0 iterations at 2025-02-01 14:23:05. Total running time: 6s
+Error file: /tmp/ray/session_2025-02-01_14-22-53_255629_2685090/artifacts/2025-02-01_14-22-58/TorchTrainer_2025-02-01_14-22-53/driver_artifacts/TorchTrainer_f2131_00000_0_lr=0.0010,noise_std=0.0000,weight_decay=0.0000_2025-02-01_14-22-58/error.txt
 
 Trial status: 1 ERROR
-Current time: 2025-01-31 17:30:15. Total running time: 17s
+Current time: 2025-02-01 14:23:05. Total running time: 6s
 Logical resource usage: 5.0/48 CPUs, 1.0/1 GPUs (0.0/1.0 accelerator_type:A100)
 ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ Trial name                 status       ..._config/noise_std     train_loop_config/lr     ...nfig/weight_decay │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ TorchTrainer_e6d7f_00000   ERROR                         0.1                    0.001                        0 │
+│ TorchTrainer_f2131_00000   ERROR                           0                    0.001                        0 │
 ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 Number of errored trials: 1
 ╭───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ Trial name                   # failures   error file                                                                                                                                                                                                                                  │
 ├───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ TorchTrainer_e6d7f_00000              1   /tmp/ray/session_2025-01-31_17-29-39_175196_2404727/artifacts/2025-01-31_17-29-57/TorchTrainer_2025-01-31_17-29-39/driver_artifacts/TorchTrainer_e6d7f_00000_0_lr=0.0010,noise_std=0.1000,weight_decay=0.0000_2025-01-31_17-29-57/error.txt │
+│ TorchTrainer_f2131_00000              1   /tmp/ray/session_2025-02-01_14-22-53_255629_2685090/artifacts/2025-02-01_14-22-58/TorchTrainer_2025-02-01_14-22-53/driver_artifacts/TorchTrainer_f2131_00000_0_lr=0.0010,noise_std=0.0000,weight_decay=0.0000_2025-02-01_14-22-58/error.txt │
 ╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 

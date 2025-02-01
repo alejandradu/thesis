@@ -2,7 +2,7 @@
 #SBATCH --job-name=test               # Job name
 #SBATCH --output=output.txt           # Standard output file
 #SBATCH --error=error.txt             # Standard error file
-#SBATCH --partition=MIG               # Partition or queue name
+# #SBATCH --partition=MIG               # Partition or queue name
 #SBATCH --nodes=1                     # Number of nodes
 #SBATCH --ntasks-per-node=1           # Number of tasks per node
 #SBATCH --gpus-per-node=1             # Number of gpus per node

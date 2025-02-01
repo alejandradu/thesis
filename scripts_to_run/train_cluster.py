@@ -104,6 +104,7 @@ num_samples = 1  # this matters for other than tune.choice
 ######## 
 
 # training function
+# NOTE: might have to create loader functions to simpify function overhead
 def train_loop(model_config):
     
     # create the model
