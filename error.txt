@@ -1,15 +1,20 @@
 
 CondaError: Run 'conda init' before 'conda activate'
 
-2025-02-01 14:53:59,381	INFO worker.py:1841 -- Started a local Ray instance.
-2025-02-01 14:54:03,847	INFO tune.py:253 -- Initializing Ray automatically. For cluster usage or custom Ray initialization, call `ray.init(...)` before `Tuner(...)`.
-[36m(RayTrainWorker pid=2697733)[0m Setting up process group for: env:// [rank=0, world_size=4]
-[36m(TorchTrainer pid=2697546)[0m Started distributed worker processes: 
-[36m(TorchTrainer pid=2697546)[0m - (node_id=a95697384a8d7ceb1e94027b5e0f9f6dbb44b1f8ef9f12ce87dca1e5, ip=172.17.6.68, pid=2697733) world_rank=0, local_rank=0, node_rank=0
-[36m(TorchTrainer pid=2697546)[0m - (node_id=a95697384a8d7ceb1e94027b5e0f9f6dbb44b1f8ef9f12ce87dca1e5, ip=172.17.6.68, pid=2697732) world_rank=1, local_rank=1, node_rank=0
-[36m(TorchTrainer pid=2697546)[0m - (node_id=a95697384a8d7ceb1e94027b5e0f9f6dbb44b1f8ef9f12ce87dca1e5, ip=172.17.6.68, pid=2697734) world_rank=2, local_rank=2, node_rank=0
-[36m(TorchTrainer pid=2697546)[0m - (node_id=a95697384a8d7ceb1e94027b5e0f9f6dbb44b1f8ef9f12ce87dca1e5, ip=172.17.6.68, pid=2697731) world_rank=3, local_rank=3, node_rank=0
-2025-02-01 14:54:14,027	ERROR tune_controller.py:1331 -- Trial task failed for trial TorchTrainer_49db4_00000
+2025-02-01 15:15:48,798	INFO worker.py:1841 -- Started a local Ray instance.
+2025-02-01 15:15:53,296	INFO tune.py:253 -- Initializing Ray automatically. For cluster usage or custom Ray initialization, call `ray.init(...)` before `Tuner(...)`.
+[36m(RayTrainWorker pid=2707802)[0m Setting up process group for: env:// [rank=0, world_size=4]
+[36m(TorchTrainer pid=2707627)[0m Started distributed worker processes: 
+[36m(TorchTrainer pid=2707627)[0m - (node_id=21963d763a5c9de4f2df56917923a405f24900f96f97256e86a9e316, ip=172.17.6.68, pid=2707802) world_rank=0, local_rank=0, node_rank=0
+[36m(TorchTrainer pid=2707627)[0m - (node_id=21963d763a5c9de4f2df56917923a405f24900f96f97256e86a9e316, ip=172.17.6.68, pid=2707801) world_rank=1, local_rank=1, node_rank=0
+[36m(TorchTrainer pid=2707627)[0m - (node_id=21963d763a5c9de4f2df56917923a405f24900f96f97256e86a9e316, ip=172.17.6.68, pid=2707803) world_rank=2, local_rank=2, node_rank=0
+[36m(TorchTrainer pid=2707627)[0m - (node_id=21963d763a5c9de4f2df56917923a405f24900f96f97256e86a9e316, ip=172.17.6.68, pid=2707805) world_rank=3, local_rank=3, node_rank=0
+[36m(RayTrainWorker pid=2707802)[0m GPU available: True (cuda), used: True
+[36m(RayTrainWorker pid=2707802)[0m TPU available: False, using: 0 TPU cores
+[36m(RayTrainWorker pid=2707802)[0m HPU available: False, using: 0 HPUs
+[36m(RayTrainWorker pid=2707802)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py:73: `max_epochs` was not set. Setting it to 1000 epochs. To train without an epoch limit, set `max_epochs=-1`.
+[36m(RayTrainWorker pid=2707802)[0m You are using a CUDA device ('NVIDIA A100-SXM4-80GB') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+2025-02-01 15:16:03,876	ERROR tune_controller.py:1331 -- Trial task failed for trial TorchTrainer_56593_00000
 Traceback (most recent call last):
   File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/air/execution/_internal/event_manager.py", line 110, in resolve_future
     result = ray.get(future)
@@ -25,7 +30,7 @@ Traceback (most recent call last):
                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 919, in get_objects
     raise value.as_instanceof_cause()
-ray.exceptions.RayTaskError(BlockingIOError): [36mray::_Inner.train()[39m (pid=2697546, ip=172.17.6.68, actor_id=62965dc72c2de8894135de0501000000, repr=TorchTrainer)
+ray.exceptions.RayTaskError(DistBackendError): [36mray::_Inner.train()[39m (pid=2707627, ip=172.17.6.68, actor_id=81990a24d35514efb804ab7701000000, repr=TorchTrainer)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/tune/trainable/trainable.py", line 331, in train
@@ -35,30 +40,49 @@ ray.exceptions.RayTaskError(BlockingIOError): [36mray::_Inner.train()[39m (pid
            ^^^^^^^^^^^^^^^^^^^
            ^^^^^^^^^^^^^^^^^^^^^
                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ray.exceptions.RayTaskError(BlockingIOError): [36mray::_RayTrainWorker__execute.get_next()[39m (pid=2697732, ip=172.17.6.68, actor_id=b0f0a584e97e666c635290b701000000, repr=<ray.train._internal.worker_group.RayTrainWorker object at 0x1515ce7eba10>)
+ray.exceptions.RayTaskError(DistBackendError): [36mray::_RayTrainWorker__execute.get_next()[39m (pid=2707805, ip=172.17.6.68, actor_id=e24af1feee3bab856e9408a701000000, repr=<ray.train._internal.worker_group.RayTrainWorker object at 0x1542dec1b890>)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/worker_group.py", line 33, in __execute
     raise skipped from exception_cause(skipped)
   File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 176, in discard_return_wrapper
     train_func(*args, **kwargs)
-  File "/home/ad2002/thesis/scripts_to_run/train_cluster.py", line 115, in train_loop
-    data_module.prepare_data()
-  File "/home/ad2002/thesis/synthetic_datasets/datamodules/task_datamodule.py", line 104, in prepare_data
-    with h5py.File(self.dpath, 'w') as f:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/h5py/_hl/files.py", line 561, in __init__
-    fid = make_fid(name, mode, userblock_size, fapl, fcpl, swmr=swmr)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/h5py/_hl/files.py", line 241, in make_fid
-    fid = h5f.create(name, h5f.ACC_TRUNC, fapl=fapl, fcpl=fcpl)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
-  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
-  File "h5py/h5f.pyx", line 122, in h5py.h5f.create
-BlockingIOError: [Errno 11] Unable to synchronously create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
-2025-02-01 14:54:14,035	INFO tune.py:1009 -- Wrote the latest version of all result files and experiment state to '/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_14-53-57' in 0.0039s.
-2025-02-01 14:54:14,040	ERROR tune.py:1037 -- Trials did not complete: [TorchTrainer_49db4_00000]
-[36m(RayTrainWorker pid=2697733)[0m GPU available: True (cuda), used: True
-[36m(RayTrainWorker pid=2697733)[0m TPU available: False, using: 0 TPU cores
-[36m(RayTrainWorker pid=2697733)[0m HPU available: False, using: 0 HPUs
+  File "/home/ad2002/thesis/scripts_to_run/train_cluster.py", line 131, in train_loop
+    trainer.fit(model, datamodule=data_module)
+  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 539, in fit
+    call._call_and_handle_interrupt(
+  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
+    return function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 575, in _fit_impl
+    self._run(model, ckpt_path=ckpt_path)
+  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 939, in _run
+    self.__setup_profiler()
+  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1072, in __setup_profiler
+    self.profiler.setup(stage=self.state.fn, local_rank=local_rank, log_dir=self.log_dir)
+                                                                            ^^^^^^^^^^^^
+  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1234, in log_dir
+    dirpath = self.strategy.broadcast(dirpath)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/ddp.py", line 307, in broadcast
+    torch.distributed.broadcast_object_list(obj, src, group=_group.WORLD)
+  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/distributed/c10d_logger.py", line 81, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py", line 3479, in broadcast_object_list
+    broadcast(object_sizes_tensor, src=global_src, group=group)
+  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/distributed/c10d_logger.py", line 81, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py", line 2726, in broadcast
+    work = group.broadcast([tensor], opts)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.distributed.DistBackendError: NCCL error in: /pytorch/torch/csrc/distributed/c10d/NCCLUtils.hpp:268, invalid usage (run with NCCL_DEBUG=WARN for details), NCCL version 2.21.5
+ncclInvalidUsage: This usually reflects invalid usage of NCCL library.
+Last error:
+Duplicate GPU detected : rank 3 and rank 0 both on CUDA device 81000
+2025-02-01 15:16:03,908	INFO tune.py:1009 -- Wrote the latest version of all result files and experiment state to '/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_15-15-47' in 0.0282s.
+2025-02-01 15:16:03,910	ERROR tune.py:1037 -- Trials did not complete: [TorchTrainer_56593_00000]

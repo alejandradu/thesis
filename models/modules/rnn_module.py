@@ -30,7 +30,7 @@ class GeneralModel(pl.LightningModule):
         
     def training_step(self, batch, batch_idx):
         inputs, targets, initial_states = batch
-        output, trajectories = self(inputs, return_latents=True, initial_states=initial_states)
+        output, trajectories = self.model(inputs, return_latents=True, initial_states=initial_states)
         # create mask to count only the response period
         mask = torch.ones_like(output) # TODO: fix mask
         loss = loss_mse(output, targets, mask)
@@ -41,7 +41,7 @@ class GeneralModel(pl.LightningModule):
         
     def validation_step(self, batch, batch_idx):
         inputs, targets, initial_states = batch
-        output, trajectories = self(inputs, return_latents=True, initial_states=initial_states)
+        output, trajectories = self.model(inputs, return_latents=True, initial_states=initial_states)
         # create mask to count only the response period
         mask = torch.ones_like(output)
         loss = loss_mse(output, targets, mask)
@@ -59,8 +59,7 @@ class GeneralModel(pl.LightningModule):
         self.eval_accuracy.clear()
     
     def configure_optimizers(self):
-        # BUG: maybe the self.parameters() will not retreive all params from the model?
-        return torch.optim.Adam(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
+        return torch.optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=self.weight_decay)
     
     
 class frRNN(nn.Module):
