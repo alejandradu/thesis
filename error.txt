@@ -1,88 +1,116 @@
 
 CondaError: Run 'conda init' before 'conda activate'
 
-2025-02-01 15:15:48,798	INFO worker.py:1841 -- Started a local Ray instance.
-2025-02-01 15:15:53,296	INFO tune.py:253 -- Initializing Ray automatically. For cluster usage or custom Ray initialization, call `ray.init(...)` before `Tuner(...)`.
-[36m(RayTrainWorker pid=2707802)[0m Setting up process group for: env:// [rank=0, world_size=4]
-[36m(TorchTrainer pid=2707627)[0m Started distributed worker processes: 
-[36m(TorchTrainer pid=2707627)[0m - (node_id=21963d763a5c9de4f2df56917923a405f24900f96f97256e86a9e316, ip=172.17.6.68, pid=2707802) world_rank=0, local_rank=0, node_rank=0
-[36m(TorchTrainer pid=2707627)[0m - (node_id=21963d763a5c9de4f2df56917923a405f24900f96f97256e86a9e316, ip=172.17.6.68, pid=2707801) world_rank=1, local_rank=1, node_rank=0
-[36m(TorchTrainer pid=2707627)[0m - (node_id=21963d763a5c9de4f2df56917923a405f24900f96f97256e86a9e316, ip=172.17.6.68, pid=2707803) world_rank=2, local_rank=2, node_rank=0
-[36m(TorchTrainer pid=2707627)[0m - (node_id=21963d763a5c9de4f2df56917923a405f24900f96f97256e86a9e316, ip=172.17.6.68, pid=2707805) world_rank=3, local_rank=3, node_rank=0
-[36m(RayTrainWorker pid=2707802)[0m GPU available: True (cuda), used: True
-[36m(RayTrainWorker pid=2707802)[0m TPU available: False, using: 0 TPU cores
-[36m(RayTrainWorker pid=2707802)[0m HPU available: False, using: 0 HPUs
-[36m(RayTrainWorker pid=2707802)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py:73: `max_epochs` was not set. Setting it to 1000 epochs. To train without an epoch limit, set `max_epochs=-1`.
-[36m(RayTrainWorker pid=2707802)[0m You are using a CUDA device ('NVIDIA A100-SXM4-80GB') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
-2025-02-01 15:16:03,876	ERROR tune_controller.py:1331 -- Trial task failed for trial TorchTrainer_56593_00000
-Traceback (most recent call last):
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/air/execution/_internal/event_manager.py", line 110, in resolve_future
-    result = ray.get(future)
-             ^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
-    return fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 2772, in get
-    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 919, in get_objects
-    raise value.as_instanceof_cause()
-ray.exceptions.RayTaskError(DistBackendError): [36mray::_Inner.train()[39m (pid=2707627, ip=172.17.6.68, actor_id=81990a24d35514efb804ab7701000000, repr=TorchTrainer)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/tune/trainable/trainable.py", line 331, in train
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 57, in check_for_failure
-    ray.get(object_ref)
-           ^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ray.exceptions.RayTaskError(DistBackendError): [36mray::_RayTrainWorker__execute.get_next()[39m (pid=2707805, ip=172.17.6.68, actor_id=e24af1feee3bab856e9408a701000000, repr=<ray.train._internal.worker_group.RayTrainWorker object at 0x1542dec1b890>)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/worker_group.py", line 33, in __execute
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 176, in discard_return_wrapper
-    train_func(*args, **kwargs)
-  File "/home/ad2002/thesis/scripts_to_run/train_cluster.py", line 131, in train_loop
-    trainer.fit(model, datamodule=data_module)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 539, in fit
-    call._call_and_handle_interrupt(
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
-    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
-    return function(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 575, in _fit_impl
-    self._run(model, ckpt_path=ckpt_path)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 939, in _run
-    self.__setup_profiler()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1072, in __setup_profiler
-    self.profiler.setup(stage=self.state.fn, local_rank=local_rank, log_dir=self.log_dir)
-                                                                            ^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1234, in log_dir
-    dirpath = self.strategy.broadcast(dirpath)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/ddp.py", line 307, in broadcast
-    torch.distributed.broadcast_object_list(obj, src, group=_group.WORLD)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/distributed/c10d_logger.py", line 81, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py", line 3479, in broadcast_object_list
-    broadcast(object_sizes_tensor, src=global_src, group=group)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/distributed/c10d_logger.py", line 81, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py", line 2726, in broadcast
-    work = group.broadcast([tensor], opts)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-torch.distributed.DistBackendError: NCCL error in: /pytorch/torch/csrc/distributed/c10d/NCCLUtils.hpp:268, invalid usage (run with NCCL_DEBUG=WARN for details), NCCL version 2.21.5
-ncclInvalidUsage: This usually reflects invalid usage of NCCL library.
-Last error:
-Duplicate GPU detected : rank 3 and rank 0 both on CUDA device 81000
-2025-02-01 15:16:03,908	INFO tune.py:1009 -- Wrote the latest version of all result files and experiment state to '/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_15-15-47' in 0.0282s.
-2025-02-01 15:16:03,910	ERROR tune.py:1037 -- Trials did not complete: [TorchTrainer_56593_00000]
+2025-02-01 16:23:19,465	INFO worker.py:1841 -- Started a local Ray instance.
+2025-02-01 16:23:23,821	INFO tune.py:253 -- Initializing Ray automatically. For cluster usage or custom Ray initialization, call `ray.init(...)` before `Tuner(...)`.
+2025-02-01 16:23:23,892	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
+[36m(TorchTrainer pid=1625772)[0m GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
+[36m(RayTrainWorker pid=1625947)[0m Setting up process group for: env:// [rank=0, world_size=4]
+[36m(TorchTrainer pid=1625772)[0m Started distributed worker processes: 
+[36m(TorchTrainer pid=1625772)[0m - (node_id=a17ec64ef2d60a07f66a66ddec74f37b5fcc6c93a4afe2e03f37e10c, ip=172.17.6.67, pid=1625947) world_rank=0, local_rank=0, node_rank=0
+[36m(TorchTrainer pid=1625772)[0m - (node_id=a17ec64ef2d60a07f66a66ddec74f37b5fcc6c93a4afe2e03f37e10c, ip=172.17.6.67, pid=1625953) world_rank=1, local_rank=1, node_rank=0
+[36m(TorchTrainer pid=1625772)[0m - (node_id=a17ec64ef2d60a07f66a66ddec74f37b5fcc6c93a4afe2e03f37e10c, ip=172.17.6.67, pid=1625950) world_rank=2, local_rank=2, node_rank=0
+[36m(TorchTrainer pid=1625772)[0m - (node_id=a17ec64ef2d60a07f66a66ddec74f37b5fcc6c93a4afe2e03f37e10c, ip=172.17.6.67, pid=1625949) world_rank=3, local_rank=3, node_rank=0
+[36m(RayTrainWorker pid=1625947)[0m GPU available: False, used: False
+[36m(RayTrainWorker pid=1625947)[0m TPU available: False, using: 0 TPU cores
+[36m(RayTrainWorker pid=1625947)[0m HPU available: False, using: 0 HPUs
+[36m(RayTrainWorker pid=1625947)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py:73: `max_epochs` was not set. Setting it to 1000 epochs. To train without an epoch limit, set `max_epochs=-1`.
+[36m(RayTrainWorker pid=1625947)[0m 
+[36m(RayTrainWorker pid=1625947)[0m   | Name  | Type  | Params | Mode 
+[36m(RayTrainWorker pid=1625947)[0m ----------------------------------------
+[36m(RayTrainWorker pid=1625947)[0m 0 | model | frRNN | 175    | train
+[36m(RayTrainWorker pid=1625947)[0m ----------------------------------------
+[36m(RayTrainWorker pid=1625947)[0m 105       Trainable params
+[36m(RayTrainWorker pid=1625947)[0m 70        Non-trainable params
+[36m(RayTrainWorker pid=1625947)[0m 175       Total params
+[36m(RayTrainWorker pid=1625947)[0m 0.001     Total estimated model params size (MB)
+[36m(RayTrainWorker pid=1625947)[0m 1         Modules in train mode
+[36m(RayTrainWorker pid=1625947)[0m 0         Modules in eval mode
+[36m(RayTrainWorker pid=1625947)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/fit_loop.py:310: The number of training batches (7) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+[36m(RayTrainWorker pid=1625947)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_16-23-17/TorchTrainer_c4a69_00000_0_lr=0.0010,noise_std=0.1000,weight_decay=0.0010_2025-02-01_16-23-23/checkpoint_000000)
+2025-02-01 16:23:36,034	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:23:38,107	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:23:40,215	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+[36m(RayTrainWorker pid=1625947)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_16-23-17/TorchTrainer_c4a69_00000_0_lr=0.0010,noise_std=0.1000,weight_decay=0.0010_2025-02-01_16-23-23/checkpoint_000005)[32m [repeated 20x across cluster] (Ray deduplicates logs by default. Set RAY_DEDUP_LOGS=0 to disable log deduplication, or see https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-deduplication for more options.)[0m
+2025-02-01 16:23:42,299	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:23:44,387	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+[36m(RayTrainWorker pid=1625947)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_16-23-17/TorchTrainer_c4a69_00000_0_lr=0.0010,noise_std=0.1000,weight_decay=0.0010_2025-02-01_16-23-23/checkpoint_000010)[32m [repeated 20x across cluster][0m
+2025-02-01 16:23:46,431	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:23:48,512	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:23:50,633	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+[36m(RayTrainWorker pid=1625947)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_16-23-17/TorchTrainer_c4a69_00000_0_lr=0.0010,noise_std=0.1000,weight_decay=0.0010_2025-02-01_16-23-23/checkpoint_000015)[32m [repeated 20x across cluster][0m
+2025-02-01 16:23:52,753	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:23:54,855	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+[36m(RayTrainWorker pid=1625947)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_16-23-17/TorchTrainer_c4a69_00000_0_lr=0.0010,noise_std=0.1000,weight_decay=0.0010_2025-02-01_16-23-23/checkpoint_000020)[32m [repeated 20x across cluster][0m
+2025-02-01 16:23:56,914	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:23:58,929	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:24:00,959	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+[36m(RayTrainWorker pid=1625947)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_16-23-17/TorchTrainer_c4a69_00000_0_lr=0.0010,noise_std=0.1000,weight_decay=0.0010_2025-02-01_16-23-23/checkpoint_000025)[32m [repeated 20x across cluster][0m
+2025-02-01 16:24:03,138	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:24:05,298	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+[36m(RayTrainWorker pid=1625947)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_16-23-17/TorchTrainer_c4a69_00000_0_lr=0.0010,noise_std=0.1000,weight_decay=0.0010_2025-02-01_16-23-23/checkpoint_000030)[32m [repeated 20x across cluster][0m
+2025-02-01 16:24:07,461	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:24:09,618	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:24:11,749	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+[36m(RayTrainWorker pid=1625947)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_16-23-17/TorchTrainer_c4a69_00000_0_lr=0.0010,noise_std=0.1000,weight_decay=0.0010_2025-02-01_16-23-23/checkpoint_000035)[32m [repeated 20x across cluster][0m
+2025-02-01 16:24:13,730	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:24:15,817	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+[36m(RayTrainWorker pid=1625947)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_16-23-17/TorchTrainer_c4a69_00000_0_lr=0.0010,noise_std=0.1000,weight_decay=0.0010_2025-02-01_16-23-23/checkpoint_000040)[32m [repeated 20x across cluster][0m
+2025-02-01 16:24:17,912	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:24:20,203	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+[36m(RayTrainWorker pid=1625947)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_16-23-17/TorchTrainer_c4a69_00000_0_lr=0.0010,noise_std=0.1000,weight_decay=0.0010_2025-02-01_16-23-23/checkpoint_000045)[32m [repeated 20x across cluster][0m
+2025-02-01 16:24:22,456	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:24:24,631	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:24:26,783	WARNING experiment_state.py:206 -- Experiment state snapshotting has been triggered multiple times in the last 5.0 seconds and may become a bottleneck. A snapshot is forced if `CheckpointConfig(num_to_keep)` is set, and a trial has checkpointed >= `num_to_keep` times since the last snapshot.
+You may want to consider increasing the `CheckpointConfig(num_to_keep)` or decreasing the frequency of saving checkpoints.
+You can suppress this warning by setting the environment variable TUNE_WARN_EXCESSIVE_EXPERIMENT_CHECKPOINT_SYNC_THRESHOLD_S to a smaller value than the current threshold (5.0). Set it to 0 to completely suppress this warning.
+2025-02-01 16:24:26,785	INFO tune.py:1009 -- Wrote the latest version of all result files and experiment state to '/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_16-23-17' in 0.0019s.
+[36m(RayTrainWorker pid=1625949)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_16-23-17/TorchTrainer_c4a69_00000_0_lr=0.0010,noise_std=0.1000,weight_decay=0.0010_2025-02-01_16-23-23/checkpoint_000049)[32m [repeated 19x across cluster][0m

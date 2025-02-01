@@ -135,7 +135,7 @@ scheduler = ASHAScheduler(max_t=num_epochs, grace_period=grace_period, reduction
 
 # HERE for distributed training
 scaling_config = ScalingConfig(
-    num_workers=num_workers, use_gpu=True, resources_per_worker={"CPU": 1, "GPU": 0.25}   # divide by worker
+    num_workers=num_workers, use_gpu=False, resources_per_worker={"CPU": 1, "GPU": 0.0}   # divide by worker
 )
 
 run_config = RunConfig(
