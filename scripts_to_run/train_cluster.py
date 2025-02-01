@@ -11,7 +11,7 @@ import torch
 import lightning as pl
 from torch.utils.data import DataLoader
 from synthetic_datasets.tasks.CDM import CDM
-from models.modules.rnn_module import frRNN
+from models.modules.rnn_module import *
 from synthetic_datasets.datamodules.task_datamodule import TaskDataModule
 from ray.train import RunConfig, ScalingConfig, CheckpointConfig
 from ray import train, tune
@@ -70,6 +70,7 @@ DATA_CONFIG = {
 # setup the model
 # NOTE: write as 'param': tune.choice([]) (or tune.OTHER) for hyperparam tuning
 MODEL_CONFIG = {
+    "model_class": frRNN,
     "input_size": input_size,
     "hidden_size": 10,
     "output_size": output_size,
@@ -108,7 +109,10 @@ num_samples = 1  # this matters for other than tune.choice
 def train_loop(model_config):
     
     # create the model
-    model = frRNN(model_config) 
+    # model = frRNN(model_config) 
+    
+    # create the model
+    model = GeneralModel(model_config)
     # create data: encapsulate all train, val, test splits
     data_module = TaskDataModule(DATA_CONFIG) 
     

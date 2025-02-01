@@ -1,49 +1,49 @@
-no change     /home/ad2002/.conda/envs/thesis/condabin/conda
-no change     /home/ad2002/.conda/envs/thesis/bin/conda
-no change     /home/ad2002/.conda/envs/thesis/bin/conda-env
-no change     /home/ad2002/.conda/envs/thesis/bin/activate
-no change     /home/ad2002/.conda/envs/thesis/bin/deactivate
-no change     /home/ad2002/.conda/envs/thesis/etc/profile.d/conda.sh
-no change     /home/ad2002/.conda/envs/thesis/etc/fish/conf.d/conda.fish
-no change     /home/ad2002/.conda/envs/thesis/shell/condabin/Conda.psm1
-no change     /home/ad2002/.conda/envs/thesis/shell/condabin/conda-hook.ps1
-no change     /home/ad2002/.conda/envs/thesis/lib/python3.11/site-packages/xontrib/conda.xsh
-no change     /home/ad2002/.conda/envs/thesis/etc/profile.d/conda.csh
+no change     /usr/licensed/anaconda3/2024.6/condabin/conda
+no change     /usr/licensed/anaconda3/2024.6/bin/conda
+no change     /usr/licensed/anaconda3/2024.6/bin/conda-env
+no change     /usr/licensed/anaconda3/2024.6/bin/activate
+no change     /usr/licensed/anaconda3/2024.6/bin/deactivate
+no change     /usr/licensed/anaconda3/2024.6/etc/profile.d/conda.sh
+no change     /usr/licensed/anaconda3/2024.6/etc/fish/conf.d/conda.fish
+no change     /usr/licensed/anaconda3/2024.6/shell/condabin/Conda.psm1
+no change     /usr/licensed/anaconda3/2024.6/shell/condabin/conda-hook.ps1
+no change     /usr/licensed/anaconda3/2024.6/lib/python3.12/site-packages/xontrib/conda.xsh
+no change     /usr/licensed/anaconda3/2024.6/etc/profile.d/conda.csh
 no change     /home/ad2002/.bashrc
 No action taken.
 ╭─────────────────────────────────────────────────────────────────────╮
-│ Configuration for experiment     TorchTrainer_2025-02-01_14-22-53   │
+│ Configuration for experiment     TorchTrainer_2025-02-01_14-53-57   │
 ├─────────────────────────────────────────────────────────────────────┤
 │ Search algorithm                 BasicVariantGenerator              │
 │ Scheduler                        AsyncHyperBandScheduler            │
 │ Number of trials                 1                                  │
 ╰─────────────────────────────────────────────────────────────────────╯
 
-View detailed results here: /scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_14-22-53
-To visualize your results with TensorBoard, run: `tensorboard --logdir /tmp/ray/session_2025-02-01_14-22-53_255629_2685090/artifacts/2025-02-01_14-22-58/TorchTrainer_2025-02-01_14-22-53/driver_artifacts`
+View detailed results here: /scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_14-53-57
+To visualize your results with TensorBoard, run: `tensorboard --logdir /tmp/ray/session_2025-02-01_14-53-57_842966_2694422/artifacts/2025-02-01_14-54-03/TorchTrainer_2025-02-01_14-53-57/driver_artifacts`
 
 Trial status: 1 PENDING
-Current time: 2025-02-01 14:22:58. Total running time: 0s
+Current time: 2025-02-01 14:54:04. Total running time: 0s
 Logical resource usage: 0/48 CPUs, 0/1 GPUs (0.0/1.0 accelerator_type:A100)
 ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ Trial name                 status       ..._config/noise_std     train_loop_config/lr     ...nfig/weight_decay │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ TorchTrainer_f2131_00000   PENDING                         0                    0.001                        0 │
+│ TorchTrainer_49db4_00000   PENDING                       0.1                   0.0001                    0.001 │
 ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-Trial TorchTrainer_f2131_00000 started with configuration:
+Trial TorchTrainer_49db4_00000 started with configuration:
 ╭────────────────────────────────────────────────────────────────╮
-│ Trial TorchTrainer_f2131_00000 config                          │
+│ Trial TorchTrainer_49db4_00000 config                          │
 ├────────────────────────────────────────────────────────────────┤
 │ train_loop_config/add_biases                             False │
 │ train_loop_config/alpha                                      1 │
 │ train_loop_config/b_init                                       │
 │ train_loop_config/hidden_size                               10 │
 │ train_loop_config/input_size                                 4 │
-│ train_loop_config/lr                                     0.001 │
-│ train_loop_config/noise_std                                0.0 │
-│ train_loop_config/non_linearity           ...t 0x14c350e12280> │
-│ train_loop_config/output_non_linearity    ...t 0x14c350e12280> │
+│ train_loop_config/lr                                    0.0001 │
+│ train_loop_config/noise_std                                0.1 │
+│ train_loop_config/non_linearity           ...t 0x153d989e2f60> │
+│ train_loop_config/output_non_linearity    ...t 0x153d989e2f60> │
 │ train_loop_config/output_size                                1 │
 │ train_loop_config/rho                                        1 │
 │ train_loop_config/si_init                                      │
@@ -54,28 +54,28 @@ Trial TorchTrainer_f2131_00000 started with configuration:
 │ train_loop_config/train_wi                               False │
 │ train_loop_config/train_wo                               False │
 │ train_loop_config/train_wrec                              True │
-│ train_loop_config/weight_decay                             0.0 │
+│ train_loop_config/weight_decay                           0.001 │
 │ train_loop_config/wi_init                                      │
 │ train_loop_config/wo_init                                      │
 │ train_loop_config/wrec_init                                    │
 ╰────────────────────────────────────────────────────────────────╯
 
-Trial TorchTrainer_f2131_00000 errored after 0 iterations at 2025-02-01 14:23:05. Total running time: 6s
-Error file: /tmp/ray/session_2025-02-01_14-22-53_255629_2685090/artifacts/2025-02-01_14-22-58/TorchTrainer_2025-02-01_14-22-53/driver_artifacts/TorchTrainer_f2131_00000_0_lr=0.0010,noise_std=0.0000,weight_decay=0.0000_2025-02-01_14-22-58/error.txt
+Trial TorchTrainer_49db4_00000 errored after 0 iterations at 2025-02-01 14:54:14. Total running time: 10s
+Error file: /tmp/ray/session_2025-02-01_14-53-57_842966_2694422/artifacts/2025-02-01_14-54-03/TorchTrainer_2025-02-01_14-53-57/driver_artifacts/TorchTrainer_49db4_00000_0_lr=0.0001,noise_std=0.1000,weight_decay=0.0010_2025-02-01_14-54-03/error.txt
 
 Trial status: 1 ERROR
-Current time: 2025-02-01 14:23:05. Total running time: 6s
+Current time: 2025-02-01 14:54:14. Total running time: 10s
 Logical resource usage: 5.0/48 CPUs, 1.0/1 GPUs (0.0/1.0 accelerator_type:A100)
 ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ Trial name                 status       ..._config/noise_std     train_loop_config/lr     ...nfig/weight_decay │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ TorchTrainer_f2131_00000   ERROR                           0                    0.001                        0 │
+│ TorchTrainer_49db4_00000   ERROR                         0.1                   0.0001                    0.001 │
 ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 Number of errored trials: 1
 ╭───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ Trial name                   # failures   error file                                                                                                                                                                                                                                  │
 ├───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ TorchTrainer_f2131_00000              1   /tmp/ray/session_2025-02-01_14-22-53_255629_2685090/artifacts/2025-02-01_14-22-58/TorchTrainer_2025-02-01_14-22-53/driver_artifacts/TorchTrainer_f2131_00000_0_lr=0.0010,noise_std=0.0000,weight_decay=0.0000_2025-02-01_14-22-58/error.txt │
+│ TorchTrainer_49db4_00000              1   /tmp/ray/session_2025-02-01_14-53-57_842966_2694422/artifacts/2025-02-01_14-54-03/TorchTrainer_2025-02-01_14-53-57/driver_artifacts/TorchTrainer_49db4_00000_0_lr=0.0001,noise_std=0.1000,weight_decay=0.0010_2025-02-01_14-54-03/error.txt │
 ╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 

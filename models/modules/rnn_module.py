@@ -12,12 +12,17 @@ class GeneralModel(pl.LightningModule):
     The params relevant for GeneralModel are lr and weight_decay, 
     but they must be passed before as part of the model_config"""
     
-    def __init__(self, model):
+    def __init__(self, model_config):
         super(GeneralModel, self).__init__()
-        self.model = model
-        self.model_config = model.model_config
+        
+        # create the model
+        self.model_config = model_config
+        self.model_class = model_config['model_class']
         self.lr = self.model_config['lr']
         self.weight_decay = self.model_config['weight_decay']
+        
+        # initialize the neural net (the model)
+        self.model = self.model_class(model_config)
         
         # per epoch metrics
         self.eval_loss = []

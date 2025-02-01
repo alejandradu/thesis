@@ -15,7 +15,7 @@
 
 module load anaconda3/2024.6
 conda init
-conda activate thesis
+conda activate neuralnets
 
 python /home/ad2002/thesis/scripts_to_run/train_cluster.py
 
