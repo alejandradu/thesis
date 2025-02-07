@@ -72,7 +72,7 @@ DATA_CONFIG = {
     "val_ratio": 0.2,
     "init_states": None,
     "init_states_dimension": 10,  # HAVE TO MATCH THIS WITH HIDDEN SIZE
-    "init_states_name":'none',
+    "init_states_name":'none_4',
 } 
 
 # setup the model
@@ -117,7 +117,7 @@ def train_loop(model_config):
     # create the model
     model = GeneralModel(model_config)
     # optional: set the mask (will count for training and eval)
-    model.set_mask(N_TIMESTEPS, BIN_SIZE, [N_TIMESTEPS-50, N_TIMESTEPS-1])
+    # model.set_mask(N_TIMESTEPS, BIN_SIZE, [N_TIMESTEPS-50, N_TIMESTEPS-1])
     # create data: encapsulate all train, val, test splits
     data_module = TaskDataModule(DATA_CONFIG) 
     

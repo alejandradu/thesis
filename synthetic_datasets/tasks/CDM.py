@@ -12,6 +12,8 @@ class CDM(SyntheticTask):
     
     Args:
         random_trials: bool, if True, the trial durations are randomly sampled"""
+        
+    # BUG: the tensors are of INCOMPLETE dimensions for the random_trials - also make the mask
     
     # NOTE: coherences here are possibly the same as Driscoll's targets
     
@@ -119,7 +121,12 @@ class CDM(SyntheticTask):
         inputs_context = torch.zeros((n_trials, total_duration, 2))
         inputs = torch.cat([inputs_sensory, inputs_context], dim=2)
         targets = torch.zeros((n_trials, total_duration, 1), dtype=torch.float32)
-        mask = torch.zeros((n_trials, self.n_timesteps, 1), dtype=torch.float32)
+        # mask for when all trials have the same total length and phase time stamps
+        mask_not_random = torch.zeros((n_trials, total_duration, 1), dtype=torch.float32)
+        # mark with ones only the response period
+        mask_not_random[:, res_begin:, 0] = 1
+        # for now return only the constant mask
+        mask_random = torch.ones((n_trials, total_duration, 1), dtype=torch.float32)
             
         for n in range(n_trials):
  
@@ -170,7 +177,10 @@ class CDM(SyntheticTask):
                 inputs[n, ctx_begin:res_begin, 3] = 1 * self.ctx_scale
                 targets[n, res_begin:, 0] = self.hi if self.coh_choice1 > 0 else self.lo
         
-        return inputs, targets, phase_index
+        if not self.random_trials:
+            return inputs, targets, phase_index, mask_not_random
+        else:
+            return inputs, targets, phase_index, mask_random
     
     
     def plot_trial(self):

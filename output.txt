@@ -12,39 +12,39 @@ no change     /usr/licensed/anaconda3/2024.6/etc/profile.d/conda.csh
 no change     /home/ad2002/.bashrc
 No action taken.
 ╭─────────────────────────────────────────────────────────────────────╮
-│ Configuration for experiment     TorchTrainer_2025-02-01_16-23-17   │
+│ Configuration for experiment     TorchTrainer_2025-02-05_14-44-00   │
 ├─────────────────────────────────────────────────────────────────────┤
 │ Search algorithm                 BasicVariantGenerator              │
 │ Scheduler                        AsyncHyperBandScheduler            │
 │ Number of trials                 1                                  │
 ╰─────────────────────────────────────────────────────────────────────╯
 
-View detailed results here: /scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-01_16-23-17
-To visualize your results with TensorBoard, run: `tensorboard --logdir /tmp/ray/session_2025-02-01_16-23-17_895602_1622658/artifacts/2025-02-01_16-23-23/TorchTrainer_2025-02-01_16-23-17/driver_artifacts`
+View detailed results here: /scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-02-05_14-44-00
+To visualize your results with TensorBoard, run: `tensorboard --logdir /tmp/ray/session_2025-02-05_14-44-00_478297_865877/artifacts/2025-02-05_14-44-06/TorchTrainer_2025-02-05_14-44-00/driver_artifacts`
 
 Trial status: 1 PENDING
-Current time: 2025-02-01 16:23:24. Total running time: 0s
+Current time: 2025-02-05 14:44:06. Total running time: 0s
 Logical resource usage: 0/48 CPUs, 0/1 GPUs (0.0/1.0 accelerator_type:A100)
 ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ Trial name                 status       ..._config/noise_std     train_loop_config/lr     ...nfig/weight_decay │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ TorchTrainer_c4a69_00000   PENDING                       0.1                    0.001                    0.001 │
+│ TorchTrainer_8f89f_00000   PENDING                       0.1                   0.0001                        0 │
 ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-Trial TorchTrainer_c4a69_00000 started with configuration:
+Trial TorchTrainer_8f89f_00000 started with configuration:
 ╭────────────────────────────────────────────────────────────────╮
-│ Trial TorchTrainer_c4a69_00000 config                          │
+│ Trial TorchTrainer_8f89f_00000 config                          │
 ├────────────────────────────────────────────────────────────────┤
 │ train_loop_config/add_biases                             False │
 │ train_loop_config/alpha                                      1 │
 │ train_loop_config/b_init                                       │
 │ train_loop_config/hidden_size                               10 │
 │ train_loop_config/input_size                                 4 │
-│ train_loop_config/lr                                     0.001 │
+│ train_loop_config/lr                                    0.0001 │
 │ train_loop_config/model_class             ...nn_module.frRNN'> │
 │ train_loop_config/noise_std                                0.1 │
-│ train_loop_config/non_linearity           ...t 0x151b83e6ef60> │
-│ train_loop_config/output_non_linearity    ...t 0x151b83e6ef60> │
+│ train_loop_config/non_linearity           ...t 0x14d02a7fdf60> │
+│ train_loop_config/output_non_linearity    ...t 0x14d02a7fdf60> │
 │ train_loop_config/output_size                                1 │
 │ train_loop_config/rho                                        1 │
 │ train_loop_config/si_init                                      │
@@ -55,54 +55,28 @@ Trial TorchTrainer_c4a69_00000 started with configuration:
 │ train_loop_config/train_wi                               False │
 │ train_loop_config/train_wo                               False │
 │ train_loop_config/train_wrec                              True │
-│ train_loop_config/weight_decay                           0.001 │
+│ train_loop_config/weight_decay                             0.0 │
 │ train_loop_config/wi_init                                      │
 │ train_loop_config/wo_init                                      │
 │ train_loop_config/wrec_init                                    │
 ╰────────────────────────────────────────────────────────────────╯
 
-Trial status: 1 RUNNING
-Current time: 2025-02-01 16:23:54. Total running time: 30s
-Logical resource usage: 5.0/48 CPUs, 0/1 GPUs (0.0/1.0 accelerator_type:A100)
-Current best trial: c4a69_00000 with ptl/val_accuracy=0.0 and params={'train_loop_config': {'model_class': <class 'models.modules.rnn_module.frRNN'>, 'input_size': 4, 'hidden_size': 10, 'output_size': 1, 'noise_std': 0.1, 'alpha': 1, 'rho': 1, 'train_wi': False, 'train_wo': False, 'train_wrec': True, 'train_h0': False, 'train_si': True, 'train_so': True, 'wi_init': None, 'wo_init': None, 'wrec_init': None, 'si_init': None, 'so_init': None, 'b_init': None, 'add_biases': False, 'non_linearity': <built-in method tanh of type object at 0x151b83e6ef60>, 'output_non_linearity': <built-in method tanh of type object at 0x151b83e6ef60>, 'lr': 0.001, 'weight_decay': 0.001}}
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ Trial name                 status       ..._config/noise_std     train_loop_config/lr     ...nfig/weight_decay     iter     total time (s)     ptl/train_loss     ptl/train_accuracy     ptl/val_loss     ptl/val_accuracy │
-├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ TorchTrainer_c4a69_00000   RUNNING                       0.1                    0.001                    0.001       19            25.2082          0.0127288                      0        0.0199942                    0 │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-Trial status: 1 RUNNING
-Current time: 2025-02-01 16:24:24. Total running time: 1min 0s
-Logical resource usage: 5.0/48 CPUs, 0/1 GPUs (0.0/1.0 accelerator_type:A100)
-Current best trial: c4a69_00000 with ptl/val_accuracy=0.0 and params={'train_loop_config': {'model_class': <class 'models.modules.rnn_module.frRNN'>, 'input_size': 4, 'hidden_size': 10, 'output_size': 1, 'noise_std': 0.1, 'alpha': 1, 'rho': 1, 'train_wi': False, 'train_wo': False, 'train_wrec': True, 'train_h0': False, 'train_si': True, 'train_so': True, 'wi_init': None, 'wo_init': None, 'wrec_init': None, 'si_init': None, 'so_init': None, 'b_init': None, 'add_biases': False, 'non_linearity': <built-in method tanh of type object at 0x151b83e6ef60>, 'output_non_linearity': <built-in method tanh of type object at 0x151b83e6ef60>, 'lr': 0.001, 'weight_decay': 0.001}}
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ Trial name                 status       ..._config/noise_std     train_loop_config/lr     ...nfig/weight_decay     iter     total time (s)     ptl/train_loss     ptl/train_accuracy     ptl/val_loss     ptl/val_accuracy │
-├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ TorchTrainer_c4a69_00000   RUNNING                       0.1                    0.001                    0.001       47            54.7865          0.0125359                      0        0.0156499                    0 │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+Trial TorchTrainer_8f89f_00000 errored after 0 iterations at 2025-02-05 14:44:22. Total running time: 15s
+Error file: /tmp/ray/session_2025-02-05_14-44-00_478297_865877/artifacts/2025-02-05_14-44-06/TorchTrainer_2025-02-05_14-44-00/driver_artifacts/TorchTrainer_8f89f_00000_0_lr=0.0001,noise_std=0.1000,weight_decay=0.0000_2025-02-05_14-44-06/error.txt
 
-Trial TorchTrainer_c4a69_00000 completed after 50 iterations at 2025-02-01 16:24:26. Total running time: 1min 2s
-╭─────────────────────────────────────────────────────────────╮
-│ Trial TorchTrainer_c4a69_00000 result                       │
-├─────────────────────────────────────────────────────────────┤
-│ checkpoint_dir_name                       checkpoint_000049 │
-│ time_this_iter_s                                    1.06609 │
-│ time_total_s                                       57.98362 │
-│ training_iteration                                       50 │
-│ epoch                                                    49 │
-│ ptl/train_accuracy                                       0. │
-│ ptl/train_loss                                       0.0126 │
-│ ptl/val_accuracy                                         0. │
-│ ptl/val_loss                                        0.01539 │
-│ step                                                    350 │
-╰─────────────────────────────────────────────────────────────╯
+Trial status: 1 ERROR
+Current time: 2025-02-05 14:44:22. Total running time: 15s
+Logical resource usage: 9.0/48 CPUs, 0/1 GPUs (0.0/1.0 accelerator_type:A100)
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Trial name                 status       ..._config/noise_std     train_loop_config/lr     ...nfig/weight_decay │
+├────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ TorchTrainer_8f89f_00000   ERROR                         0.1                   0.0001                        0 │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-Trial status: 1 TERMINATED
-Current time: 2025-02-01 16:24:26. Total running time: 1min 2s
-Logical resource usage: 5.0/48 CPUs, 0/1 GPUs (0.0/1.0 accelerator_type:A100)
-Current best trial: c4a69_00000 with ptl/val_accuracy=0.0 and params={'train_loop_config': {'model_class': <class 'models.modules.rnn_module.frRNN'>, 'input_size': 4, 'hidden_size': 10, 'output_size': 1, 'noise_std': 0.1, 'alpha': 1, 'rho': 1, 'train_wi': False, 'train_wo': False, 'train_wrec': True, 'train_h0': False, 'train_si': True, 'train_so': True, 'wi_init': None, 'wo_init': None, 'wrec_init': None, 'si_init': None, 'so_init': None, 'b_init': None, 'add_biases': False, 'non_linearity': <built-in method tanh of type object at 0x151b83e6ef60>, 'output_non_linearity': <built-in method tanh of type object at 0x151b83e6ef60>, 'lr': 0.001, 'weight_decay': 0.001}}
-╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ Trial name                 status         ..._config/noise_std     train_loop_config/lr     ...nfig/weight_decay     iter     total time (s)     ptl/train_loss     ptl/train_accuracy     ptl/val_loss     ptl/val_accuracy │
-├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ TorchTrainer_c4a69_00000   TERMINATED                      0.1                    0.001                    0.001       50            57.9836          0.0126009                      0        0.0153926                    0 │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+Number of errored trials: 1
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Trial name                   # failures   error file                                                                                                                                                                                                                                 │
+├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ TorchTrainer_8f89f_00000              1   /tmp/ray/session_2025-02-05_14-44-00_478297_865877/artifacts/2025-02-05_14-44-06/TorchTrainer_2025-02-05_14-44-00/driver_artifacts/TorchTrainer_8f89f_00000_0_lr=0.0001,noise_std=0.1000,weight_decay=0.0000_2025-02-05_14-44-06/error.txt │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 

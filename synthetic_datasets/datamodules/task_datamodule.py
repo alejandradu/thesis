@@ -68,7 +68,7 @@ class TaskDataModule(pl.LightningDataModule):
         if os.path.exists(self.dpath):
             return
         else:
-            inputs, targets, phase_index = self.task.generate_dataset()
+            inputs, targets, phase_index, mask = self.task.generate_dataset()
             
             # expand the initial states to the number of n_trials
             if self.init_states is not None:
@@ -97,6 +97,8 @@ class TaskDataModule(pl.LightningDataModule):
                 'val_inputs': inputs[val_idx],
                 'val_targets': targets[val_idx],
                 'val_init_states': init_states[val_idx],
+                'train_mask': mask[train_idx],
+                'val_mask': mask[val_idx],
             }
             
             # save
@@ -119,11 +121,13 @@ class TaskDataModule(pl.LightningDataModule):
             val_inputs = torch.tensor(f['val_inputs'][:])
             val_targets = torch.tensor(f['val_targets'][:])
             val_init_states = torch.tensor(f['val_init_states'][:])
+            train_mask = torch.tensor(f['train_mask'][:])
+            val_mask = torch.tensor(f['val_mask'][:])
             # phase_index_train = f['phase_index_train']
             # phase_index_val = f['phase_index_val']
 
-        self.train_dataset = TensorDataset(train_inputs, train_targets, train_init_states)
-        self.val_dataset = TensorDataset(val_inputs, val_targets, val_init_states)
+        self.train_dataset = TensorDataset(train_inputs, train_targets, train_init_states, train_mask)
+        self.val_dataset = TensorDataset(val_inputs, val_targets, val_init_states, val_mask)
         # self.phase_index_train = phase_index_train
         # self.phase_index_val = phase_index_val
 

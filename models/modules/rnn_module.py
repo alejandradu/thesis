@@ -29,35 +29,44 @@ class GeneralModel(pl.LightningModule):
         self.eval_accuracy = []
         
         # to mask during training/evaluation
-        self.mask = None
+        # self.mask = None
         
-    def set_mask(self, n_timesteps: int, bin_size: int, mask_interval: list[int]):
-        """Return binary mask for ONLY the timestep dimension
+    # def set_mask(self, n_timesteps: int, bin_size: int, mask_interval: list[int]):
+    #     """Return binary mask for ONLY the timestep dimension
         
-        Args:
-            n_timesteps: total timesteps as passed in TASK_CONFIG
-            bin_size: bin size as passed in TASK_CONFIG
-            mask_interval: list/tuple of start and end timesteps (raw, not binned)
-        """
-        # binned length
-        binned_mask = torch.zeros(int(n_timesteps / bin_size))  
-        binned_mask[math.floor(mask_interval[0] / bin_size) : math.floor(mask_interval[1] / bin_size)] = 1
-        self.mask = binned_mask
+    #     Args:
+    #         n_timesteps: total timesteps as passed in TASK_CONFIG
+    #         bin_size: bin size as passed in TASK_CONFIG
+    #         mask_interval: list/tuple of start and end timesteps (raw, not binned)
+    #     """
+    #     # binned length
+    #     binned_mask = torch.zeros(int(n_timesteps / bin_size))  
+    #     binned_mask[math.floor(mask_interval[0] / bin_size) : math.floor(mask_interval[1] / bin_size)] = 1
+    #     self.mask = binned_mask
         
     def training_step(self, batch, batch_idx):
-        inputs, targets, initial_states = batch
+        # batch is the tensor dataset created in the datamodule
+        inputs, targets, initial_states, mask = batch
         output, trajectories = self.model(inputs, return_latents=True, initial_states=initial_states)
-        loss = loss_mse(output, targets, self.mask)
-        acc = accuracy(output, targets, self.mask)
+        
+        # adjust the mask dimensions - batch_size, n_timesteps, input_dim
+        batch_size, n_timesteps, output_dim = output.shape
+
+        loss = loss_mse(output, targets, mask)
+        acc = accuracy(output, targets, mask)
         self.log('ptl/train_loss', loss, sync_dist=True)
         self.log('ptl/train_accuracy', acc, sync_dist=True)
         return loss
         
     def validation_step(self, batch, batch_idx):
-        inputs, targets, initial_states = batch
+        inputs, targets, initial_states, mask = batch
         output, trajectories = self.model(inputs, return_latents=True, initial_states=initial_states)
-        loss = loss_mse(output, targets, self.mask)
-        acc = accuracy(output, targets, self.mask)
+        
+        # adjust the mask dimensions - batch_size, n_timesteps, input_dim
+        batch_size, n_timesteps, output_dim = output.shape
+        
+        loss = loss_mse(output, targets, mask)
+        acc = accuracy(output, targets, mask)
         self.eval_accuracy.append(acc)
         self.eval_loss.append(loss)
         return {"val_loss": loss, "val_accuracy": acc}
