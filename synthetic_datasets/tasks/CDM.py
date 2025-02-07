@@ -124,7 +124,7 @@ class CDM(SyntheticTask):
         # mask for when all trials have the same total length and phase time stamps
         mask_not_random = torch.zeros((n_trials, total_duration, 1), dtype=torch.float32)
         # mark with ones only the response period
-        mask_not_random[:, res_begin:, 0] = 1
+        mask_not_random[:, res_begin:, 0] = 1.0
         # for now return only the constant mask
         mask_random = torch.ones((n_trials, total_duration, 1), dtype=torch.float32)
             
