@@ -25,11 +25,11 @@ from ray.train.lightning import (
 )
 
 ######## train with Ray
-num_epochs = 50
+num_epochs = 100
 grace_period = 1
 reduction_factor = 2
 num_workers = 8   # SET THE SAME AS CPU
-num_samples = 1  # this matters for other than tune.choice
+num_samples = 8  # total hyperparam combs 
 ######## 
 
 # setup the task
@@ -37,7 +37,7 @@ TASK_CONFIG = {
     "seed": 0,
     "coherences": None,
     "n_trials": 2000,    # check that this > batch_size below
-    "bin_size": 20,   # this is bin for TIMESTEPS
+    "bin_size": 10,   # this is bin for TIMESTEPS
     "noise": 0.0,   # this is noise for the task itself
     "n_timesteps": 250+800+2000+250+50,
     "fix": 250,
@@ -72,7 +72,7 @@ DATA_CONFIG = {
     "val_ratio": 0.2,
     "init_states": None,
     "init_states_dimension": 10,  # HAVE TO MATCH THIS WITH HIDDEN SIZE
-    "init_states_name":'none_4',
+    "init_states_name":'none_5',
 } 
 
 # setup the model
@@ -110,19 +110,14 @@ BIN_SIZE = TASK_CONFIG["bin_size"]
 # training function
 # NOTE: might have to create loader functions to simpify function overhead
 def train_loop(model_config):
-    
-    # create the model
-    # model = frRNN(model_config) 
-    
+
     # create the model
     model = GeneralModel(model_config)
-    # optional: set the mask (will count for training and eval)
-    # model.set_mask(N_TIMESTEPS, BIN_SIZE, [N_TIMESTEPS-50, N_TIMESTEPS-1])
     # create data: encapsulate all train, val, test splits
     data_module = TaskDataModule(DATA_CONFIG) 
     
-    data_module.prepare_data()
-    data_module.setup()
+    # data_module.prepare_data()
+    # data_module.setup()
     
     trainer = pl.Trainer(
         devices="auto",

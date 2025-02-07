@@ -5,6 +5,7 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.model_selection import train_test_split
+import pickle
 
 # NOTE: you might want to add a seed, also retrieve
 # phase_index_train and phase_index_val
@@ -106,13 +107,22 @@ class TaskDataModule(pl.LightningDataModule):
             with h5py.File(self.dpath, 'w') as f:
                 for key, value in data.items():
                     f.create_dataset(key, data=value)
-        
+                    
+            # save as a pickle
+            with open(self.dpath, 'wb') as f:
+                pickle.dump(data, f)
+
+            print(f"Data saved to {self.dpath}")
+
 
     # DO NOT REMOVE stage
     # BUG: should do splits here
     def setup(self, stage=None):
         
-        # BUG: this is not finding the dataset (path is fine)
+        if not os.path.exists(self.dpath):
+            raise FileNotFoundError(f"The file {self.dpath} does not exist.")
+        
+  
         # load the saved h5py dataset
         with h5py.File((self.dpath), 'r') as f:
             train_inputs = torch.tensor(f['train_inputs'][:])
@@ -125,7 +135,8 @@ class TaskDataModule(pl.LightningDataModule):
             val_mask = torch.tensor(f['val_mask'][:])
             # phase_index_train = f['phase_index_train']
             # phase_index_val = f['phase_index_val']
-
+ 
+        # create the dataset
         self.train_dataset = TensorDataset(train_inputs, train_targets, train_init_states, train_mask)
         self.val_dataset = TensorDataset(val_inputs, val_targets, val_init_states, val_mask)
         # self.phase_index_train = phase_index_train

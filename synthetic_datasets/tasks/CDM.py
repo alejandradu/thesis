@@ -123,7 +123,7 @@ class CDM(SyntheticTask):
         targets = torch.zeros((n_trials, total_duration, 1), dtype=torch.float32)
         # mask for when all trials have the same total length and phase time stamps
         mask_not_random = torch.zeros((n_trials, total_duration, 1), dtype=torch.float32)
-        # mark with ones only the response period
+        # mark with ones only the response period - DO NOT REMOVE FLOAT 1.0
         mask_not_random[:, res_begin:, 0] = 1.0
         # for now return only the constant mask
         mask_random = torch.ones((n_trials, total_duration, 1), dtype=torch.float32)
@@ -204,6 +204,7 @@ class CDM(SyntheticTask):
             ax[0].axvline(x=val, color='k', linestyle='--')
             ax[1].axvline(x=val, color='k', linestyle='--')
         
-        plt.show()
+        # return the image
+        return fig
         
         

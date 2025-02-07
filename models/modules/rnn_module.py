@@ -28,21 +28,6 @@ class GeneralModel(pl.LightningModule):
         self.eval_loss = []
         self.eval_accuracy = []
         
-        # to mask during training/evaluation
-        # self.mask = None
-        
-    # def set_mask(self, n_timesteps: int, bin_size: int, mask_interval: list[int]):
-    #     """Return binary mask for ONLY the timestep dimension
-        
-    #     Args:
-    #         n_timesteps: total timesteps as passed in TASK_CONFIG
-    #         bin_size: bin size as passed in TASK_CONFIG
-    #         mask_interval: list/tuple of start and end timesteps (raw, not binned)
-    #     """
-    #     # binned length
-    #     binned_mask = torch.zeros(int(n_timesteps / bin_size))  
-    #     binned_mask[math.floor(mask_interval[0] / bin_size) : math.floor(mask_interval[1] / bin_size)] = 1
-    #     self.mask = binned_mask
         
     def training_step(self, batch, batch_idx):
         # batch is the tensor dataset created in the datamodule
