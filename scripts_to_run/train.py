@@ -24,6 +24,14 @@ from ray.train.lightning import (
     prepare_trainer,
 )
 
+######## train with Ray
+num_epochs = 5
+grace_period = 1
+reduction_factor = 2
+num_workers = 4   # SET THE SAME AS CPU
+num_samples = 1  # this matters for other than tune.choice
+######## 
+
 # setup the task
 TASK_CONFIG = {
     "seed": 0,
@@ -64,18 +72,19 @@ DATA_CONFIG = {
     "val_ratio": 0.2,
     "init_states": None,
     "init_states_dimension": 10,  # HAVE TO MATCH THIS WITH HIDDEN SIZE
-    "init_states_name":'none',
+    "init_states_name":'none_4',
 } 
 
 # setup the model
 # NOTE: write as 'param': tune.choice([]) (or tune.OTHER) for hyperparam tuning
 MODEL_CONFIG = {
+    "model_class": frRNN,
     "input_size": input_size,
     "hidden_size": 10,
     "output_size": output_size,
-    "noise_std": 0.0,  # TODO: check what this noise is
-    "alpha": 0.2,
-    "rho": 1,
+    "noise_std": tune.choice([0.0, 0.1]),  # this is noise for the evolution of the hidden states
+    "alpha": 1,     # this should be t/TAU?
+    "rho": 1,       # this is for matrix initialization distributions
     "train_wi": False,
     "train_wo": False,
     "train_wrec": True,
@@ -91,17 +100,12 @@ MODEL_CONFIG = {
     "add_biases": False,
     "non_linearity": torch.tanh,
     "output_non_linearity": torch.tanh,
-    "lr": 1e-3,
-    "weight_decay": 0.0
+    "lr": tune.choice([1e-4, 1e-3]),
+    "weight_decay": tune.choice([0.0, 1e-3]),
 }
 
-######## train with Ray
-num_epochs = 5
-grace_period = 1
-reduction_factor = 2
-num_workers = 4   # SET THE SAME AS CPU
-num_samples = 1  # this matters for other than tune.choice
-######## 
+N_TIMESTEPS = TASK_CONFIG["n_timesteps"]
+BIN_SIZE = TASK_CONFIG["bin_size"]
 
 # training function
 def train_loop(model_config):
