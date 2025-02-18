@@ -72,8 +72,34 @@ class TuneResult:
         
         # TODO: implement pca/tsne
 
-        plt.title('Data Trajectories')
-        plt.legend()
-        plt.show()
+        return fig
                 
-    def plot_targets(self, readout, targets):
+    def plot_targets(self, inputs, targets, readout, phase_index=None):
+        
+        # TODO: generalize, this is labeled only for the CDM task
+        
+        inputs = inputs.squeeze().numpy() 
+        targets = targets.squeeze().numpy()
+        
+        # plot the inputs and targets
+        fig, ax = plt.subplots(1, 2, figsize=(10, 5))
+        ax[0].plot(inputs, label=['Channel 0', 'Channel 1', 'Context 0', 'Context 1'])
+        ax[0].set_xlim(0, len(inputs))
+        ax[0].legend()
+        ax[1].plot(targets, color='k', label='targets')
+        ax[1].plot(readout, color='r', label='readout')  # BUG: maybe this sould NOT be the readout??
+        
+        # plot vertical dotted lines at x values of phase_index
+        if phase_index:
+            for key, val in phase_index.items():
+                ax[0].axvline(x=val, color='k', linestyle='--')
+                ax[1].axvline(x=val, color='k', linestyle='--')
+            
+        # add labels
+        ax[0].set_xlabel("Binned timesteps (bin_size = {})".format(self.bin_size))
+        ax[0].set_ylabel("Input amplitude")
+        ax[1].set_xlabel("Binned timesteps (bin_size = {})".format(self.bin_size))
+        ax[1].set_ylabel("Target vs Predictions")
+        
+        # return the image
+        return fig
