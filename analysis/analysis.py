@@ -12,7 +12,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from ray import tune
 from scripts_to_run.train_cluster import train_loop
 
-class TuneResult:
+class Analyzer():
     def __init__(self, experiment_path, lightning_module):
         """Load the best model of a tuning session and analyze its latents
         
@@ -22,30 +22,37 @@ class TuneResult:
         """
         self.experiment_path = experiment_path
         self.lightning_module = lightning_module
-        self.model = None
+        self.best_model = None
+        self.best_model_metadata = None
+        self.result_grid = None
         
     def load_result_grid(self):
         # load the result grid from the TorchTrainer experiment
         restored_tuner = tune.Tuner.restore(self.experiment_path, trainable=train_loop)
-        return restored_tuner.result_grid()
+        self.result_grid = restored_tuner.result_grid()
+    
+    def load_best_model(self, metric=None, mode=None):
+        """Load the best model from the best checkpoint in Result
+            and return the best checkpoint's metadata
+            metric (str): The key for checkpoints to order on
+            mode (str): One of [“min”, “max”]
+        """
+        if self.result_grid == None:
+            self.load_result_grid()
+        best_result = self.result_grid.get_best_result()
+        best_checkpoint = best_result.get_best_checkpoint(metric=metric, mode=mode)
+        with best_checkpoint.as_directory() as dir:
+            self.best_model = dir['model.pt']
+        self.best_model_metadata = best_checkpoint.get_metadata()
 
-    def load_model(self, checkpoint_path=None):
-        # provide the checkpoint_path to immediately load a specific model
-        if not checkpoint_path:
-            # TODO: get all the checkpoints and iterate over folder
-            print('Retry and provide the checkpoint_path for now')
-            return
-        self.model = self.lightning_module.load_from_checkpoint(checkpoint_path)
-            
-    def run_inference(self, input, targets, plot_trajs=False, plot_targets=False):
+    def model(self, input, initial_states=None):
+        """Run inference, mimic the original torch interface.
+        Return (readout, trajectories) for the given input and inits"""
         if self.model == None:
             self.load_model()
         # disable batch normalization, dropout, randomness
         self.model.eval()
-        readout, trajs = self.model(input, return_latents=True)
-        if plot_trajs:
-            self.plot_trajectories(trajs)
-        return readout
+        return self.model(input, return_latents=True, initial_states=initial_states)
 
     def plot_trajectories(self, trajs, pca=False, tsne=False):
         # trajs have shape (n_timesteps, n_trials, hidden_size = n_neurons)
