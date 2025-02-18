@@ -91,13 +91,13 @@ class Analyzer():
         if dimensions == 2:
             ax = fig.add_subplot(111)
             for trial in range(trials):
-                ax.scatter(trajs[trial, :, 0], trajs[trial, :, 1], color=colors[trial])#, label=f'Trial {trial+1}')
+                ax.plot(trajs[trial, :, 0], trajs[trial, :, 1], color=colors[trial])#, label=f'Trial {trial+1}')
             ax.set_xlabel('latent 1')
             ax.set_ylabel('latent 2')
         elif dimensions == 3:
             ax = fig.add_subplot(111, projection='3d')
             for trial in range(trials):
-                ax.scatter(trajs[trial, :, 0], trajs[trial, :, 1], trajs[trial, :, 2], color=colors[trial])#, label=f'Trial {trial+1}')
+                ax.plot(trajs[trial, :, 0], trajs[trial, :, 1], trajs[trial, :, 2], color=colors[trial])#, label=f'Trial {trial+1}')
             ax.set_xlabel('latent 1')
             ax.set_ylabel('latent 2')
             ax.set_zlabel('latent 3')
