@@ -107,7 +107,7 @@ MODEL_CONFIG = {
 N_TIMESTEPS = TASK_CONFIG["n_timesteps"]
 BIN_SIZE = TASK_CONFIG["bin_size"]
 
-# training function
+# training function to execute on each worker
 # NOTE: might have to create loader functions to simpify function overhead
 def train_loop(model_config):
 

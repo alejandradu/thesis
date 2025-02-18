@@ -2,7 +2,7 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 from math import floor
-from synthetic_datasets.tasks.AbstractClass import SyntheticTask
+from AbstractClass import SyntheticTask
 
 # NOTE: generate docstrings with codeium, the period args are fractions of the trial
 
@@ -186,7 +186,7 @@ class CDM(SyntheticTask):
     def plot_trial(self):
         """"Generate randomly one trial and plot it."""
         
-        inputs, targets, phase_index = self.generate_dataset(to_plot=True)
+        inputs, targets, phase_index, mask = self.generate_dataset(to_plot=True)
         inputs = inputs.squeeze().numpy() 
         targets = targets.squeeze().numpy()
         
@@ -203,6 +203,12 @@ class CDM(SyntheticTask):
         for key, val in phase_index.items():
             ax[0].axvline(x=val, color='k', linestyle='--')
             ax[1].axvline(x=val, color='k', linestyle='--')
+            
+        # add labels
+        ax[0].set_xlabel("Binned timesteps (bin_size = {})".format(self.bin_size))
+        ax[0].set_ylabel("Amplitude")
+        ax[1].set_xlabel("Binned timesteps (bin_size = {})".format(self.bin_size))
+        ax[1].set_ylabel("Target")
         
         # return the image
         return fig
