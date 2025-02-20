@@ -78,7 +78,7 @@ class Analyzer():
 
 
     def plot_latent_space(self, trajs, input=None, plot_field=True, pca=False, tsne=False, val=True,
-                          latent_space=[[-1,1],[-1,1]], num_points=10, cmap=plt.cm.Reds, **kwargs):
+                          latent_range=[[-1,1],[-1,1]], num_points=10, cmap=plt.cm.Reds, **kwargs):
         """Plot the trajectories and/or vector field of the latent
         variables of a trained model, given trajectories from model()
         """
@@ -110,34 +110,34 @@ class Analyzer():
         
         if plot_field:
             if dim==2:
-                U,V,normalized_cmap=self.get_field_data(input, latent_space, num_points)
+                U,V,normalized_cmap=self.get_field_data(input, latent_range, num_points)
                 colors_map = cmap(normalized_cmap.flatten())
-                ax.quiver(*np.meshgrid(latent_space[0], latent_space[1], indexing='ij'), U, V, color=colors_map)
+                ax.quiver(*np.meshgrid(latent_range[0], latent_range[1], indexing='ij'), U, V, color=colors_map)
             else:
-                U,V,W,normalized_cmap=self.get_field_data(input, latent_space, num_points)
+                U,V,W,normalized_cmap=self.get_field_data(input, latent_range, num_points)
                 colors_map = cmap(normalized_cmap.flatten())
                 ax = fig.add_subplot(111, projection='3d')
-                ax.quiver(*np.meshgrid(latent_space[0], latent_space[1], latent_space[2], indexing='ij'), U, V, W, color=colors_map)
+                ax.quiver(*np.meshgrid(latent_range[0], latent_range[1], latent_range[2], indexing='ij'), U, V, W, color=colors_map)
             
         fig.tight_layout()
         plt.show() 
         
         
-    def get_field_data(self, input, latents_range, num_points):
+    def get_field_data(self, input, latent_range, num_points):
         """Return the values for the vectors in the vecgtor field
         created by some model
         input: input dataset to the model during training, NOT the init_states
-        latents_range: list of the axis limits for every dimension
+        latent_range: list of the axis limits for every dimension
                        set it after visualizing only the trajs first
         """
         
-        dim = len(latents_range)
+        dim = len(latent_range)
         
         # Calculate velocities over a grid using a double for loop implementation
-        x = np.linspace(latents_range[0][0], latents_range[0][1], num_points)
-        y = np.linspace(latents_range[1][0], latents_range[1][1], num_points)
-        if len(latents_range) == 3:
-            z = np.linspace(latents_range[2][0], latents_range[2][1], num_points)
+        x = np.linspace(latent_range[0][0], latent_range[0][1], num_points)
+        y = np.linspace(latent_range[1][0], latent_range[1][1], num_points)
+        if len(latent_range) == 3:
+            z = np.linspace(latent_range[2][0], latent_range[2][1], num_points)
             
         if dim == 2:
             U = np.zeros([num_points, num_points])
