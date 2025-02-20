@@ -52,16 +52,19 @@ class Analyzer():
         best_checkpoint = best_result.get_best_checkpoint(metric=metric, mode=mode)
         self.metadata = best_checkpoint.get_metadata()
         with best_checkpoint.as_directory() as dir:
-            self.model = dir['model.pt']
+            model_file = dir['model.pt']
+        # BUG: not sure if i should call the state_dict() load
+        self.best_model = torch.load(model_file)
 
-    def model(self, input=None, initial_states=None, val=True, 
-              plot_trajs=False, plot_targets=False, plot_field=True, **kwargs):
+    def model(self, input=None, initial_states=None, val=True):
         """Run inference, mimic the original torch interface.
-        Return (readout, trajectories) for the given input and inits"""
+        Return (readout, trajectories) for the given input and inits and
+        manually put this into the plotting/analysis functions
+        """
         if self.best_model == None:
             self.load_best_model()
         # disable batch normalization, dropout, randomness
-        self.best_model.eval()
+        self.best_model.eval() # TODO: you only have to do this once
         if input is None:
             input = self.val_input if val else self.train_input
         if initial_states is None:
@@ -71,58 +74,118 @@ class Analyzer():
         # run inference
         readout, trajs = self.best_model(input, return_latents=True, initial_states=initial_states)
             
-        # this will display a plot
-        if plot_trajs:
-            self.plot_trajectories(trajs, plot_field=plot_field, pca=kwargs.get('pca'), tsne=kwargs.get('tsne'))
-            
-        # this will also display a plot
-        if plot_targets:
-            self.plot_targets(input, target, readout)
-            
         return readout, trajs
 
-    def plot_trajectories(self, trajs, plot_field=True, pca=False, tsne=False):
-        # trajs have shape (n_timesteps, n_trials, hidden_size = n_neurons)
-        trials, timesteps, dimensions = trajs.shape
+
+    def plot_latent_space(self, trajs, input=None, plot_field=True, pca=False, tsne=False, val=True,
+                          latent_space=[[-1,1],[-1,1]], num_points=10, cmap=plt.cm.Reds, **kwargs):
+        """Plot the trajectories and/or vector field of the latent
+        variables of a trained model, given trajectories from model()
+        """
+        trials, timesteps, dim = trajs.shape
         colors = plt.cm.viridis(np.linspace(0, 1, trials))  # Generate different colors for each trial
+        
+        if not input:
+            input = self.val_input if val else self.train_input
 
         fig = plt.figure(figsize=(10, 6))
 
-        if dimensions == 2:
+        if dim == 2:
             ax = fig.add_subplot(111)
             for trial in range(trials):
-                ax.plot(trajs[trial, :, 0], trajs[trial, :, 1], color=colors[trial])#, label=f'Trial {trial+1}')
+                ax.plot(trajs[trial, :, 0], trajs[trial, :, 1], color=colors[trial])
             ax.set_xlabel('latent 1')
             ax.set_ylabel('latent 2')
-        elif dimensions == 3:
+        elif dim == 3:
             ax = fig.add_subplot(111, projection='3d')
             for trial in range(trials):
-                ax.plot(trajs[trial, :, 0], trajs[trial, :, 1], trajs[trial, :, 2], color=colors[trial])#, label=f'Trial {trial+1}')
+                ax.plot(trajs[trial, :, 0], trajs[trial, :, 1], trajs[trial, :, 2], color=colors[trial])
             ax.set_xlabel('latent 1')
             ax.set_ylabel('latent 2')
             ax.set_zlabel('latent 3')
         else:
-            raise ValueError("FOR NOW Dimensions must be 2 or 3 for plotting.")
+            raise ValueError("Can only handle dimensions 2 or 3 for plotting.")
         
         # TODO: implement pca/tsne
-
-        plt.show()
         
-    def get_field_data(self, domain=[[-1,1],[-1,1]]):
+        if plot_field:
+            if dim==2:
+                U,V,normalized_cmap=self.get_field_data(input, latent_space, num_points)
+                colors_map = cmap(normalized_cmap.flatten())
+                ax.quiver(*np.meshgrid(latent_space[0], latent_space[1], indexing='ij'), U, V, color=colors_map)
+            else:
+                U,V,W,normalized_cmap=self.get_field_data(input, latent_space, num_points)
+                colors_map = cmap(normalized_cmap.flatten())
+                ax = fig.add_subplot(111, projection='3d')
+                ax.quiver(*np.meshgrid(latent_space[0], latent_space[1], latent_space[2], indexing='ij'), U, V, W, color=colors_map)
+            
+        fig.tight_layout()
+        plt.show() 
+        
+        
+    def get_field_data(self, input, latents_range, num_points):
         """Return the values for the vectors in the vecgtor field
         created by some model
-        domain: list of the axis limits for every dimension
+        input: input dataset to the model during training, NOT the init_states
+        latents_range: list of the axis limits for every dimension
+                       set it after visualizing only the trajs first
         """
         
+        dim = len(latents_range)
         
+        # Calculate velocities over a grid using a double for loop implementation
+        x = np.linspace(latents_range[0][0], latents_range[0][1], num_points)
+        y = np.linspace(latents_range[1][0], latents_range[1][1], num_points)
+        if len(latents_range) == 3:
+            z = np.linspace(latents_range[2][0], latents_range[2][1], num_points)
+            
+        if dim == 2:
+            U = np.zeros([num_points, num_points])
+            V = np.zeros([num_points, num_points])
+        else:
+            U = np.zeros([num_points, num_points, num_points])
+            V = np.zeros([num_points, num_points, num_points])
+            W = np.zeros([num_points, num_points, num_points])
+            
+        for i in range(num_points):
+            for j in range(num_points):
+                state = torch.tensor([[x[i], y[j]]], dtype=torch.float)
+                if dim == 2:
+                    U[i, j], V[i, j] = (self.best_model(input, state) - state).detach().numpy().flatten()
+                else:
+                    for k in range(num_points):
+                        state = torch.tensor([[x[i], y[j], z[k]]], dtype=torch.float)
+                        # removed a 0.1 constant from here
+                        U[i, j, k], V[i, j, k], W[i, j, k] = (self.best_model(input, state) - state).detach().numpy().flatten()
+        
+        # Create a colormap based on the normalized magnitude
+        if dim == 2:
+            magnitude = np.sqrt(U**2 + V**2)
+        else:
+            magnitude = np.sqrt(U**2 + V**2 + W**2)
+        normalized_cmap = ((magnitude - np.min(magnitude)) / (np.max(magnitude) - np.min(magnitude))).flatten()
+
+        if dim==2:
+            return U, V, normalized_cmap
+        else:
+            return U, V, W, normalized_cmap
         
                 
-    def plot_targets(self, inputs, targets, readout, phase_index=None):
+    def plot_targets(self, readout, inputs=None, targets=None, phase_index=None, val=True):
+        """Plot the inputs and targets vs readout along the experiment
+        visualization for each task, given readout from model()"""
         
         # TODO: generalize, this is labeled only for the CDM task
         
+        if not inputs:
+            inputs = self.val_input if val else self.train_input
+        if not targets:
+            targets = self.val_target if val else self.train_target
+            
+        # NOTE: is this even necessary?
         inputs = inputs.squeeze().numpy() 
         targets = targets.squeeze().numpy()
+        readout = readout.squeeze().numpy()
         
         # plot the inputs and targets
         fig, ax = plt.subplots(1, 2, figsize=(10, 5))
@@ -144,5 +207,5 @@ class Analyzer():
         ax[1].set_xlabel("Binned timesteps (bin_size = {})".format(self.bin_size))
         ax[1].set_ylabel("Target vs Predictions")
         
-        # return the image
-        return fig
+        fig.tight_layout()
+        plt.show() 
