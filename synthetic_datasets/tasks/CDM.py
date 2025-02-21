@@ -2,7 +2,7 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 from math import floor
-from AbstractClass import SyntheticTask
+from synthetic_datasets.tasks.AbstractClass import SyntheticTask
 
 # NOTE: generate docstrings with codeium, the period args are fractions of the trial
 

@@ -5,13 +5,13 @@ import sys
 import os
 import matplotlib.pyplot as plt
 import numpy as np
-from helpers import *
+from analysis.helpers import *
 
 # Add the root directory to the Python path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from ray import tune
-from scripts_to_run.train_cluster import train_loop
+from scripts_to_run.train_cluster import train_loop, ray_trainer
 
 class Analyzer():
     def __init__(self, experiment_path, train_data_path):
@@ -36,8 +36,8 @@ class Analyzer():
         
     def load_result_grid(self):
         # load the result grid from the TorchTrainer experiment
-        restored_tuner = tune.Tuner.restore(self.experiment_path, trainable=train_loop)
-        self.result_grid = restored_tuner.result_grid()
+        restored_tuner = tune.Tuner.restore(self.experiment_path, trainable=ray_trainer)
+        self.result_grid = restored_tuner.get_results()
     
     def load_best_model(self, metric='ptl/val_accuracy', mode='max'):
         """Load the best model/metadata from the best checkpoint in Result
