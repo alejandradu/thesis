@@ -1,12 +1,6 @@
 # general training pipeline for both task and data trained models
 # explicitly integrated with ray here
 
-import os
-import sys
-
-# Add the root directory to the Python path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 import torch
 import lightning as pl
 from torch.utils.data import DataLoader

@@ -1,17 +1,11 @@
 # load the result grid and analyze different (practical) aspects of the
 # training itself and the evolution of metrics
 
-import sys 
-import os
 import matplotlib.pyplot as plt
 import numpy as np
-from analysis.helpers import *
-
-# Add the root directory to the Python path
-# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from ray import tune
-from scripts_to_run.train_cluster import train_loop, ray_trainer
+from helpers import *
+from main.train_cluster import ray_trainer
 
 class Analyzer():
     def __init__(self, experiment_path, train_data_path):
