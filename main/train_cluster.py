@@ -140,18 +140,18 @@ def train_loop(model_config):
 
 # Define a TorchTrainer without hyper-parameters for Tuner
 # this is passed to recover the TorchTrainer results
-def get_ray_trainer(train_loop, scaling_config, run_config):
+def get_ray_trainer():
     return TorchTrainer(
         train_loop,
-        scaling_config=scaling_config,
-        run_config=run_config,
+        scaling_config=SCALING_CONFIG,
+        run_config=RUN_CONFIG,
     )
     
     
 # note that the task is stated out of the pipline
 def tune_pipeline():
     
-    ray_trainer = get_ray_trainer(train_loop, SCALING_CONFIG, RUN_CONFIG)
+    ray_trainer = get_ray_trainer()
         
     tuner = tune.Tuner(
         ray_trainer,

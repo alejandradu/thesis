@@ -28,8 +28,10 @@ class Analyzer():
         ) = self.load_train_dataset(train_data_path, verbose=True)
         
     def load_result_grid(self):
+        # get the objective function that returns the TorchTrainer
+        trainable = get_ray_trainer()
         # load the result grid from the TorchTrainer experiment
-        restored_tuner = tune.Tuner.restore(self.experiment_path, trainable=ray_trainer)
+        restored_tuner = tune.Tuner.restore(self.experiment_path, trainable=trainable)
         self.result_grid = restored_tuner.get_results()
     
     def load_best_model(self, metric='ptl/val_accuracy', mode='max'):
