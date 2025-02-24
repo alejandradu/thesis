@@ -3,9 +3,9 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-from ray import tune
+import ray.tune as tune
 from analysis.helpers import *
-from main.train_cluster import ray_trainer
+from main.train_cluster import get_ray_trainer
 
 class Analyzer():
     def __init__(self, experiment_path, train_data_path):
@@ -25,8 +25,7 @@ class Analyzer():
             self.val_input,
             self.val_target, 
             self.val_init
-        ) = load_train_dataset(train_data_path)
-
+        ) = self.load_train_dataset(train_data_path, verbose=True)
         
     def load_result_grid(self):
         # load the result grid from the TorchTrainer experiment
@@ -203,3 +202,22 @@ class Analyzer():
         
         fig.tight_layout()
         plt.show() 
+        
+        
+    def load_train_dataset(path, verbose=False):
+        """Load the tensors used for training from the saved h5py file"""
+        if verbose:
+            print('loading train dataset')
+        with h5py.File((path), 'r') as f:
+                train_inputs = torch.tensor(f['train_inputs'][:])
+                train_targets = torch.tensor(f['train_targets'][:])
+                train_init_states = torch.tensor(f['train_init_states'][:])
+                val_inputs = torch.tensor(f['val_inputs'][:])
+                val_targets = torch.tensor(f['val_targets'][:])
+                val_init_states = torch.tensor(f['val_init_states'][:])
+                train_mask = torch.tensor(f['train_mask'][:])
+                val_mask = torch.tensor(f['val_mask'][:])
+        if verbose:
+            print('loaded train dataset')
+
+        return train_inputs, train_targets, train_init_states,val_inputs, val_targets, val_init_states

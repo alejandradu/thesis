@@ -388,17 +388,3 @@ def replace_output_retrain(net, output):
         param.requires_grad = False
     net.wo.requires_grad = True
     return net
-
-def load_train_dataset(path):
-    """Load the tensors used for training from the saved h5py file"""
-    with h5py.File((path), 'r') as f:
-            train_inputs = torch.tensor(f['train_inputs'][:])
-            train_targets = torch.tensor(f['train_targets'][:])
-            train_init_states = torch.tensor(f['train_init_states'][:])
-            val_inputs = torch.tensor(f['val_inputs'][:])
-            val_targets = torch.tensor(f['val_targets'][:])
-            val_init_states = torch.tensor(f['val_init_states'][:])
-            train_mask = torch.tensor(f['train_mask'][:])
-            val_mask = torch.tensor(f['val_mask'][:])
-            
-    return train_inputs, train_targets, train_init_states,val_inputs, val_targets, val_init_states

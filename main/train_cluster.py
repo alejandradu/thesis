@@ -1,6 +1,7 @@
 # general training pipeline for both task and data trained models
 # explicitly integrated with ray here
 
+import ray
 import torch
 import lightning as pl
 from torch.utils.data import DataLoader
@@ -18,7 +19,7 @@ from ray.train.lightning import (
     prepare_trainer,
 )
 
-######## train with Ray
+######## CONFIGS
 num_epochs = 100
 grace_period = 1
 reduction_factor = 2
@@ -49,11 +50,9 @@ TASK_CONFIG = {
 
 # create task
 task = CDM(TASK_CONFIG)
-# task.plot_trial()
-
 input_size = task.input_size
 output_size = task.output_size
-
+ 
 # setup the datamodule
 # NOTE: write as 'param': tune.choice([]) (or tune.OTHER) for hyperparam tuning
 # can merge with model_config as dict to optimize over it - not expecting to need this
@@ -101,17 +100,31 @@ MODEL_CONFIG = {
 N_TIMESTEPS = TASK_CONFIG["n_timesteps"]
 BIN_SIZE = TASK_CONFIG["bin_size"]
 
+# optimize trials (stop if params are likely to be bad)
+SCHEDULER = ASHAScheduler(time_attr='training_iteration', max_t=num_epochs,
+                              grace_period=grace_period, reduction_factor=reduction_factor)
+
+# HERE for distributed training
+SCALING_CONFIG = ScalingConfig(
+    num_workers=num_workers, use_gpu=False, resources_per_worker={"CPU": 1, "GPU": 0.0}   # divide by worker
+)
+
+RUN_CONFIG = RunConfig(
+    storage_path="/scratch/gpfs/ad2002/task_training/ray_results/",
+    checkpoint_config=CheckpointConfig(
+        num_to_keep=2,
+        checkpoint_score_attribute="ptl/val_accuracy",
+        checkpoint_score_order="max",
+    ),
+)
+
 # training function to execute on each worker
-# NOTE: might have to create loader functions to simpify function overhead
 def train_loop(model_config):
 
     # create the model
     model = GeneralModel(model_config)
     # create data: encapsulate all train, val, test splits
     data_module = TaskDataModule(DATA_CONFIG) 
-    
-    # data_module.prepare_data()
-    # data_module.setup()
     
     trainer = pl.Trainer(
         devices="auto",
@@ -123,34 +136,23 @@ def train_loop(model_config):
     )
     trainer = prepare_trainer(trainer)
     trainer.fit(model, datamodule=data_module)
-    
-# optimize trials (stop if params are likely to be bad)
-scheduler = ASHAScheduler(max_t=num_epochs, grace_period=grace_period, reduction_factor=reduction_factor)
 
-# HERE for distributed training
-scaling_config = ScalingConfig(
-    num_workers=num_workers, use_gpu=False, resources_per_worker={"CPU": 1, "GPU": 0.0}   # divide by worker
-)
-
-run_config = RunConfig(
-    storage_path="/scratch/gpfs/ad2002/task_training/ray_results/",
-    checkpoint_config=CheckpointConfig(
-        num_to_keep=2,
-        checkpoint_score_attribute="ptl/val_accuracy",
-        checkpoint_score_order="max",
-    ),
-)
 
 # Define a TorchTrainer without hyper-parameters for Tuner
-ray_trainer = TorchTrainer(
-    train_loop,
-    scaling_config=scaling_config,
-    run_config=run_config,
-)
-
-def tune_mnist_asha(num_samples=1):
-    scheduler = ASHAScheduler(time_attr='training_iteration', max_t=num_epochs, grace_period=1, reduction_factor=2)
-
+# this is passed to recover the TorchTrainer results
+def get_ray_trainer(train_loop, scaling_config, run_config):
+    return TorchTrainer(
+        train_loop,
+        scaling_config=scaling_config,
+        run_config=run_config,
+    )
+    
+    
+# note that the task is stated out of the pipline
+def tune_pipeline():
+    
+    ray_trainer = get_ray_trainer(train_loop, SCALING_CONFIG, RUN_CONFIG)
+        
     tuner = tune.Tuner(
         ray_trainer,
         # here goes the model_config
@@ -159,11 +161,14 @@ def tune_mnist_asha(num_samples=1):
             metric="ptl/val_accuracy",
             mode="max",
             num_samples=num_samples,
-            scheduler=scheduler,
+            scheduler=SCHEDULER,
         ),
     )
     return tuner.fit()
 
 
-results = tune_mnist_asha(num_samples=num_samples)
+if __name__ == "__main__":
+
+    # run the pipeline and store result object in memory
+    tuner_result = tune_pipeline(num_samples=num_samples)
 
