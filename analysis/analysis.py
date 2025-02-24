@@ -4,7 +4,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from ray import tune
-from helpers import *
+from analysis.helpers import *
 from main.train_cluster import ray_trainer
 
 class Analyzer():
