@@ -25,7 +25,7 @@ class Analyzer():
             self.val_input,
             self.val_target, 
             self.val_init
-        ) = self.load_train_dataset(train_data_path, verbose=True)
+        ) = self.load_train_dataset(train_data_path, verbose=False)
         
     def load_result_grid(self):
         # get the objective function that returns the TorchTrainer
@@ -206,7 +206,7 @@ class Analyzer():
         plt.show() 
         
         
-    def load_train_dataset(path, verbose=False):
+    def load_train_dataset(self, path, verbose=False):
         """Load the tensors used for training from the saved h5py file"""
         if verbose:
             print('loading train dataset')
