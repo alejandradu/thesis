@@ -20,7 +20,7 @@ from ray.train.lightning import (
 )
 
 ######## CONFIGS
-num_epochs = 100
+num_epochs = 50
 grace_period = 1
 reduction_factor = 2
 num_workers = 8   # SET THE SAME AS CPU
@@ -34,12 +34,12 @@ TASK_CONFIG = {
     "n_trials": 2000,    # check that this > batch_size below
     "bin_size": 10,   # this is bin for TIMESTEPS
     "noise": 0.0,   # this is noise for the task itself
-    "n_timesteps": 250+800+2000+250+50,
+    "n_timesteps": 250+800+2000+250+200,
     "fix": 250,
     "ctx": 800,
     "stim": 2000,
     "mem": 250,
-    "res": 50,
+    "res": 200,
     "random_trials": False,
     "ctx_choice": None,
     "coh_choice0": None,
@@ -65,7 +65,7 @@ DATA_CONFIG = {
     "val_ratio": 0.2,
     "init_states": None,
     "init_states_dimension": 10,  # HAVE TO MATCH THIS WITH HIDDEN SIZE
-    "init_states_name":'none_5',
+    "init_states_name":'TEST',
 } 
 
 # setup the model
@@ -170,5 +170,5 @@ def tune_pipeline():
 if __name__ == "__main__":
 
     # run the pipeline and store result object in memory
-    tuner_result = tune_pipeline(num_samples=num_samples)
+    result_grid = tune_pipeline(num_samples=num_samples)
 
