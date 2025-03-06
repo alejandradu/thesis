@@ -97,6 +97,10 @@ MODEL_CONFIG = {
     "weight_decay": tune.choice([0.0, 1e-3]),
 }
 
+# save the model config with filename date and time the script is run
+# UNLESS the last saved file is the same as the current one
+
+
 N_TIMESTEPS = TASK_CONFIG["n_timesteps"]
 BIN_SIZE = TASK_CONFIG["bin_size"]
 

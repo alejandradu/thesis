@@ -8,6 +8,9 @@ import seaborn as sns
 import torch
 import torch.nn as nn
 import h5py
+import os
+import json
+from datetime import datetime
 
 #%% ALGEBRAIC UTILITIES
 
@@ -388,3 +391,35 @@ def replace_output_retrain(net, output):
         param.requires_grad = False
     net.wo.requires_grad = True
     return net
+
+
+def save_model_config(model_config, save_dir):
+    # Ensure the save directory exists
+    os.makedirs(save_dir, exist_ok=True)
+
+    # Get the current date and time
+    current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
+
+    # Generate the filename
+    filename = f'model_config_{current_time}.json'
+    filepath = os.path.join(save_dir, filename)
+
+    # Check for the last saved file
+    existing_files = sorted([f for f in os.listdir(save_dir) if f.startswith('model_config_') and f.endswith('.json')])
+    if existing_files:
+        last_saved_file = existing_files[-1]
+        last_saved_filepath = os.path.join(save_dir, last_saved_file)
+
+        # Load the last saved configuration
+        with open(last_saved_filepath, 'r') as f:
+            last_saved_config = json.load(f)
+
+        # Compare the last saved configuration with the current one
+        if last_saved_config == model_config:
+            print("The last saved configuration is the same as the current one. No new file will be saved.")
+            return
+
+    # Save the current model configuration
+    with open(filepath, 'w') as f:
+        json.dump(model_config, f, indent=4)
+    print(f"Model configuration saved to {filepath}")
