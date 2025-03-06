@@ -5,7 +5,7 @@ import ray
 import torch
 import lightning as pl
 from torch.utils.data import DataLoader
-from synthetic_datasets.tasks.CDM import CDM
+from synthetic_datasets.tasks.NBFF import NBFF
 from models.modules.rnn_module import *
 from synthetic_datasets.datamodules.task_datamodule import TaskDataModule
 from ray.train import RunConfig, ScalingConfig, CheckpointConfig
@@ -31,26 +31,16 @@ hidden_size = 2
 # setup the task
 TASK_CONFIG = {
     "seed": 0,
-    "coherences": None,
+    "n": 2,
     "n_trials": 2000,    # check that this > batch_size below
-    "bin_size": 10,   # this is bin for TIMESTEPS
+    "bin_size": 1,   # this is bin for TIMESTEPS
     "noise": 0.0,   # this is noise for the task itself
-    "n_timesteps": 250+800+2000+250+200,
-    "fix": 250,
-    "ctx": 800,
-    "stim": 2000,
-    "mem": 250,
-    "res": 200,
-    "random_trials": False,
-    "ctx_choice": None,
-    "coh_choice0": None,
-    "coh_choice1": None,
-    "coh_scale": 1e-1,
-    "ctx_scale": 1e-1
+    "n_timesteps": 1000,
+    "switch_prob": 0.008,
 }
 
 # create task
-task = CDM(TASK_CONFIG)
+task = NBFF(TASK_CONFIG)
 input_size = task.input_size
 output_size = task.output_size
  
@@ -75,7 +65,7 @@ MODEL_CONFIG = {
     "model_class": nODE,
     "lr": tune.choice([1e-4, 1e-3]),
     "weight_decay": tune.choice([0.0, 1e-3]),
-    "num_layers": 3,
+    "num_layers": tune.choice([2, 5]),
     "input_size": input_size,
     "hidden_size": hidden_size,
     "output_size": output_size,
