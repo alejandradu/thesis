@@ -78,7 +78,7 @@ class frRNN(nn.Module):
         self.input_size = config['input_size']
         self.hidden_size = config['hidden_size']
         self.output_size = config['output_size']
-        self.noise_std = config['noise_std']
+        self.noise_std = config['noise_std']  # note that this noise is for the evolution of the hidden states
         self.alpha = config['alpha']
         self.rho = config['rho']
         self.train_wi = config['train_wi']
@@ -338,3 +338,70 @@ class lrRNN(nn.Module):
         else:
             return output, trajectories
     
+
+class nODE(nn.Module):
+    """Imlement neural ordinary differential equation"""
+    def __init__(self, config):
+
+        super(nODE, self).__init__()
+        self.num_layers = config['num_layers']
+        self.hidden_size = config['hidden_size']
+        self.latent_size = config['latent_size']  # this is for expressivity?
+        self.output_size = config['output_size']
+        self.input_size = config['input_size']
+        self.readout = config['output_mapping']
+        self.generator = None
+        self.latent_ics = torch.nn.Parameter(
+            torch.zeros(self.latent_size), requires_grad=True
+        )
+
+    def init_hidden(self, batch_size):
+        return self.latent_ics.unsqueeze(0).expand(batch_size, -1)
+
+    def init_model(self, input_size, output_size):
+        self.input_size = input_size
+        self.output_size = output_size
+        self.generator = MLPCell(
+            input_size, self.num_layers, self.hidden_size, self.latent_size
+        )
+        if self.readout is None:
+            self.readout = nn.Linear(self.latent_size, output_size)
+            # Initialize weights and biases for the readout layer
+            nn.init.normal_(
+                self.readout.weight, mean=0.0, std=0.01
+            )  # Small standard deviation
+            nn.init.constant_(self.readout.bias, 0.0)  # Zero bias initialization
+
+    def forward(self, inputs, hidden=None):
+        n_samples, n_inputs = inputs.shape
+        dev = inputs.device
+        if hidden is None:
+            hidden = torch.zeros((n_samples, self.latent_size), device=dev)
+        hidden = self.generator(inputs, hidden)
+        output = self.readout(hidden)
+        return output, hidden
+
+
+class MLPCell(nn.Module):
+    """Parametrizes the NODE with an MLP"""
+    def __init__(self, input_size, num_layers, layer_hidden_size, latent_size):
+        super().__init__()
+        self.input_size = input_size
+        self.num_layers = num_layers
+        self.layer_hidden_size = layer_hidden_size
+        self.latent_size = latent_size
+        layers = nn.ModuleList()
+        for i in range(num_layers):
+            if i == 0:
+                layers.append(nn.Linear(input_size + latent_size, layer_hidden_size))
+                layers.append(nn.ReLU())
+            elif i == num_layers - 1:
+                layers.append(nn.Linear(layer_hidden_size, latent_size))
+            else:
+                layers.append(nn.Linear(layer_hidden_size, layer_hidden_size))
+                layers.append(nn.ReLU())
+        self.vf_net = nn.Sequential(*layers)
+
+    def forward(self, input, hidden):
+        input_hidden = torch.cat([hidden, input], dim=1)
+        return hidden + 0.1 * self.vf_net(input_hidden)

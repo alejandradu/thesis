@@ -2,7 +2,7 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 from math import floor
-from synthetic_datasets.tasks.AbstractClass import SyntheticTask
+from AbstractClass import SyntheticTask
 
 # NOTE: generate docstrings with codeium, the period args are fractions of the trial
 
@@ -210,7 +210,7 @@ class CDM(SyntheticTask):
         ax[1].set_xlabel("Binned timesteps (bin_size = {})".format(self.bin_size))
         ax[1].set_ylabel("Target")
         
-        # return the image
-        return fig
+        # # return the image
+        # return fig
         
         
