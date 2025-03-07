@@ -1,0 +1,13 @@
+no change     /usr/licensed/anaconda3/2024.6/condabin/conda
+no change     /usr/licensed/anaconda3/2024.6/bin/conda
+no change     /usr/licensed/anaconda3/2024.6/bin/conda-env
+no change     /usr/licensed/anaconda3/2024.6/bin/activate
+no change     /usr/licensed/anaconda3/2024.6/bin/deactivate
+no change     /usr/licensed/anaconda3/2024.6/etc/profile.d/conda.sh
+no change     /usr/licensed/anaconda3/2024.6/etc/fish/conf.d/conda.fish
+no change     /usr/licensed/anaconda3/2024.6/shell/condabin/Conda.psm1
+no change     /usr/licensed/anaconda3/2024.6/shell/condabin/conda-hook.ps1
+no change     /usr/licensed/anaconda3/2024.6/lib/python3.12/site-packages/xontrib/conda.xsh
+no change     /usr/licensed/anaconda3/2024.6/etc/profile.d/conda.csh
+no change     /home/ad2002/.bashrc
+No action taken.
