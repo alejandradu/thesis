@@ -37,7 +37,7 @@ TASK_CONFIG = {
     "bin_size": 1,   # this is bin for TIMESTEPS
     "noise": 0.0,   # this is noise for the task itself
     "n_timesteps": 1000,
-    "switch_prob": 0.008,
+    "switch_prob": 0.01,
 }
 
 # create task
