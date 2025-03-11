@@ -24,7 +24,9 @@ grace_period = 1
 reduction_factor = 2
 num_workers = 8   # SET THE SAME AS CPU
 num_samples = 8  # total hyperparam combs 
-hidden_size = 2
+# special to node 
+latent_size = 2   # to plot
+hidden_size = 64
 ######## 
 
 # setup the task
@@ -54,7 +56,7 @@ DATA_CONFIG = {
     "train_ratio": 0.8,
     "val_ratio": 0.2,
     "init_states": None,
-    "init_states_dimension": hidden_size,
+    "init_states_dimension": latent_size,
     "init_states_name":'nbff_node_fix1',
 } 
 
@@ -68,7 +70,7 @@ MODEL_CONFIG = {
     "input_size": input_size,
     "hidden_size": hidden_size,
     "output_size": output_size,
-    "latent_size": 10,
+    "latent_size": latent_size,
     "output_mapping": None,  # default is to Linear. Change if you want a nonlinearity
 }
 

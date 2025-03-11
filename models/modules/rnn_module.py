@@ -348,8 +348,8 @@ class nODE(nn.Module):
 
         super(nODE, self).__init__()
         self.num_layers = config['num_layers']
-        self.hidden_size = config['hidden_size']  # this is the size that will plot
-        self.latent_size = config['latent_size']  # this is the size of the function that parametrizes
+        self.hidden_size = config['hidden_size']  # this is the size of the function that parametrizes
+        self.latent_size = config['latent_size']  # this is the size that will plot
         self.output_size = config['output_size']
         self.input_size = config['input_size']
         self.readout = config['output_mapping']
@@ -372,20 +372,20 @@ class nODE(nn.Module):
     def forward(self, input, return_latents=False, initial_states=None):
         batch_size, n_timesteps, input_size = input.shape
         if initial_states is None:
-            initial_states = torch.zeros((batch_size, self.latent_size), requires_grad=True, device=self.readout.device)
+            initial_states = torch.zeros((batch_size, self.latent_size), requires_grad=True, device=self.readout.weight.device)
             
-        output = torch.zeros(batch_size, n_timesteps, self.output_size, device=self.readout.device)
+        output = torch.zeros((batch_size, n_timesteps, self.output_size), device=self.readout.weight.device)
         hidden = initial_states.clone()
         
         if return_latents:
-            trajectories = torch.zeros(batch_size, n_timesteps + 1, self.hidden_size, device=self.readout.device) 
+            trajectories = torch.zeros((batch_size, n_timesteps + 1, self.latent_size), device=self.readout.weight.device) 
             trajectories[:, 0, :] = hidden
             
         # simulation loop
         for i in range(n_timesteps):
             # input: batch_size, input_size ; hidden: batch_size, latent_size
             hidden = self.generator(input[:, i, :], hidden)
-            output = self.readout(hidden)
+            output[:, i, :] = self.readout(hidden)
             if return_latents:
                 trajectories[:, i + 1, :] = hidden
         
@@ -415,5 +415,5 @@ class MLPCell(nn.Module):
         self.vf_net = nn.Sequential(*layers)
 
     def forward(self, input, hidden):
-        input_hidden = torch.cat([hidden, input], dim=1)
-        return hidden + 0.1 * self.vf_net(input_hidden)
+        input_hidden = torch.cat([hidden, input], dim=1).float()
+        return hidden.float() + 0.1 * self.vf_net(input_hidden)

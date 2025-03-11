@@ -1,1055 +1,138 @@
-2025-03-11 15:26:01,286	INFO worker.py:1841 -- Started a local Ray instance.
-2025-03-11 15:26:04,550	INFO tune.py:253 -- Initializing Ray automatically. For cluster usage or custom Ray initialization, call `ray.init(...)` before `Tuner(...)`.
-2025-03-11 15:26:04,604	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
-2025-03-11 15:26:04,606	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
-2025-03-11 15:26:04,609	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
-2025-03-11 15:26:04,611	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
-2025-03-11 15:26:04,613	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
-2025-03-11 15:26:04,615	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
-2025-03-11 15:26:04,617	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
-2025-03-11 15:26:04,619	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
-[36m(TorchTrainer pid=599906)[0m GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
-[36m(RayTrainWorker pid=600810)[0m Setting up process group for: env:// [rank=0, world_size=8]
-[36m(TorchTrainer pid=599903)[0m GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.[32m [repeated 5x across cluster] (Ray deduplicates logs by default. Set RAY_DEDUP_LOGS=0 to disable log deduplication, or see https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-deduplication for more options.)[0m
-[36m(TorchTrainer pid=599907)[0m Started distributed worker processes: 
-[36m(TorchTrainer pid=599907)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600810) world_rank=0, local_rank=0, node_rank=0
-[36m(TorchTrainer pid=599907)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600812) world_rank=1, local_rank=1, node_rank=0
-[36m(TorchTrainer pid=599907)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600801) world_rank=2, local_rank=2, node_rank=0
-[36m(TorchTrainer pid=599907)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600808) world_rank=3, local_rank=3, node_rank=0
-[36m(TorchTrainer pid=599907)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600857) world_rank=4, local_rank=4, node_rank=0
-[36m(TorchTrainer pid=599907)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600828) world_rank=5, local_rank=5, node_rank=0
-[36m(TorchTrainer pid=599907)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600817) world_rank=6, local_rank=6, node_rank=0
-[36m(TorchTrainer pid=599907)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600827) world_rank=7, local_rank=7, node_rank=0
-[36m(RayTrainWorker pid=600823)[0m Setting up process group for: env:// [rank=0, world_size=8][32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600821)[0m Setting up process group for: env:// [rank=0, world_size=8]
-[36m(RayTrainWorker pid=600810)[0m GPU available: False, used: False
-[36m(RayTrainWorker pid=600810)[0m TPU available: False, using: 0 TPU cores
-[36m(RayTrainWorker pid=600810)[0m HPU available: False, using: 0 HPUs
-[36m(RayTrainWorker pid=600810)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py:73: `max_epochs` was not set. Setting it to 1000 epochs. To train without an epoch limit, set `max_epochs=-1`.
-[36m(RayTrainWorker pid=600810)[0m 
-[36m(RayTrainWorker pid=600810)[0m   | Name  | Type | Params | Mode 
-[36m(RayTrainWorker pid=600810)[0m ---------------------------------------
-[36m(RayTrainWorker pid=600810)[0m 0 | model | nODE | 106    | train
-[36m(RayTrainWorker pid=600810)[0m ---------------------------------------
-[36m(RayTrainWorker pid=600810)[0m 106       Trainable params
-[36m(RayTrainWorker pid=600810)[0m 0         Non-trainable params
-[36m(RayTrainWorker pid=600810)[0m 106       Total params
-[36m(RayTrainWorker pid=600810)[0m 0.000     Total estimated model params size (MB)
-[36m(RayTrainWorker pid=600810)[0m 13        Modules in train mode
-[36m(RayTrainWorker pid=600810)[0m 0         Modules in eval mode
-[36m(RayTrainWorker pid=600799)[0m Setting up process group for: env:// [rank=0, world_size=8]
-2025-03-11 15:26:36,185	ERROR tune_controller.py:1331 -- Trial task failed for trial TorchTrainer_ac9d9_00005
-Traceback (most recent call last):
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/air/execution/_internal/event_manager.py", line 110, in resolve_future
-    result = ray.get(future)
-             ^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
-    return fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 2772, in get
-    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 919, in get_objects
-    raise value.as_instanceof_cause()
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_Inner.train()[39m (pid=599907, ip=172.17.6.108, actor_id=e0afa9d35f7dded75c8435c401000000, repr=TorchTrainer)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/tune/trainable/trainable.py", line 331, in train
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 57, in check_for_failure
-    ray.get(object_ref)
-           ^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_RayTrainWorker__execute.get_next()[39m (pid=600857, ip=172.17.6.108, actor_id=0f248b2819376caa990d900601000000, repr=<ray.train._internal.worker_group.RayTrainWorker object at 0x14ce8d5d5400>)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/worker_group.py", line 33, in __execute
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 176, in discard_return_wrapper
-    train_func(*args, **kwargs)
-  File "/home/ad2002/thesis/main/train_cluster_nbff.py", line 118, in train_loop
-    trainer.fit(model, datamodule=data_module)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 539, in fit
-    call._call_and_handle_interrupt(
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
-    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
-    return function(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 575, in _fit_impl
-    self._run(model, ckpt_path=ckpt_path)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 982, in _run
-    results = self._run_stage()
-              ^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1024, in _run_stage
-    self._run_sanity_check()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1053, in _run_sanity_check
-    val_loop.run()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py", line 179, in _decorator
-    return loop_run(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 144, in run
-    self._evaluation_step(batch, batch_idx, dataloader_idx, dataloader_iter)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 433, in _evaluation_step
-    output = call._call_strategy_hook(trainer, hook_name, *step_args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 323, in _call_strategy_hook
-    output = fn(*args, **kwargs)
-             ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 411, in validation_step
-    return self._forward_redirection(self.model, self.lightning_module, "validation_step", *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 641, in __call__
-    wrapper_output = wrapper_module(*args, **kwargs)
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1643, in forward
-    else self._run_ddp_forward(*inputs, **kwargs)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1459, in _run_ddp_forward
-    return self.module(*inputs, **kwargs)  # type: ignore[index]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 634, in wrapped_forward
-    out = method(*_args, **_kwargs)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 51, in validation_step
-    output, trajectories = self.model(inputs, return_latents=True, initial_states=initial_states)
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 386, in forward
-    hidden = self.generator(input, hidden)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 415, in forward
-    input_hidden = torch.cat([hidden, input], dim=1)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: Tensors must have same number of dimensions: got 2 and 3
-[36m(TorchTrainer pid=599902)[0m Started distributed worker processes: 
-[36m(TorchTrainer pid=599902)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600863) world_rank=0, local_rank=0, node_rank=0
-[36m(TorchTrainer pid=599902)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600868) world_rank=1, local_rank=1, node_rank=0
-[36m(TorchTrainer pid=599902)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600814) world_rank=2, local_rank=2, node_rank=0
-[36m(TorchTrainer pid=599902)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600870) world_rank=3, local_rank=3, node_rank=0
-[36m(TorchTrainer pid=599902)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600867) world_rank=4, local_rank=4, node_rank=0
-[36m(TorchTrainer pid=599902)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600873) world_rank=5, local_rank=5, node_rank=0
-[36m(TorchTrainer pid=599902)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600807) world_rank=6, local_rank=6, node_rank=0
-[36m(TorchTrainer pid=599902)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600872) world_rank=7, local_rank=7, node_rank=0
-[36m(RayTrainWorker pid=600869)[0m Setting up process group for: env:// [rank=0, world_size=8]
-[36m(RayTrainWorker pid=600863)[0m GPU available: False, used: False
-[36m(RayTrainWorker pid=600863)[0m TPU available: False, using: 0 TPU cores
-[36m(RayTrainWorker pid=600863)[0m HPU available: False, using: 0 HPUs
-[36m(RayTrainWorker pid=600863)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py:73: `max_epochs` was not set. Setting it to 1000 epochs. To train without an epoch limit, set `max_epochs=-1`.
-[36m(RayTrainWorker pid=600863)[0m 
-[36m(RayTrainWorker pid=600863)[0m   | Name  | Type | Params | Mode 
-[36m(RayTrainWorker pid=600863)[0m ---------------------------------------
-[36m(RayTrainWorker pid=600863)[0m 0 | model | nODE | 106    | train
-[36m(RayTrainWorker pid=600863)[0m ---------------------------------------
-[36m(RayTrainWorker pid=600863)[0m 106       Trainable params
-[36m(RayTrainWorker pid=600863)[0m 0         Non-trainable params
-[36m(RayTrainWorker pid=600863)[0m 106       Total params
-[36m(RayTrainWorker pid=600863)[0m 0.000     Total estimated model params size (MB)
-[36m(RayTrainWorker pid=600863)[0m 13        Modules in train mode
-[36m(RayTrainWorker pid=600863)[0m 0         Modules in eval mode
-[36m(TorchTrainer pid=599904)[0m Started distributed worker processes: [32m [repeated 2x across cluster][0m
-[36m(TorchTrainer pid=599904)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600877) world_rank=7, local_rank=7, node_rank=0[32m [repeated 16x across cluster][0m
-2025-03-11 15:26:43,189	ERROR tune_controller.py:1331 -- Trial task failed for trial TorchTrainer_ac9d9_00004
-Traceback (most recent call last):
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/air/execution/_internal/event_manager.py", line 110, in resolve_future
-    result = ray.get(future)
-             ^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
-    return fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 2772, in get
-    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 919, in get_objects
-    raise value.as_instanceof_cause()
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_Inner.train()[39m (pid=599902, ip=172.17.6.108, actor_id=19b43eadd811e47b7d0c377901000000, repr=TorchTrainer)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/tune/trainable/trainable.py", line 331, in train
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 57, in check_for_failure
-    ray.get(object_ref)
-           ^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_RayTrainWorker__execute.get_next()[39m (pid=600807, ip=172.17.6.108, actor_id=70f39d5511ec23617b88910501000000, repr=<ray.train._internal.worker_group.RayTrainWorker object at 0x14c6b5a99100>)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/worker_group.py", line 33, in __execute
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 176, in discard_return_wrapper
-    train_func(*args, **kwargs)
-  File "/home/ad2002/thesis/main/train_cluster_nbff.py", line 118, in train_loop
-    trainer.fit(model, datamodule=data_module)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 539, in fit
-    call._call_and_handle_interrupt(
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
-    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
-    return function(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 575, in _fit_impl
-    self._run(model, ckpt_path=ckpt_path)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 982, in _run
-    results = self._run_stage()
-              ^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1024, in _run_stage
-    self._run_sanity_check()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1053, in _run_sanity_check
-    val_loop.run()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py", line 179, in _decorator
-    return loop_run(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 144, in run
-    self._evaluation_step(batch, batch_idx, dataloader_idx, dataloader_iter)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 433, in _evaluation_step
-    output = call._call_strategy_hook(trainer, hook_name, *step_args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 323, in _call_strategy_hook
-    output = fn(*args, **kwargs)
-             ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 411, in validation_step
-    return self._forward_redirection(self.model, self.lightning_module, "validation_step", *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 641, in __call__
-    wrapper_output = wrapper_module(*args, **kwargs)
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1643, in forward
-    else self._run_ddp_forward(*inputs, **kwargs)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1459, in _run_ddp_forward
-    return self.module(*inputs, **kwargs)  # type: ignore[index]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 634, in wrapped_forward
-    out = method(*_args, **_kwargs)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 51, in validation_step
-    output, trajectories = self.model(inputs, return_latents=True, initial_states=initial_states)
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 386, in forward
-    hidden = self.generator(input, hidden)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 415, in forward
-    input_hidden = torch.cat([hidden, input], dim=1)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: Tensors must have same number of dimensions: got 2 and 3
-[36m(RayTrainWorker pid=600799)[0m 
-[36m(TorchTrainer pid=604657)[0m GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
-[36m(RayTrainWorker pid=600823)[0m GPU available: False, used: False[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600823)[0m TPU available: False, using: 0 TPU cores[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600823)[0m HPU available: False, using: 0 HPUs[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600823)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py:73: `max_epochs` was not set. Setting it to 1000 epochs. To train without an epoch limit, set `max_epochs=-1`.[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600799)[0m   | Name  | Type | Params | Mode 
-[36m(RayTrainWorker pid=600799)[0m ---------------------------------------[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600799)[0m 0 | model | nODE | 106    | train
-[36m(RayTrainWorker pid=600799)[0m 106       Trainable params
-[36m(RayTrainWorker pid=600799)[0m 0         Non-trainable params
-[36m(RayTrainWorker pid=600799)[0m 106       Total params
-[36m(RayTrainWorker pid=600799)[0m 0.000     Total estimated model params size (MB)
-[36m(RayTrainWorker pid=600799)[0m 13        Modules in train mode
-[36m(RayTrainWorker pid=600799)[0m 0         Modules in eval mode
-[36m(TorchTrainer pid=599903)[0m Started distributed worker processes: [32m [repeated 2x across cluster][0m
-[36m(TorchTrainer pid=599903)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=600871) world_rank=7, local_rank=7, node_rank=0[32m [repeated 16x across cluster][0m
-[36m(RayTrainWorker pid=600823)[0m 
-[36m(RayTrainWorker pid=600823)[0m   | Name  | Type | Params | Mode 
-[36m(RayTrainWorker pid=600823)[0m 0 | model | nODE | 106    | train
-[36m(RayTrainWorker pid=600823)[0m 106       Trainable params
-[36m(RayTrainWorker pid=600823)[0m 0         Non-trainable params
-[36m(RayTrainWorker pid=600823)[0m 106       Total params
-[36m(RayTrainWorker pid=600823)[0m 0.000     Total estimated model params size (MB)
-[36m(RayTrainWorker pid=600823)[0m 13        Modules in train mode
-[36m(RayTrainWorker pid=600823)[0m 0         Modules in eval mode
-[36m(RayTrainWorker pid=600869)[0m 
-2025-03-11 15:26:48,380	ERROR tune_controller.py:1331 -- Trial task failed for trial TorchTrainer_ac9d9_00001
-Traceback (most recent call last):
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/air/execution/_internal/event_manager.py", line 110, in resolve_future
-    result = ray.get(future)
-             ^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
-    return fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 2772, in get
-    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 919, in get_objects
-    raise value.as_instanceof_cause()
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_Inner.train()[39m (pid=599904, ip=172.17.6.108, actor_id=8142633f8a2b659409ef4dce01000000, repr=TorchTrainer)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/tune/trainable/trainable.py", line 331, in train
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 57, in check_for_failure
-    ray.get(object_ref)
-           ^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_RayTrainWorker__execute.get_next()[39m (pid=600874, ip=172.17.6.108, actor_id=0e50e60fa85a57d3c2f16a9501000000, repr=<ray.train._internal.worker_group.RayTrainWorker object at 0x150aa040ab70>)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/worker_group.py", line 33, in __execute
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 176, in discard_return_wrapper
-    train_func(*args, **kwargs)
-  File "/home/ad2002/thesis/main/train_cluster_nbff.py", line 118, in train_loop
-    trainer.fit(model, datamodule=data_module)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 539, in fit
-    call._call_and_handle_interrupt(
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
-    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
-    return function(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 575, in _fit_impl
-    self._run(model, ckpt_path=ckpt_path)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 982, in _run
-    results = self._run_stage()
-              ^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1024, in _run_stage
-    self._run_sanity_check()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1053, in _run_sanity_check
-    val_loop.run()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py", line 179, in _decorator
-    return loop_run(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 144, in run
-    self._evaluation_step(batch, batch_idx, dataloader_idx, dataloader_iter)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 433, in _evaluation_step
-    output = call._call_strategy_hook(trainer, hook_name, *step_args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 323, in _call_strategy_hook
-    output = fn(*args, **kwargs)
-             ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 411, in validation_step
-    return self._forward_redirection(self.model, self.lightning_module, "validation_step", *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 641, in __call__
-    wrapper_output = wrapper_module(*args, **kwargs)
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1643, in forward
-    else self._run_ddp_forward(*inputs, **kwargs)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1459, in _run_ddp_forward
-    return self.module(*inputs, **kwargs)  # type: ignore[index]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 634, in wrapped_forward
-    out = method(*_args, **_kwargs)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 51, in validation_step
-    output, trajectories = self.model(inputs, return_latents=True, initial_states=initial_states)
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 386, in forward
-    hidden = self.generator(input, hidden)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 415, in forward
-    input_hidden = torch.cat([hidden, input], dim=1)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: Tensors must have same number of dimensions: got 2 and 3
-[36m(RayTrainWorker pid=600821)[0m 
-2025-03-11 15:26:50,158	ERROR tune_controller.py:1331 -- Trial task failed for trial TorchTrainer_ac9d9_00002
-Traceback (most recent call last):
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/air/execution/_internal/event_manager.py", line 110, in resolve_future
-    result = ray.get(future)
-             ^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
-    return fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 2772, in get
-    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 919, in get_objects
-    raise value.as_instanceof_cause()
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_Inner.train()[39m (pid=599906, ip=172.17.6.108, actor_id=412a24797b8362b28631a13c01000000, repr=TorchTrainer)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/tune/trainable/trainable.py", line 331, in train
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 57, in check_for_failure
-    ray.get(object_ref)
-           ^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_RayTrainWorker__execute.get_next()[39m (pid=600824, ip=172.17.6.108, actor_id=b5c64642a9f2342af049050401000000, repr=<ray.train._internal.worker_group.RayTrainWorker object at 0x142842a442c0>)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/worker_group.py", line 33, in __execute
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 176, in discard_return_wrapper
-    train_func(*args, **kwargs)
-  File "/home/ad2002/thesis/main/train_cluster_nbff.py", line 118, in train_loop
-    trainer.fit(model, datamodule=data_module)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 539, in fit
-    call._call_and_handle_interrupt(
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
-    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
-    return function(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 575, in _fit_impl
-    self._run(model, ckpt_path=ckpt_path)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 982, in _run
-    results = self._run_stage()
-              ^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1024, in _run_stage
-    self._run_sanity_check()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1053, in _run_sanity_check
-    val_loop.run()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py", line 179, in _decorator
-    return loop_run(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 144, in run
-    self._evaluation_step(batch, batch_idx, dataloader_idx, dataloader_iter)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 433, in _evaluation_step
-    output = call._call_strategy_hook(trainer, hook_name, *step_args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 323, in _call_strategy_hook
-    output = fn(*args, **kwargs)
-             ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 411, in validation_step
-    return self._forward_redirection(self.model, self.lightning_module, "validation_step", *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 641, in __call__
-    wrapper_output = wrapper_module(*args, **kwargs)
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1643, in forward
-    else self._run_ddp_forward(*inputs, **kwargs)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1459, in _run_ddp_forward
-    return self.module(*inputs, **kwargs)  # type: ignore[index]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 634, in wrapped_forward
-    out = method(*_args, **_kwargs)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 51, in validation_step
-    output, trajectories = self.model(inputs, return_latents=True, initial_states=initial_states)
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 386, in forward
-    hidden = self.generator(input, hidden)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 415, in forward
-    input_hidden = torch.cat([hidden, input], dim=1)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: Tensors must have same number of dimensions: got 2 and 3
-2025-03-11 15:26:50,459	ERROR tune_controller.py:1331 -- Trial task failed for trial TorchTrainer_ac9d9_00000
-Traceback (most recent call last):
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/air/execution/_internal/event_manager.py", line 110, in resolve_future
-    result = ray.get(future)
-             ^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
-    return fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 2772, in get
-    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 919, in get_objects
-    raise value.as_instanceof_cause()
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_Inner.train()[39m (pid=599905, ip=172.17.6.108, actor_id=d53dac9530e3cfbe3e37eec501000000, repr=TorchTrainer)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/tune/trainable/trainable.py", line 331, in train
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 57, in check_for_failure
-    ray.get(object_ref)
-           ^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_RayTrainWorker__execute.get_next()[39m (pid=600860, ip=172.17.6.108, actor_id=9f6051cd4f3a12f6253fc75301000000, repr=<ray.train._internal.worker_group.RayTrainWorker object at 0x146c234c8f20>)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/worker_group.py", line 33, in __execute
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 176, in discard_return_wrapper
-    train_func(*args, **kwargs)
-  File "/home/ad2002/thesis/main/train_cluster_nbff.py", line 118, in train_loop
-    trainer.fit(model, datamodule=data_module)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 539, in fit
-    call._call_and_handle_interrupt(
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
-    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
-    return function(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 575, in _fit_impl
-    self._run(model, ckpt_path=ckpt_path)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 982, in _run
-    results = self._run_stage()
-              ^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1024, in _run_stage
-    self._run_sanity_check()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1053, in _run_sanity_check
-    val_loop.run()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py", line 179, in _decorator
-    return loop_run(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 144, in run
-    self._evaluation_step(batch, batch_idx, dataloader_idx, dataloader_iter)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 433, in _evaluation_step
-    output = call._call_strategy_hook(trainer, hook_name, *step_args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 323, in _call_strategy_hook
-    output = fn(*args, **kwargs)
-             ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 411, in validation_step
-    return self._forward_redirection(self.model, self.lightning_module, "validation_step", *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 641, in __call__
-    wrapper_output = wrapper_module(*args, **kwargs)
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1643, in forward
-    else self._run_ddp_forward(*inputs, **kwargs)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1459, in _run_ddp_forward
-    return self.module(*inputs, **kwargs)  # type: ignore[index]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 634, in wrapped_forward
-    out = method(*_args, **_kwargs)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 51, in validation_step
-    output, trajectories = self.model(inputs, return_latents=True, initial_states=initial_states)
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 386, in forward
-    hidden = self.generator(input, hidden)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 415, in forward
-    input_hidden = torch.cat([hidden, input], dim=1)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: Tensors must have same number of dimensions: got 2 and 3
-2025-03-11 15:26:52,565	ERROR tune_controller.py:1331 -- Trial task failed for trial TorchTrainer_ac9d9_00003
-Traceback (most recent call last):
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/air/execution/_internal/event_manager.py", line 110, in resolve_future
-    result = ray.get(future)
-             ^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
-    return fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 2772, in get
-    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 919, in get_objects
-    raise value.as_instanceof_cause()
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_Inner.train()[39m (pid=599903, ip=172.17.6.108, actor_id=5dbd636ac1d5e543480da9d301000000, repr=TorchTrainer)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/tune/trainable/trainable.py", line 331, in train
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 57, in check_for_failure
-    ray.get(object_ref)
-           ^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_RayTrainWorker__execute.get_next()[39m (pid=600856, ip=172.17.6.108, actor_id=b29d07bd082f53e9a272f68f01000000, repr=<ray.train._internal.worker_group.RayTrainWorker object at 0x1527fbdc12e0>)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/worker_group.py", line 33, in __execute
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 176, in discard_return_wrapper
-    train_func(*args, **kwargs)
-  File "/home/ad2002/thesis/main/train_cluster_nbff.py", line 118, in train_loop
-    trainer.fit(model, datamodule=data_module)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 539, in fit
-    call._call_and_handle_interrupt(
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
-    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
-    return function(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 575, in _fit_impl
-    self._run(model, ckpt_path=ckpt_path)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 982, in _run
-    results = self._run_stage()
-              ^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1024, in _run_stage
-    self._run_sanity_check()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1053, in _run_sanity_check
-    val_loop.run()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py", line 179, in _decorator
-    return loop_run(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 144, in run
-    self._evaluation_step(batch, batch_idx, dataloader_idx, dataloader_iter)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 433, in _evaluation_step
-    output = call._call_strategy_hook(trainer, hook_name, *step_args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 323, in _call_strategy_hook
-    output = fn(*args, **kwargs)
-             ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 411, in validation_step
-    return self._forward_redirection(self.model, self.lightning_module, "validation_step", *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 641, in __call__
-    wrapper_output = wrapper_module(*args, **kwargs)
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1643, in forward
-    else self._run_ddp_forward(*inputs, **kwargs)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1459, in _run_ddp_forward
-    return self.module(*inputs, **kwargs)  # type: ignore[index]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 634, in wrapped_forward
-    out = method(*_args, **_kwargs)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 51, in validation_step
-    output, trajectories = self.model(inputs, return_latents=True, initial_states=initial_states)
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 386, in forward
-    hidden = self.generator(input, hidden)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 415, in forward
-    input_hidden = torch.cat([hidden, input], dim=1)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: Tensors must have same number of dimensions: got 2 and 3
-[36m(RayTrainWorker pid=605042)[0m Setting up process group for: env:// [rank=0, world_size=8]
-[36m(RayTrainWorker pid=600821)[0m GPU available: False, used: False[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600821)[0m TPU available: False, using: 0 TPU cores[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600821)[0m HPU available: False, using: 0 HPUs[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600821)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py:73: `max_epochs` was not set. Setting it to 1000 epochs. To train without an epoch limit, set `max_epochs=-1`.[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600821)[0m ---------------------------------------[32m [repeated 6x across cluster][0m
-[36m(RayTrainWorker pid=600821)[0m   | Name  | Type | Params | Mode [32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600821)[0m 0 | model | nODE | 106    | train[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600821)[0m 106       Trainable params[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600821)[0m 0         Non-trainable params[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600821)[0m 106       Total params[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600821)[0m 0.000     Total estimated model params size (MB)[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600821)[0m 13        Modules in train mode[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=600821)[0m 0         Modules in eval mode[32m [repeated 2x across cluster][0m
-[36m(TorchTrainer pid=605046)[0m GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
-[36m(TorchTrainer pid=604657)[0m Started distributed worker processes: 
-[36m(TorchTrainer pid=604657)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=605042) world_rank=0, local_rank=0, node_rank=0
-[36m(TorchTrainer pid=604657)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=605052) world_rank=1, local_rank=1, node_rank=0
-[36m(TorchTrainer pid=604657)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=605049) world_rank=2, local_rank=2, node_rank=0
-[36m(TorchTrainer pid=604657)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=605055) world_rank=3, local_rank=3, node_rank=0
-[36m(TorchTrainer pid=604657)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=605053) world_rank=4, local_rank=4, node_rank=0
-[36m(TorchTrainer pid=604657)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=605057) world_rank=5, local_rank=5, node_rank=0
-[36m(TorchTrainer pid=604657)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=605059) world_rank=6, local_rank=6, node_rank=0
-[36m(TorchTrainer pid=604657)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=605061) world_rank=7, local_rank=7, node_rank=0
-[36m(RayTrainWorker pid=605042)[0m 
-2025-03-11 15:27:00,136	ERROR tune_controller.py:1331 -- Trial task failed for trial TorchTrainer_ac9d9_00006
-Traceback (most recent call last):
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/air/execution/_internal/event_manager.py", line 110, in resolve_future
-    result = ray.get(future)
-             ^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
-    return fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 2772, in get
-    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 919, in get_objects
-    raise value.as_instanceof_cause()
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_Inner.train()[39m (pid=604657, ip=172.17.6.108, actor_id=a8cf6c83011658be2e33394901000000, repr=TorchTrainer)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/tune/trainable/trainable.py", line 331, in train
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 57, in check_for_failure
-    ray.get(object_ref)
-           ^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_RayTrainWorker__execute.get_next()[39m (pid=605052, ip=172.17.6.108, actor_id=f5cccf9a7486546baa0535f701000000, repr=<ray.train._internal.worker_group.RayTrainWorker object at 0x14e4596e42c0>)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/worker_group.py", line 33, in __execute
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 176, in discard_return_wrapper
-    train_func(*args, **kwargs)
-  File "/home/ad2002/thesis/main/train_cluster_nbff.py", line 118, in train_loop
-    trainer.fit(model, datamodule=data_module)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 539, in fit
-    call._call_and_handle_interrupt(
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
-    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
-    return function(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 575, in _fit_impl
-    self._run(model, ckpt_path=ckpt_path)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 982, in _run
-    results = self._run_stage()
-              ^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1024, in _run_stage
-    self._run_sanity_check()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1053, in _run_sanity_check
-    val_loop.run()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py", line 179, in _decorator
-    return loop_run(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 144, in run
-    self._evaluation_step(batch, batch_idx, dataloader_idx, dataloader_iter)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 433, in _evaluation_step
-    output = call._call_strategy_hook(trainer, hook_name, *step_args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 323, in _call_strategy_hook
-    output = fn(*args, **kwargs)
-             ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 411, in validation_step
-    return self._forward_redirection(self.model, self.lightning_module, "validation_step", *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 641, in __call__
-    wrapper_output = wrapper_module(*args, **kwargs)
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1643, in forward
-    else self._run_ddp_forward(*inputs, **kwargs)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1459, in _run_ddp_forward
-    return self.module(*inputs, **kwargs)  # type: ignore[index]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 634, in wrapped_forward
-    out = method(*_args, **_kwargs)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 51, in validation_step
-    output, trajectories = self.model(inputs, return_latents=True, initial_states=initial_states)
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 386, in forward
-    hidden = self.generator(input, hidden)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 415, in forward
-    input_hidden = torch.cat([hidden, input], dim=1)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: Tensors must have same number of dimensions: got 2 and 3
-[36m(RayTrainWorker pid=606277)[0m Setting up process group for: env:// [rank=0, world_size=8]
-[36m(RayTrainWorker pid=605042)[0m GPU available: False, used: False
-[36m(RayTrainWorker pid=605042)[0m TPU available: False, using: 0 TPU cores
-[36m(RayTrainWorker pid=605042)[0m HPU available: False, using: 0 HPUs
-[36m(RayTrainWorker pid=605042)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py:73: `max_epochs` was not set. Setting it to 1000 epochs. To train without an epoch limit, set `max_epochs=-1`.
-[36m(RayTrainWorker pid=605042)[0m ---------------------------------------[32m [repeated 2x across cluster][0m
-[36m(RayTrainWorker pid=605042)[0m   | Name  | Type | Params | Mode 
-[36m(RayTrainWorker pid=605042)[0m 0 | model | nODE | 88     | train
-[36m(RayTrainWorker pid=605042)[0m 88        Trainable params
-[36m(RayTrainWorker pid=605042)[0m 0         Non-trainable params
-[36m(RayTrainWorker pid=605042)[0m 88        Total params
-[36m(RayTrainWorker pid=605042)[0m 0.000     Total estimated model params size (MB)
-[36m(RayTrainWorker pid=605042)[0m 7         Modules in train mode
-[36m(RayTrainWorker pid=605042)[0m 0         Modules in eval mode
-[36m(TorchTrainer pid=605046)[0m Started distributed worker processes: 
-[36m(TorchTrainer pid=605046)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=606277) world_rank=0, local_rank=0, node_rank=0
-[36m(TorchTrainer pid=605046)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=606276) world_rank=1, local_rank=1, node_rank=0
-[36m(TorchTrainer pid=605046)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=606275) world_rank=2, local_rank=2, node_rank=0
-[36m(TorchTrainer pid=605046)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=606279) world_rank=3, local_rank=3, node_rank=0
-[36m(TorchTrainer pid=605046)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=606272) world_rank=4, local_rank=4, node_rank=0
-[36m(TorchTrainer pid=605046)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=606278) world_rank=5, local_rank=5, node_rank=0
-[36m(TorchTrainer pid=605046)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=606274) world_rank=6, local_rank=6, node_rank=0
-[36m(TorchTrainer pid=605046)[0m - (node_id=f3ba5c275fab9ff5034669a425f5009eb1ede6f770f38632bf78faaf, ip=172.17.6.108, pid=606273) world_rank=7, local_rank=7, node_rank=0
-[36m(RayTrainWorker pid=606277)[0m GPU available: False, used: False
-[36m(RayTrainWorker pid=606277)[0m TPU available: False, using: 0 TPU cores
-[36m(RayTrainWorker pid=606277)[0m HPU available: False, using: 0 HPUs
-[36m(RayTrainWorker pid=606277)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py:73: `max_epochs` was not set. Setting it to 1000 epochs. To train without an epoch limit, set `max_epochs=-1`.
-[36m(RayTrainWorker pid=606277)[0m 
-[36m(RayTrainWorker pid=606277)[0m   | Name  | Type | Params | Mode 
-[36m(RayTrainWorker pid=606277)[0m 0 | model | nODE | 106    | train
-[36m(RayTrainWorker pid=606277)[0m 106       Trainable params
-[36m(RayTrainWorker pid=606277)[0m 0         Non-trainable params
-[36m(RayTrainWorker pid=606277)[0m 106       Total params
-[36m(RayTrainWorker pid=606277)[0m 0.000     Total estimated model params size (MB)
-[36m(RayTrainWorker pid=606277)[0m 13        Modules in train mode
-[36m(RayTrainWorker pid=606277)[0m 0         Modules in eval mode
-2025-03-11 15:27:04,129	ERROR tune_controller.py:1331 -- Trial task failed for trial TorchTrainer_ac9d9_00007
-Traceback (most recent call last):
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/air/execution/_internal/event_manager.py", line 110, in resolve_future
-    result = ray.get(future)
-             ^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
-    return fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 2772, in get
-    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/_private/worker.py", line 919, in get_objects
-    raise value.as_instanceof_cause()
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_Inner.train()[39m (pid=605046, ip=172.17.6.108, actor_id=a4f68db6a4fc9439baff593d01000000, repr=TorchTrainer)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/tune/trainable/trainable.py", line 331, in train
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 57, in check_for_failure
-    ray.get(object_ref)
-           ^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ray.exceptions.RayTaskError(RuntimeError): [36mray::_RayTrainWorker__execute.get_next()[39m (pid=606279, ip=172.17.6.108, actor_id=a119b6a661cd7a91c02fcedf01000000, repr=<ray.train._internal.worker_group.RayTrainWorker object at 0x154cd890e810>)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/worker_group.py", line 33, in __execute
-    raise skipped from exception_cause(skipped)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/ray/train/_internal/utils.py", line 176, in discard_return_wrapper
-    train_func(*args, **kwargs)
-  File "/home/ad2002/thesis/main/train_cluster_nbff.py", line 118, in train_loop
-    trainer.fit(model, datamodule=data_module)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 539, in fit
-    call._call_and_handle_interrupt(
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 46, in _call_and_handle_interrupt
-    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
-    return function(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 575, in _fit_impl
-    self._run(model, ckpt_path=ckpt_path)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 982, in _run
-    results = self._run_stage()
-              ^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1024, in _run_stage
-    self._run_sanity_check()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1053, in _run_sanity_check
-    val_loop.run()
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py", line 179, in _decorator
-    return loop_run(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 144, in run
-    self._evaluation_step(batch, batch_idx, dataloader_idx, dataloader_iter)
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 433, in _evaluation_step
-    output = call._call_strategy_hook(trainer, hook_name, *step_args)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 323, in _call_strategy_hook
-    output = fn(*args, **kwargs)
-             ^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 411, in validation_step
-    return self._forward_redirection(self.model, self.lightning_module, "validation_step", *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 641, in __call__
-    wrapper_output = wrapper_module(*args, **kwargs)
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1643, in forward
-    else self._run_ddp_forward(*inputs, **kwargs)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/parallel/distributed.py", line 1459, in _run_ddp_forward
-    return self.module(*inputs, **kwargs)  # type: ignore[index]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 634, in wrapped_forward
-    out = method(*_args, **_kwargs)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 51, in validation_step
-    output, trajectories = self.model(inputs, return_latents=True, initial_states=initial_states)
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 386, in forward
-    hidden = self.generator(input, hidden)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ad2002/thesis/models/modules/rnn_module.py", line 415, in forward
-    input_hidden = torch.cat([hidden, input], dim=1)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: Tensors must have same number of dimensions: got 2 and 3
-2025-03-11 15:27:04,143	INFO tune.py:1009 -- Wrote the latest version of all result files and experiment state to '/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_15-25-59' in 0.0126s.
-2025-03-11 15:27:04,147	ERROR tune.py:1037 -- Trials did not complete: [TorchTrainer_ac9d9_00000, TorchTrainer_ac9d9_00001, TorchTrainer_ac9d9_00002, TorchTrainer_ac9d9_00003, TorchTrainer_ac9d9_00004, TorchTrainer_ac9d9_00005, TorchTrainer_ac9d9_00006, TorchTrainer_ac9d9_00007]
-[36m(RayTrainWorker pid=606277)[0m ---------------------------------------[32m [repeated 2x across cluster][0m
+2025-03-11 16:53:17,289	INFO worker.py:1841 -- Started a local Ray instance.
+2025-03-11 16:53:20,594	INFO tune.py:253 -- Initializing Ray automatically. For cluster usage or custom Ray initialization, call `ray.init(...)` before `Tuner(...)`.
+2025-03-11 16:53:20,647	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
+2025-03-11 16:53:20,650	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
+2025-03-11 16:53:20,652	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
+2025-03-11 16:53:20,654	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
+2025-03-11 16:53:20,656	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
+2025-03-11 16:53:20,658	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
+2025-03-11 16:53:20,660	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
+2025-03-11 16:53:20,662	INFO data_parallel_trainer.py:340 -- GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
+[36m(TorchTrainer pid=728293)[0m GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.
+[36m(RayTrainWorker pid=729419)[0m Setting up process group for: env:// [rank=0, world_size=8]
+[36m(TorchTrainer pid=728290)[0m GPUs are detected in your Ray cluster, but GPU training is not enabled for this trainer. To enable GPU training, make sure to set `use_gpu` to True in your scaling config.[32m [repeated 5x across cluster] (Ray deduplicates logs by default. Set RAY_DEDUP_LOGS=0 to disable log deduplication, or see https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-deduplication for more options.)[0m
+[36m(TorchTrainer pid=728293)[0m Started distributed worker processes: 
+[36m(TorchTrainer pid=728293)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729419) world_rank=0, local_rank=0, node_rank=0
+[36m(TorchTrainer pid=728293)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729406) world_rank=1, local_rank=1, node_rank=0
+[36m(TorchTrainer pid=728293)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729428) world_rank=2, local_rank=2, node_rank=0
+[36m(TorchTrainer pid=728293)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729423) world_rank=3, local_rank=3, node_rank=0
+[36m(TorchTrainer pid=728293)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729439) world_rank=4, local_rank=4, node_rank=0
+[36m(TorchTrainer pid=728293)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729466) world_rank=5, local_rank=5, node_rank=0
+[36m(TorchTrainer pid=728293)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729438) world_rank=6, local_rank=6, node_rank=0
+[36m(TorchTrainer pid=728293)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729441) world_rank=7, local_rank=7, node_rank=0
+[36m(RayTrainWorker pid=729475)[0m Setting up process group for: env:// [rank=0, world_size=8][32m [repeated 2x across cluster][0m
+[36m(RayTrainWorker pid=729419)[0m GPU available: False, used: False
+[36m(RayTrainWorker pid=729419)[0m TPU available: False, using: 0 TPU cores
+[36m(RayTrainWorker pid=729419)[0m HPU available: False, using: 0 HPUs
+[36m(RayTrainWorker pid=729419)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py:73: `max_epochs` was not set. Setting it to 1000 epochs. To train without an epoch limit, set `max_epochs=-1`.
+[36m(TorchTrainer pid=728294)[0m Started distributed worker processes: 
+[36m(TorchTrainer pid=728294)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729460) world_rank=0, local_rank=0, node_rank=0
+[36m(TorchTrainer pid=728294)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729462) world_rank=1, local_rank=1, node_rank=0
+[36m(TorchTrainer pid=728294)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729461) world_rank=2, local_rank=2, node_rank=0
+[36m(TorchTrainer pid=728294)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729468) world_rank=3, local_rank=3, node_rank=0
+[36m(TorchTrainer pid=728294)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729469) world_rank=4, local_rank=4, node_rank=0
+[36m(TorchTrainer pid=728294)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729473) world_rank=5, local_rank=5, node_rank=0
+[36m(TorchTrainer pid=728294)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729459) world_rank=6, local_rank=6, node_rank=0
+[36m(TorchTrainer pid=728294)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729453) world_rank=7, local_rank=7, node_rank=0
+[36m(RayTrainWorker pid=729419)[0m 
+[36m(RayTrainWorker pid=729419)[0m   | Name  | Type | Params | Mode 
+[36m(RayTrainWorker pid=729419)[0m ---------------------------------------
+[36m(RayTrainWorker pid=729419)[0m 0 | model | nODE | 12.9 K | train
+[36m(RayTrainWorker pid=729419)[0m ---------------------------------------
+[36m(RayTrainWorker pid=729419)[0m 12.9 K    Trainable params
+[36m(RayTrainWorker pid=729419)[0m 0         Non-trainable params
+[36m(RayTrainWorker pid=729419)[0m 12.9 K    Total params
+[36m(RayTrainWorker pid=729419)[0m 0.052     Total estimated model params size (MB)
+[36m(RayTrainWorker pid=729419)[0m 13        Modules in train mode
+[36m(RayTrainWorker pid=729419)[0m 0         Modules in eval mode
+[36m(RayTrainWorker pid=729402)[0m Setting up process group for: env:// [rank=0, world_size=8][32m [repeated 3x across cluster][0m
+[36m(RayTrainWorker pid=729402)[0m GPU available: False, used: False
+[36m(RayTrainWorker pid=729402)[0m TPU available: False, using: 0 TPU cores
+[36m(RayTrainWorker pid=729402)[0m HPU available: False, using: 0 HPUs
+[36m(RayTrainWorker pid=729402)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py:73: `max_epochs` was not set. Setting it to 1000 epochs. To train without an epoch limit, set `max_epochs=-1`.
+[36m(TorchTrainer pid=728291)[0m Started distributed worker processes: [32m [repeated 4x across cluster][0m
+[36m(TorchTrainer pid=728291)[0m - (node_id=4ed6bc3a598b56cfc83f7957f105e9289262661fad4f4a105763f80c, ip=172.17.6.108, pid=729411) world_rank=7, local_rank=7, node_rank=0[32m [repeated 32x across cluster][0m
+[36m(RayTrainWorker pid=729475)[0m GPU available: False, used: False
+[36m(RayTrainWorker pid=729475)[0m TPU available: False, using: 0 TPU cores
+[36m(RayTrainWorker pid=729475)[0m HPU available: False, using: 0 HPUs
+[36m(RayTrainWorker pid=729475)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py:73: `max_epochs` was not set. Setting it to 1000 epochs. To train without an epoch limit, set `max_epochs=-1`.
+[36m(RayTrainWorker pid=729402)[0m 
+[36m(RayTrainWorker pid=729402)[0m   | Name  | Type | Params | Mode 
+[36m(RayTrainWorker pid=729402)[0m ---------------------------------------
+[36m(RayTrainWorker pid=729402)[0m 0 | model | nODE | 456    | train
+[36m(RayTrainWorker pid=729402)[0m ---------------------------------------
+[36m(RayTrainWorker pid=729402)[0m 456       Trainable params
+[36m(RayTrainWorker pid=729402)[0m 0         Non-trainable params
+[36m(RayTrainWorker pid=729402)[0m 456       Total params
+[36m(RayTrainWorker pid=729402)[0m 0.002     Total estimated model params size (MB)
+[36m(RayTrainWorker pid=729402)[0m 7         Modules in train mode
+[36m(RayTrainWorker pid=729402)[0m 0         Modules in eval mode
+[36m(RayTrainWorker pid=729475)[0m 
+[36m(RayTrainWorker pid=729475)[0m 0 | model | nODE | 12.9 K | train
+[36m(RayTrainWorker pid=729475)[0m 12.9 K    Trainable params
+[36m(RayTrainWorker pid=729475)[0m 12.9 K    Total params
+[36m(RayTrainWorker pid=729417)[0m 
+[36m(RayTrainWorker pid=729460)[0m 
+[36m(RayTrainWorker pid=729455)[0m 
+[36m(RayTrainWorker pid=729419)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/fit_loop.py:310: The number of training batches (4) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+[36m(RayTrainWorker pid=729455)[0m GPU available: False, used: False[32m [repeated 3x across cluster][0m
+[36m(RayTrainWorker pid=729455)[0m TPU available: False, using: 0 TPU cores[32m [repeated 3x across cluster][0m
+[36m(RayTrainWorker pid=729455)[0m HPU available: False, using: 0 HPUs[32m [repeated 3x across cluster][0m
+[36m(RayTrainWorker pid=729455)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py:73: `max_epochs` was not set. Setting it to 1000 epochs. To train without an epoch limit, set `max_epochs=-1`.[32m [repeated 3x across cluster][0m
+[36m(RayTrainWorker pid=729455)[0m   | Name  | Type | Params | Mode [32m [repeated 4x across cluster][0m
+[36m(RayTrainWorker pid=729455)[0m ---------------------------------------[32m [repeated 8x across cluster][0m
+[36m(RayTrainWorker pid=729455)[0m 0 | model | nODE | 456    | train[32m [repeated 3x across cluster][0m
+[36m(RayTrainWorker pid=729455)[0m 456       Trainable params[32m [repeated 3x across cluster][0m
+[36m(RayTrainWorker pid=729455)[0m 0         Non-trainable params[32m [repeated 4x across cluster][0m
+[36m(RayTrainWorker pid=729455)[0m 456       Total params[32m [repeated 3x across cluster][0m
+[36m(RayTrainWorker pid=729455)[0m 0.002     Total estimated model params size (MB)[32m [repeated 4x across cluster][0m
+[36m(RayTrainWorker pid=729455)[0m 7         Modules in train mode[32m [repeated 4x across cluster][0m
+[36m(RayTrainWorker pid=729455)[0m 0         Modules in eval mode[32m [repeated 4x across cluster][0m
+[36m(RayTrainWorker pid=729402)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/fit_loop.py:310: The number of training batches (4) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+[36m(RayTrainWorker pid=729417)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/fit_loop.py:310: The number of training batches (4) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+[36m(RayTrainWorker pid=729419)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00000_0_lr=0.0001,num_layers=5,weight_decay=0.0000_2025-03-11_16-53-20/checkpoint_000000)
+[36m(RayTrainWorker pid=729455)[0m /home/ad2002/.conda/envs/neuralnets/lib/python3.12/site-packages/lightning/pytorch/loops/fit_loop.py:310: The number of training batches (4) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.[32m [repeated 3x across cluster][0m
+[36m(RayTrainWorker pid=729402)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00004_4_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000000)[32m [repeated 8x across cluster][0m
+[36m(RayTrainWorker pid=729419)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00000_0_lr=0.0001,num_layers=5,weight_decay=0.0000_2025-03-11_16-53-20/checkpoint_000001)[32m [repeated 40x across cluster][0m
+[36m(RayTrainWorker pid=729460)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00005_5_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000001)[32m [repeated 8x across cluster][0m
+[36m(RayTrainWorker pid=729419)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00000_0_lr=0.0001,num_layers=5,weight_decay=0.0000_2025-03-11_16-53-20/checkpoint_000002)[32m [repeated 40x across cluster][0m
+[36m(RayTrainWorker pid=729402)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00004_4_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000002)[32m [repeated 8x across cluster][0m
+[36m(RayTrainWorker pid=729423)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00000_0_lr=0.0001,num_layers=5,weight_decay=0.0000_2025-03-11_16-53-20/checkpoint_000003)[32m [repeated 40x across cluster][0m
+[36m(RayTrainWorker pid=729402)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00004_4_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000003)[32m [repeated 8x across cluster][0m
+[36m(RayTrainWorker pid=729406)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00000_0_lr=0.0001,num_layers=5,weight_decay=0.0000_2025-03-11_16-53-20/checkpoint_000004)[32m [repeated 40x across cluster][0m
+[36m(RayTrainWorker pid=729417)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00003_3_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000004)[32m [repeated 16x across cluster][0m
+[36m(RayTrainWorker pid=729402)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00004_4_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000005)[32m [repeated 32x across cluster][0m
+[36m(RayTrainWorker pid=729475)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00002_2_lr=0.0010,num_layers=5,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000005)[32m [repeated 16x across cluster][0m
+[36m(RayTrainWorker pid=729419)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00000_0_lr=0.0001,num_layers=5,weight_decay=0.0000_2025-03-11_16-53-20/checkpoint_000006)[32m [repeated 32x across cluster][0m
+[36m(RayTrainWorker pid=729417)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00003_3_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000006)[32m [repeated 16x across cluster][0m
+[36m(RayTrainWorker pid=729402)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00004_4_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000007)[32m [repeated 32x across cluster][0m
+[36m(RayTrainWorker pid=729460)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00005_5_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000007)[32m [repeated 16x across cluster][0m
+[36m(RayTrainWorker pid=729413)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00004_4_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000008)[32m [repeated 32x across cluster][0m
+[36m(RayTrainWorker pid=729460)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00005_5_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000008)[32m [repeated 16x across cluster][0m
+[36m(RayTrainWorker pid=729402)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00004_4_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000009)[32m [repeated 32x across cluster][0m
+[36m(RayTrainWorker pid=729460)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00005_5_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000009)[32m [repeated 16x across cluster][0m
+[36m(RayTrainWorker pid=729419)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00000_0_lr=0.0001,num_layers=5,weight_decay=0.0000_2025-03-11_16-53-20/checkpoint_000010)[32m [repeated 40x across cluster][0m
+[36m(RayTrainWorker pid=729455)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00001_1_lr=0.0001,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000010)[32m [repeated 8x across cluster][0m
+[36m(RayTrainWorker pid=729402)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00004_4_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000011)[32m [repeated 32x across cluster][0m
+[36m(RayTrainWorker pid=729460)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00005_5_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000011)[32m [repeated 16x across cluster][0m
+[36m(RayTrainWorker pid=729475)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00002_2_lr=0.0010,num_layers=5,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000011)[32m [repeated 24x across cluster][0m
+[36m(RayTrainWorker pid=729417)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00003_3_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000012)[32m [repeated 24x across cluster][0m
+[36m(RayTrainWorker pid=729415)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00004_4_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000013)[32m [repeated 24x across cluster][0m
+[36m(RayTrainWorker pid=729410)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00001_1_lr=0.0001,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000013)[32m [repeated 24x across cluster][0m
+[36m(RayTrainWorker pid=729406)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00000_0_lr=0.0001,num_layers=5,weight_decay=0.0000_2025-03-11_16-53-20/checkpoint_000014)[32m [repeated 24x across cluster][0m
+[36m(RayTrainWorker pid=729408)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00001_1_lr=0.0001,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000014)[32m [repeated 24x across cluster][0m
+[36m(RayTrainWorker pid=729402)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00004_4_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000015)[32m [repeated 24x across cluster][0m
+[36m(RayTrainWorker pid=729460)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00005_5_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000015)[32m [repeated 32x across cluster][0m
+[36m(RayTrainWorker pid=729402)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00004_4_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000016)[32m [repeated 16x across cluster][0m
+[36m(RayTrainWorker pid=729419)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00000_0_lr=0.0001,num_layers=5,weight_decay=0.0000_2025-03-11_16-53-20/checkpoint_000016)[32m [repeated 8x across cluster][0m
+[36m(RayTrainWorker pid=729475)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00002_2_lr=0.0010,num_layers=5,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000015)[32m [repeated 32x across cluster][0m
+[36m(RayTrainWorker pid=729419)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00000_0_lr=0.0001,num_layers=5,weight_decay=0.0000_2025-03-11_16-53-20/checkpoint_000017)[32m [repeated 16x across cluster][0m
+[36m(RayTrainWorker pid=729460)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00005_5_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000017)[32m [repeated 8x across cluster][0m
+[36m(RayTrainWorker pid=729406)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00000_0_lr=0.0001,num_layers=5,weight_decay=0.0000_2025-03-11_16-53-20/checkpoint_000018)[32m [repeated 40x across cluster][0m
+[36m(RayTrainWorker pid=729460)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00005_5_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000018)[32m [repeated 8x across cluster][0m
+[36m(RayTrainWorker pid=729419)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00000_0_lr=0.0001,num_layers=5,weight_decay=0.0000_2025-03-11_16-53-20/checkpoint_000019)[32m [repeated 40x across cluster][0m
+[36m(RayTrainWorker pid=729460)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00005_5_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000019)[32m [repeated 8x across cluster][0m
+[36m(RayTrainWorker pid=729402)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00004_4_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000020)[32m [repeated 16x across cluster][0m
+[36m(RayTrainWorker pid=729419)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00000_0_lr=0.0001,num_layers=5,weight_decay=0.0000_2025-03-11_16-53-20/checkpoint_000020)[32m [repeated 24x across cluster][0m
+[36m(RayTrainWorker pid=729460)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00005_5_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000020)[32m [repeated 8x across cluster][0m
+[36m(RayTrainWorker pid=729402)[0m Checkpoint successfully created at: Checkpoint(filesystem=local, path=/scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_16-53-15/TorchTrainer_dd8a6_00004_4_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_16-53-20/checkpoint_000021)[32m [repeated 8x across cluster][0m
