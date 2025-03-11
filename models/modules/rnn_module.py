@@ -4,6 +4,9 @@ import torch.nn as nn
 import math
 from models.metrics import loss_mse, accuracy
 
+# NOTE: all models must have 
+# forward(self, input, return_latents=, initial_states=):
+# might want to take away the return_latents option
 
 class GeneralModel(pl.LightningModule):
     """Wrap any neural net model for training and logging the same
@@ -333,10 +336,10 @@ class lrRNN(nn.Module):
             if return_latents:
                 trajectories[:, i + 1, :] = h           
 
-        if not return_latents:
-            return output
-        else:
+        if return_latents:
             return output, trajectories
+        
+        return output
     
 
 class nODE(nn.Module):
@@ -345,22 +348,16 @@ class nODE(nn.Module):
 
         super(nODE, self).__init__()
         self.num_layers = config['num_layers']
-        self.hidden_size = config['hidden_size']
-        self.latent_size = config['latent_size']  # this is for expressivity?
+        self.hidden_size = config['hidden_size']  # this is the size that will plot
+        self.latent_size = config['latent_size']  # this is the size of the function that parametrizes
         self.output_size = config['output_size']
         self.input_size = config['input_size']
         self.readout = config['output_mapping']
         self.generator = None
-        self.latent_ics = torch.nn.Parameter(
-            torch.zeros(self.latent_size), requires_grad=True
-        )
-
-    def init_hidden(self, batch_size):
-        return self.latent_ics.unsqueeze(0).expand(batch_size, -1)
+        # immediately initialize
+        self.init_model(self.input_size, self.output_size)
 
     def init_model(self, input_size, output_size):
-        self.input_size = input_size
-        self.output_size = output_size
         self.generator = MLPCell(
             input_size, self.num_layers, self.hidden_size, self.latent_size
         )
@@ -372,15 +369,30 @@ class nODE(nn.Module):
             )  # Small standard deviation
             nn.init.constant_(self.readout.bias, 0.0)  # Zero bias initialization
 
-    def forward(self, inputs, hidden=None):
-        n_samples, n_inputs = inputs.shape
-        dev = inputs.device
-        if hidden is None:
-            hidden = torch.zeros((n_samples, self.latent_size), device=dev)
-        hidden = self.generator(inputs, hidden)
-        output = self.readout(hidden)
-        return output, hidden
-
+    def forward(self, input, return_latents=False, initial_states=None):
+        batch_size, n_timesteps, input_size = input.shape
+        if initial_states is None:
+            initial_states = torch.zeros((batch_size, self.latent_size), requires_grad=True, device=self.readout.device)
+            
+        output = torch.zeros(batch_size, n_timesteps, self.output_size, device=self.readout.device)
+        hidden = initial_states.clone()
+        
+        if return_latents:
+            trajectories = torch.zeros(batch_size, n_timesteps + 1, self.hidden_size, device=self.readout.device) 
+            trajectories[:, 0, :] = hidden
+            
+        # simulation loop
+        for i in range(n_timesteps):
+            # input: batch_size, input_size ; hidden: batch_size, latent_size
+            hidden = self.generator(input[:, i, :], hidden)
+            output = self.readout(hidden)
+            if return_latents:
+                trajectories[:, i + 1, :] = hidden
+        
+        if return_latents:
+            return output, trajectories
+        
+        return output
 
 class MLPCell(nn.Module):
     """Parametrizes the NODE with an MLP"""

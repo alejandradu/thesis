@@ -18,7 +18,8 @@ module load anaconda3/2024.6
 conda init
 conda activate neuralnets
 
-cd home/ad2002/thesis
+# Set PYTHONPATH to include the parent directory of 'synthetic_datasets' and 'main'
+export PYTHONPATH="/home/ad2002/thesis/"
 
 python main/train_cluster_nbff.py
 

@@ -11,3 +11,220 @@ no change     /usr/licensed/anaconda3/2024.6/lib/python3.12/site-packages/xontri
 no change     /usr/licensed/anaconda3/2024.6/etc/profile.d/conda.csh
 no change     /home/ad2002/.bashrc
 No action taken.
+╭─────────────────────────────────────────────────────────────────────╮
+│ Configuration for experiment     TorchTrainer_2025-03-11_15-25-59   │
+├─────────────────────────────────────────────────────────────────────┤
+│ Search algorithm                 BasicVariantGenerator              │
+│ Scheduler                        AsyncHyperBandScheduler            │
+│ Number of trials                 8                                  │
+╰─────────────────────────────────────────────────────────────────────╯
+
+View detailed results here: /scratch/gpfs/ad2002/task_training/ray_results/TorchTrainer_2025-03-11_15-25-59
+To visualize your results with TensorBoard, run: `tensorboard --logdir /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts`
+
+Trial status: 8 PENDING
+Current time: 2025-03-11 15:26:04. Total running time: 0s
+Logical resource usage: 0/56 CPUs, 0/1 GPUs (0.0/1.0 accelerator_type:A100)
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Trial name                 status       train_loop_config/lr     ...nfig/weight_decay     ...config/num_layers │
+├────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ TorchTrainer_ac9d9_00000   PENDING                    0.001                     0                            2 │
+│ TorchTrainer_ac9d9_00001   PENDING                    0.0001                    0.001                        5 │
+│ TorchTrainer_ac9d9_00002   PENDING                    0.0001                    0.001                        5 │
+│ TorchTrainer_ac9d9_00003   PENDING                    0.001                     0.001                        5 │
+│ TorchTrainer_ac9d9_00004   PENDING                    0.0001                    0.001                        5 │
+│ TorchTrainer_ac9d9_00005   PENDING                    0.0001                    0.001                        5 │
+│ TorchTrainer_ac9d9_00006   PENDING                    0.001                     0.001                        2 │
+│ TorchTrainer_ac9d9_00007   PENDING                    0.001                     0.001                        5 │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+Trial TorchTrainer_ac9d9_00005 started with configuration:
+╭────────────────────────────────────────────────────────────────╮
+│ Trial TorchTrainer_ac9d9_00005 config                          │
+├────────────────────────────────────────────────────────────────┤
+│ train_loop_config/hidden_size                                2 │
+│ train_loop_config/input_size                                 2 │
+│ train_loop_config/latent_size                               10 │
+│ train_loop_config/lr                                    0.0001 │
+│ train_loop_config/model_class             ...rnn_module.nODE'> │
+│ train_loop_config/num_layers                                 5 │
+│ train_loop_config/output_mapping                               │
+│ train_loop_config/output_size                                2 │
+│ train_loop_config/weight_decay                           0.001 │
+╰────────────────────────────────────────────────────────────────╯
+
+Trial TorchTrainer_ac9d9_00002 started with configuration:
+╭────────────────────────────────────────────────────────────────╮
+│ Trial TorchTrainer_ac9d9_00002 config                          │
+├────────────────────────────────────────────────────────────────┤
+│ train_loop_config/hidden_size                                2 │
+│ train_loop_config/input_size                                 2 │
+│ train_loop_config/latent_size                               10 │
+│ train_loop_config/lr                                    0.0001 │
+│ train_loop_config/model_class             ...rnn_module.nODE'> │
+│ train_loop_config/num_layers                                 5 │
+│ train_loop_config/output_mapping                               │
+│ train_loop_config/output_size                                2 │
+│ train_loop_config/weight_decay                           0.001 │
+╰────────────────────────────────────────────────────────────────╯
+
+Trial TorchTrainer_ac9d9_00004 started with configuration:
+╭────────────────────────────────────────────────────────────────╮
+│ Trial TorchTrainer_ac9d9_00004 config                          │
+├────────────────────────────────────────────────────────────────┤
+│ train_loop_config/hidden_size                                2 │
+│ train_loop_config/input_size                                 2 │
+│ train_loop_config/latent_size                               10 │
+│ train_loop_config/lr                                    0.0001 │
+│ train_loop_config/model_class             ...rnn_module.nODE'> │
+│ train_loop_config/num_layers                                 5 │
+│ train_loop_config/output_mapping                               │
+│ train_loop_config/output_size                                2 │
+│ train_loop_config/weight_decay                           0.001 │
+╰────────────────────────────────────────────────────────────────╯
+
+Trial TorchTrainer_ac9d9_00000 started with configuration:
+╭────────────────────────────────────────────────────────────────╮
+│ Trial TorchTrainer_ac9d9_00000 config                          │
+├────────────────────────────────────────────────────────────────┤
+│ train_loop_config/hidden_size                                2 │
+│ train_loop_config/input_size                                 2 │
+│ train_loop_config/latent_size                               10 │
+│ train_loop_config/lr                                     0.001 │
+│ train_loop_config/model_class             ...rnn_module.nODE'> │
+│ train_loop_config/num_layers                                 2 │
+│ train_loop_config/output_mapping                               │
+│ train_loop_config/output_size                                2 │
+│ train_loop_config/weight_decay                             0.0 │
+╰────────────────────────────────────────────────────────────────╯
+
+Trial TorchTrainer_ac9d9_00001 started with configuration:
+╭────────────────────────────────────────────────────────────────╮
+│ Trial TorchTrainer_ac9d9_00001 config                          │
+├────────────────────────────────────────────────────────────────┤
+│ train_loop_config/hidden_size                                2 │
+│ train_loop_config/input_size                                 2 │
+│ train_loop_config/latent_size                               10 │
+│ train_loop_config/lr                                    0.0001 │
+│ train_loop_config/model_class             ...rnn_module.nODE'> │
+│ train_loop_config/num_layers                                 5 │
+│ train_loop_config/output_mapping                               │
+│ train_loop_config/output_size                                2 │
+│ train_loop_config/weight_decay                           0.001 │
+╰────────────────────────────────────────────────────────────────╯
+
+Trial TorchTrainer_ac9d9_00003 started with configuration:
+╭────────────────────────────────────────────────────────────────╮
+│ Trial TorchTrainer_ac9d9_00003 config                          │
+├────────────────────────────────────────────────────────────────┤
+│ train_loop_config/hidden_size                                2 │
+│ train_loop_config/input_size                                 2 │
+│ train_loop_config/latent_size                               10 │
+│ train_loop_config/lr                                     0.001 │
+│ train_loop_config/model_class             ...rnn_module.nODE'> │
+│ train_loop_config/num_layers                                 5 │
+│ train_loop_config/output_mapping                               │
+│ train_loop_config/output_size                                2 │
+│ train_loop_config/weight_decay                           0.001 │
+╰────────────────────────────────────────────────────────────────╯
+
+Trial status: 6 RUNNING | 2 PENDING
+Current time: 2025-03-11 15:26:34. Total running time: 30s
+Logical resource usage: 54.0/56 CPUs, 0/1 GPUs (0.0/1.0 accelerator_type:A100)
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Trial name                 status       train_loop_config/lr     ...nfig/weight_decay     ...config/num_layers │
+├────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ TorchTrainer_ac9d9_00000   RUNNING                    0.001                     0                            2 │
+│ TorchTrainer_ac9d9_00001   RUNNING                    0.0001                    0.001                        5 │
+│ TorchTrainer_ac9d9_00002   RUNNING                    0.0001                    0.001                        5 │
+│ TorchTrainer_ac9d9_00003   RUNNING                    0.001                     0.001                        5 │
+│ TorchTrainer_ac9d9_00004   RUNNING                    0.0001                    0.001                        5 │
+│ TorchTrainer_ac9d9_00005   RUNNING                    0.0001                    0.001                        5 │
+│ TorchTrainer_ac9d9_00006   PENDING                    0.001                     0.001                        2 │
+│ TorchTrainer_ac9d9_00007   PENDING                    0.001                     0.001                        5 │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+Trial TorchTrainer_ac9d9_00005 errored after 0 iterations at 2025-03-11 15:26:36. Total running time: 31s
+Error file: /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00005_5_lr=0.0001,num_layers=5,weight_decay=0.0010_2025-03-11_15-26-04/error.txt
+
+Trial TorchTrainer_ac9d9_00004 errored after 0 iterations at 2025-03-11 15:26:43. Total running time: 38s
+Error file: /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00004_4_lr=0.0001,num_layers=5,weight_decay=0.0010_2025-03-11_15-26-04/error.txt
+
+Trial TorchTrainer_ac9d9_00006 started with configuration:
+╭────────────────────────────────────────────────────────────────╮
+│ Trial TorchTrainer_ac9d9_00006 config                          │
+├────────────────────────────────────────────────────────────────┤
+│ train_loop_config/hidden_size                                2 │
+│ train_loop_config/input_size                                 2 │
+│ train_loop_config/latent_size                               10 │
+│ train_loop_config/lr                                     0.001 │
+│ train_loop_config/model_class             ...rnn_module.nODE'> │
+│ train_loop_config/num_layers                                 2 │
+│ train_loop_config/output_mapping                               │
+│ train_loop_config/output_size                                2 │
+│ train_loop_config/weight_decay                           0.001 │
+╰────────────────────────────────────────────────────────────────╯
+
+Trial TorchTrainer_ac9d9_00001 errored after 0 iterations at 2025-03-11 15:26:48. Total running time: 43s
+Error file: /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00001_1_lr=0.0001,num_layers=5,weight_decay=0.0010_2025-03-11_15-26-04/error.txt
+
+Trial TorchTrainer_ac9d9_00002 errored after 0 iterations at 2025-03-11 15:26:50. Total running time: 45s
+Error file: /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00002_2_lr=0.0001,num_layers=5,weight_decay=0.0010_2025-03-11_15-26-04/error.txt
+
+Trial TorchTrainer_ac9d9_00000 errored after 0 iterations at 2025-03-11 15:26:50. Total running time: 45s
+Error file: /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00000_0_lr=0.0010,num_layers=2,weight_decay=0.0000_2025-03-11_15-26-04/error.txt
+
+Trial TorchTrainer_ac9d9_00003 errored after 0 iterations at 2025-03-11 15:26:52. Total running time: 47s
+Error file: /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00003_3_lr=0.0010,num_layers=5,weight_decay=0.0010_2025-03-11_15-26-04/error.txt
+
+Trial TorchTrainer_ac9d9_00007 started with configuration:
+╭────────────────────────────────────────────────────────────────╮
+│ Trial TorchTrainer_ac9d9_00007 config                          │
+├────────────────────────────────────────────────────────────────┤
+│ train_loop_config/hidden_size                                2 │
+│ train_loop_config/input_size                                 2 │
+│ train_loop_config/latent_size                               10 │
+│ train_loop_config/lr                                     0.001 │
+│ train_loop_config/model_class             ...rnn_module.nODE'> │
+│ train_loop_config/num_layers                                 5 │
+│ train_loop_config/output_mapping                               │
+│ train_loop_config/output_size                                2 │
+│ train_loop_config/weight_decay                           0.001 │
+╰────────────────────────────────────────────────────────────────╯
+
+Trial TorchTrainer_ac9d9_00006 errored after 0 iterations at 2025-03-11 15:27:00. Total running time: 55s
+Error file: /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00006_6_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_15-26-04/error.txt
+
+Trial TorchTrainer_ac9d9_00007 errored after 0 iterations at 2025-03-11 15:27:04. Total running time: 59s
+Error file: /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00007_7_lr=0.0010,num_layers=5,weight_decay=0.0010_2025-03-11_15-26-04/error.txt
+
+Trial status: 8 ERROR
+Current time: 2025-03-11 15:27:04. Total running time: 59s
+Logical resource usage: 9.0/56 CPUs, 0/1 GPUs (0.0/1.0 accelerator_type:A100)
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Trial name                 status       train_loop_config/lr     ...nfig/weight_decay     ...config/num_layers │
+├────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ TorchTrainer_ac9d9_00000   ERROR                      0.001                     0                            2 │
+│ TorchTrainer_ac9d9_00001   ERROR                      0.0001                    0.001                        5 │
+│ TorchTrainer_ac9d9_00002   ERROR                      0.0001                    0.001                        5 │
+│ TorchTrainer_ac9d9_00003   ERROR                      0.001                     0.001                        5 │
+│ TorchTrainer_ac9d9_00004   ERROR                      0.0001                    0.001                        5 │
+│ TorchTrainer_ac9d9_00005   ERROR                      0.0001                    0.001                        5 │
+│ TorchTrainer_ac9d9_00006   ERROR                      0.001                     0.001                        2 │
+│ TorchTrainer_ac9d9_00007   ERROR                      0.001                     0.001                        5 │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+Number of errored trials: 8
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Trial name                   # failures   error file                                                                                                                                                                                                                             │
+├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ TorchTrainer_ac9d9_00000              1   /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00000_0_lr=0.0010,num_layers=2,weight_decay=0.0000_2025-03-11_15-26-04/error.txt │
+│ TorchTrainer_ac9d9_00001              1   /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00001_1_lr=0.0001,num_layers=5,weight_decay=0.0010_2025-03-11_15-26-04/error.txt │
+│ TorchTrainer_ac9d9_00002              1   /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00002_2_lr=0.0001,num_layers=5,weight_decay=0.0010_2025-03-11_15-26-04/error.txt │
+│ TorchTrainer_ac9d9_00003              1   /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00003_3_lr=0.0010,num_layers=5,weight_decay=0.0010_2025-03-11_15-26-04/error.txt │
+│ TorchTrainer_ac9d9_00004              1   /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00004_4_lr=0.0001,num_layers=5,weight_decay=0.0010_2025-03-11_15-26-04/error.txt │
+│ TorchTrainer_ac9d9_00005              1   /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00005_5_lr=0.0001,num_layers=5,weight_decay=0.0010_2025-03-11_15-26-04/error.txt │
+│ TorchTrainer_ac9d9_00006              1   /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00006_6_lr=0.0010,num_layers=2,weight_decay=0.0010_2025-03-11_15-26-04/error.txt │
+│ TorchTrainer_ac9d9_00007              1   /tmp/ray/session_2025-03-11_15-25-59_935501_595935/artifacts/2025-03-11_15-26-04/TorchTrainer_2025-03-11_15-25-59/driver_artifacts/TorchTrainer_ac9d9_00007_7_lr=0.0010,num_layers=5,weight_decay=0.0010_2025-03-11_15-26-04/error.txt │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+

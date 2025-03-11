@@ -6,6 +6,7 @@ import torch
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.model_selection import train_test_split
 import pickle
+from filelock import FileLock
 
 # NOTE: you might want to add a seed, also retrieve
 # phase_index_train and phase_index_val
@@ -56,19 +57,21 @@ class TaskDataModule(pl.LightningDataModule):
                 name.append(f"{key}{value}_")
         
         key = ''.join(name)
-        self.dpath = os.path.join(self.data_dir, f"{self.init_states_name}_{key}.h5")
+        self.dpath = os.path.join(self.data_dir, f"{self.init_states_name}_{key}")
+        self.hdf5_path = self.dpath + '.h5'
+        self.pickle_path = self.dpath + '.pkl'
         
 
     # NOTE: should not assign states here
     def prepare_data(self):
         
-        n_trials = self.task.n_trials
-        idx = np.linspace(0, n_trials-1, n_trials-1).astype(int)
-        
-        # if data with same timing and splits already exists pass
-        if os.path.exists(self.dpath):
+        if os.path.isfile(self.hdf5_path) and os.path.isfile(self.pickle_path):
             return
+
         else:
+            n_trials = self.task.n_trials
+            idx = np.linspace(0, n_trials-1, n_trials-1).astype(int)
+    
             inputs, targets, phase_index, mask = self.task.generate_dataset()
             
             # expand the initial states to the number of n_trials
@@ -77,11 +80,11 @@ class TaskDataModule(pl.LightningDataModule):
             else:
                 init_states = np.zeros((n_trials, self.init_states_dimension))
             
-            # split
+            # split 
             train_idx, val_idx = train_test_split(idx, train_size=self.train_ratio, test_size=self.val_ratio)
             
-            # if the there is more than one phase info for trials
-            if phase_index['fix'] > 1:
+            # if trial lengths were random for CDM
+            if ('fix' in phase_index) and (len(phase_index['fix'])) > 1:
                 phase_index_train = {}
                 phase_index_val = {}
                 for key, value in phase_index.items():
@@ -90,7 +93,7 @@ class TaskDataModule(pl.LightningDataModule):
             else:
                 phase_index_train = phase_index
                 phase_index_val = phase_index
-   
+    
             data = {
                 'train_inputs': inputs[train_idx],
                 'train_targets': targets[train_idx],
@@ -102,29 +105,29 @@ class TaskDataModule(pl.LightningDataModule):
                 'val_mask': mask[val_idx],
             }
             
-            # save
-            os.makedirs(self.data_dir, exist_ok=True)
-            with h5py.File(self.dpath, 'w') as f:
+            # save 
+            with h5py.File(self.hdf5_path, 'w') as f:
                 for key, value in data.items():
                     f.create_dataset(key, data=value)
                     
             # save as a pickle
-            with open(self.dpath, 'wb') as f:
+            with open(self.pickle_path, 'wb') as f:
                 pickle.dump(data, f)
-
-            print(f"Data saved to {self.dpath}")
+                
+            print(f"Data saved as pkl and hdf5 to {self.dpath}")
 
 
     # DO NOT REMOVE stage
-    # BUG: should do splits here
+    # BUG: usually splits are done here, not saved, done at runtime
     def setup(self, stage=None):
         
-        if not os.path.exists(self.dpath):
-            raise FileNotFoundError(f"The file {self.dpath} does not exist.")
+        if not os.path.isfile(self.hdf5_path):
+            raise FileNotFoundError(f"The file {self.hdf5_path} does not exist.") 
+        if not os.path.isfile(self.pickle_path):
+            raise FileNotFoundError(f"The file {self.pickle_path} does not exist.") 
         
-  
         # load the saved h5py dataset
-        with h5py.File((self.dpath), 'r') as f:
+        with h5py.File((self.hdf5_path), 'r') as f:
             train_inputs = torch.tensor(f['train_inputs'][:])
             train_targets = torch.tensor(f['train_targets'][:])
             train_init_states = torch.tensor(f['train_init_states'][:])

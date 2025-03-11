@@ -4,7 +4,6 @@
 import ray
 import torch
 import lightning as pl
-from torch.utils.data import DataLoader
 from synthetic_datasets.tasks.NBFF import NBFF
 from models.modules.rnn_module import *
 from synthetic_datasets.datamodules.task_datamodule import TaskDataModule
@@ -56,7 +55,7 @@ DATA_CONFIG = {
     "val_ratio": 0.2,
     "init_states": None,
     "init_states_dimension": hidden_size,
-    "init_states_name":'nbff_node',
+    "init_states_name":'nbff_node_fix1',
 } 
 
 # setup the model
@@ -94,6 +93,10 @@ RUN_CONFIG = RunConfig(
         checkpoint_score_order="max",
     ),
 )
+
+# # FIX TO MANUALLY CONTROL THE PREPARE_DATA
+# data_module = TaskDataModule(DATA_CONFIG)
+# data_module.prepare_data()
 
 # training function to execute on each worker
 def train_loop(model_config):
@@ -147,5 +150,5 @@ def tune_pipeline():
 if __name__ == "__main__":
 
     # run the pipeline and store result object in memory
-    result_grid = tune_pipeline(num_samples=num_samples)
+    result_grid = tune_pipeline()
 

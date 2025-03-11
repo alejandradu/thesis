@@ -2,7 +2,7 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 from math import floor
-from AbstractClass import SyntheticTask
+from synthetic_datasets.tasks.AbstractClass import SyntheticTask
 
 # NOTE: generate docstrings with codeium, the period args are fractions of the trial
 
@@ -66,7 +66,13 @@ class NBFF(SyntheticTask):
 
         # Add noise to the inputs for the trial - return the noisy version
         inputs = inputs + np.random.normal(loc=0.0, scale=self.noise, size=inputs.shape)
-        return inputs, targets
+        
+        phase_index = {'stimulus & response': 0}
+        
+        # do not mask the loss
+        mask = torch.ones_like(targets)
+        
+        return inputs, targets, phase_index, mask
     
     
     def plot_trial(self):
