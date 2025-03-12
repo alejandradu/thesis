@@ -178,7 +178,7 @@ class frRNN(nn.Module):
         # initial state is a value for the hidden vector at time 0
         if initial_states is None:
             initial_states = self.h0
-            #initial_states = initial_states.unsqueeze(0).expand(batch_size, self.hidden_size)
+            initial_states = initial_states.unsqueeze(0).expand(batch_size, self.hidden_size)
 
         # clone to keep reusability across trials and distributions
         h = initial_states.clone()
@@ -246,7 +246,7 @@ class lrRNN(nn.Module):
         if not self.train_si:
             self.si.requires_grad = False
         # low rank approx matrix factors
-        self.m = nn.Parameter(torch.Tensor(self.input_size, self.rank))
+        self.m = nn.Parameter(torch.Tensor(self.hidden_size, self.rank))
         self.n = nn.Parameter(torch.Tensor(self.hidden_size, self.rank))   
         self.b = nn.Parameter(torch.Tensor(self.hidden_size))
         # never optimize bias
@@ -315,14 +315,18 @@ class lrRNN(nn.Module):
         n_timesteps = input.shape[1]
         if initial_states is None:
             initial_states = self.h0
-        h = initial_states.clone()
-        r = self.non_linearity(initial_states)
+            # #initial_states = initial_states.unsqueeze(0).expand(batch_size, self.hidden_size)
+            # initial_states = nn.Parameter(torch.Tensor((batch_size, self.hidden_size), device = self.m.device))
+            # nn.init.zeros_(initial_states)
+            
+        h = initial_states.clone().float()
+        r = self.non_linearity(initial_states).float()
         self._define_proxy_parameters()
-        noise = torch.randn(batch_size, n_timesteps, self.hidden_size, device=self.m.device)
-        output = torch.zeros(batch_size, n_timesteps, self.output_size, device=self.m.device)
+        noise = torch.randn((batch_size, n_timesteps, self.hidden_size), device=self.m.device)
+        output = torch.zeros((batch_size, n_timesteps, self.output_size), device=self.m.device)
         if return_latents:
             # BUG: The expanded size of the tensor (10) must match the existing size (4) at non-singleton dimension 1.  Target sizes: [1, 10].  Tensor sizes: [335, 4]
-            trajectories = torch.zeros(batch_size, n_timesteps + 1, self.hidden_size, device=self.m.device) 
+            trajectories = torch.zeros((batch_size, n_timesteps + 1, self.hidden_size), device=self.m.device) 
             trajectories[:, 0, :] = h
             
         # TODO: set noise to zero, otherwise be careful if noise_std depends on alpha
@@ -330,9 +334,9 @@ class lrRNN(nn.Module):
         # simulation loop 
         for i in range(n_timesteps):
             # NOTE: why are we dividing by hidden_size?
-            h = h + self.noise_std * noise[:, i, :] + self.alpha * (-h + r.matmul(self.n).matmul(self.m.t()) / self.hidden_size + input[:, i, :].matmul(self.wi_full))
-            r = self.non_linearity(h + self.b)
-            output[:, i, :] = self.output_non_linearity(h) @ self.wo_full
+            h = h + self.noise_std * noise[:, i, :] + self.alpha * (-h + r.matmul(self.n).matmul(self.m.t()) / self.hidden_size + input[:, i, :].float().matmul(self.wi_full))
+            r = self.non_linearity(h + self.b).float()
+            output[:, i, :] = self.output_non_linearity(h).float() @ self.wo_full
             if return_latents:
                 trajectories[:, i + 1, :] = h           
 

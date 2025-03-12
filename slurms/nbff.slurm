@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=node_2bff               # Job name
+#SBATCH --job-name=lrRNN_2bff               # Job name
 #SBATCH --output=output.txt           # Standard output file
 #SBATCH --error=error.txt             # Standard error file
 # #SBATCH --partition=MIG               # Partition or queue name

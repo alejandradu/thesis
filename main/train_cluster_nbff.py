@@ -23,10 +23,13 @@ num_epochs = 100
 grace_period = 1
 reduction_factor = 2
 num_workers = 8   # SET THE SAME AS CPU
-num_samples = 8  # total hyperparam combs 
+num_samples = 6  # total hyperparam combs 
+hidden_size = 128
+init_states_dimension = hidden_size
+
 # special to node 
-latent_size = 2   # to plot
-hidden_size = 64
+latent_size = 2   # to plot, & change hidden size
+# init_states_dimension = latent_size
 ######## 
 
 # setup the task
@@ -56,22 +59,49 @@ DATA_CONFIG = {
     "train_ratio": 0.8,
     "val_ratio": 0.2,
     "init_states": None,
-    "init_states_dimension": latent_size,
-    "init_states_name":'nbff_node_fix1',
+    "init_states_dimension": init_states_dimension,
+    "init_states_name":'nbff_lrRNN',  # NOTE: have to change for nodes bc dimension of init states changes
 } 
 
 # setup the model
 # NOTE: write as 'param': tune.choice([]) (or tune.OTHER) for hyperparam tuning
 MODEL_CONFIG = {
-    "model_class": nODE,
-    "lr": tune.choice([1e-4, 1e-3]),
+    "model_class": lrRNN,
+    "lr": tune.choice([1e-4, 1e-3, 1e-5]),
     "weight_decay": tune.choice([0.0, 1e-3]),
-    "num_layers": tune.choice([2, 5]),
     "input_size": input_size,
     "hidden_size": hidden_size,
     "output_size": output_size,
+    
+    # fr/lrRNN
+    "noise_std": 0.0,  # this is noise for the evolution of the hidden states
+    "alpha": 1,     # this should be t/TAU?
+    "rho": 1,       # this is for matrix initialization distributions
+    "train_wi": False,
+    "train_wo": False,
+    "train_wrec": True,
+    "train_h0": False,
+    "train_si": True,
+    "train_so": True,
+    "wi_init": None,
+    "wo_init": None,
+    "wrec_init": None,
+    "si_init": None,
+    "so_init": None,
+    "b_init": None,
+    "add_biases": False,
+    "non_linearity": torch.tanh,
+    "output_non_linearity": torch.tanh,
+    
+    # lrRNN
+    "rank": 2,
+    "m_init": None,
+    "n_init": None,
+    
+    # node
     "latent_size": latent_size,
     "output_mapping": None,  # default is to Linear. Change if you want a nonlinearity
+    "num_layers": tune.choice([3, 10]),
 }
 
 
